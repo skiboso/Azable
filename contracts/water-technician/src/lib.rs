@@ -17,19 +17,19 @@ pub enum DataKey {
     RewardToken,
     /// Reward amount in stroops (instance storage).
     RewardAmount,
-    /// Planter info keyed by address (persistent storage).
-    Planter(Address),
+    /// WaterTechnician info keyed by address (persistent storage).
+    WaterTechnician(Address),
     /// Referral info keyed by referrer address (persistent storage).
     Referrals(Address),
 }
 
-/// Planter information.
+/// WaterTechnician information.
 #[contracttype]
 #[derive(Clone)]
-pub struct PlanterInfo {
-    /// Planter address.
+pub struct WaterTechnicianInfo {
+    /// WaterTechnician address.
     pub address: Address,
-    /// Who referred this planter (if any).
+    /// Who referred this technician (if any).
     pub referrer: Option<Address>,
     /// Number of jobs completed.
     pub jobs_completed: u64,
@@ -41,25 +41,25 @@ pub struct PlanterInfo {
 #[contracttype]
 #[derive(Clone)]
 pub struct ReferralInfo {
-    /// Number of planters referred.
+    /// Number of technicians referred.
     pub referral_count: u64,
-    /// Number of referred planters who completed their first job.
+    /// Number of referred technicians who completed their first job.
     pub successful_referrals: u64,
 }
 
-/// Event emitted when a planter is registered.
+/// Event emitted when a technician is registered.
 #[contracttype]
 #[derive(Clone)]
-pub struct PlanterRegisteredEvent {
-    pub planter: Address,
+pub struct WaterTechnicianRegisteredEvent {
+    pub technician: Address,
     pub referrer: Option<Address>,
 }
 
-/// Event emitted when a planter completes a job.
+/// Event emitted when a technician completes a job.
 #[contracttype]
 #[derive(Clone)]
 pub struct JobCompletedEvent {
-    pub planter: Address,
+    pub technician: Address,
     pub job_count: u64,
 }
 
@@ -68,7 +68,7 @@ pub struct JobCompletedEvent {
 #[derive(Clone)]
 pub struct ReferralRewardClaimedEvent {
     pub referrer: Address,
-    pub referred_planter: Address,
+    pub referred_technician: Address,
     pub amount: i128,
 }
 
@@ -86,10 +86,10 @@ pub enum Error {
     NotInitialized = 2,
     /// Unauthorized caller.
     Unauthorized = 3,
-    /// Planter already registered.
+    /// WaterTechnician already registered.
     AlreadyRegistered = 4,
-    /// Planter not found.
-    PlanterNotFound = 5,
+    /// WaterTechnician not found.
+    WaterTechnicianNotFound = 5,
     /// Invalid reward amount.
     InvalidRewardAmount = 6,
     /// Reward already claimed.
@@ -113,18 +113,18 @@ const DEFAULT_REWARD: i128 = 20_000_000;
 
 #[contracttype]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub struct PlanterMetrics {
-    pub trees_completed: u32,
+pub struct WaterTechnicianMetrics {
+    pub wells_completed: u32,
     pub avg_completion_time: u64,
     pub success_rate: u32,
     pub current_bond_locked: i128,
 }
 
 #[contract]
-pub struct PlanterContract;
+pub struct WaterTechnicianContract;
 
 #[contractimpl]
-impl PlanterContract {
+impl WaterTechnicianContract {
     /// Initialize the contract.
     ///
     /// # Arguments
@@ -146,19 +146,19 @@ impl PlanterContract {
         env.storage().instance().extend_ttl(LEDGER_THRESHOLD, LEDGER_BUMP);
     }
 
-    /// Register a new planter with an optional referrer.
+    /// Register a new technician with an optional referrer.
     ///
     /// # Arguments
-    /// * `planter` — Planter address to register.
+    /// * `technician` — WaterTechnician address to register.
     /// * `referrer` — Optional referrer address.
-    pub fn register_planter(env: Env, planter: Address, referrer: Option<Address>) {
-        if env.storage().persistent().has(&DataKey::Planter(planter.clone())) {
+    pub fn register_technician(env: Env, technician: Address, referrer: Option<Address>) {
+        if env.storage().persistent().has(&DataKey::WaterTechnician(technician.clone())) {
             panic_with_error!(&env, Error::AlreadyRegistered);
         }
-        planter.require_auth();
+        technician.require_auth();
 
-        let planter_info = PlanterInfo {
-            address: planter.clone(),
+        let technician_info = WaterTechnicianInfo {
+            address: technician.clone(),
             referrer: referrer.clone(),
             jobs_completed: 0,
             first_job_reward_claimed: false,
@@ -166,10 +166,10 @@ impl PlanterContract {
 
         env.storage()
             .persistent()
-            .set(&DataKey::Planter(planter.clone()), &planter_info);
+            .set(&DataKey::WaterTechnician(technician.clone()), &technician_info);
         env.storage()
             .persistent()
-            .extend_ttl(&DataKey::Planter(planter.clone()), LEDGER_THRESHOLD, LEDGER_BUMP);
+            .extend_ttl(&DataKey::WaterTechnician(technician.clone()), LEDGER_THRESHOLD, LEDGER_BUMP);
 
         // Update referrer's referral count
         if let Some(referrer_addr) = referrer.clone() {
@@ -179,52 +179,52 @@ impl PlanterContract {
         }
 
         env.events().publish(
-            ("PlanterRegistered", planter.clone()),
-            PlanterRegisteredEvent {
-                planter,
+            ("WaterTechnicianRegistered", technician.clone()),
+            WaterTechnicianRegisteredEvent {
+                technician,
                 referrer,
             },
         );
     }
 
-    /// Record a job completion for a planter.
+    /// Record a job completion for a technician.
     ///
     /// # Arguments
-    /// * `planter` — Planter address.
-    pub fn complete_job(env: Env, planter: Address) {
-        let mut planter_info = Self::load_planter(&env, planter.clone());
-        planter.require_auth();
+    /// * `technician` — WaterTechnician address.
+    pub fn complete_job(env: Env, technician: Address) {
+        let mut technician_info = Self::load_technician(&env, technician.clone());
+        technician.require_auth();
 
-        planter_info.jobs_completed += 1;
-        Self::save_planter(&env, planter.clone(), &planter_info);
+        technician_info.jobs_completed += 1;
+        Self::save_technician(&env, technician.clone(), &technician_info);
 
         env.events().publish(
-            ("JobCompleted", planter.clone()),
+            ("JobCompleted", technician.clone()),
             JobCompletedEvent {
-                planter,
-                job_count: planter_info.jobs_completed,
+                technician,
+                job_count: technician_info.jobs_completed,
             },
         );
     }
 
-    /// Claim referral reward for a referred planter's first job completion.
+    /// Claim referral reward for a referred technician's first job completion.
     ///
     /// # Arguments
     /// * `referrer` — Referrer address claiming the reward.
-    /// * `referred_planter` — The referred planter who completed their first job.
-    pub fn claim_referral_reward(env: Env, referrer: Address, referred_planter: Address) {
+    /// * `referred_technician` — The referred technician who completed their first job.
+    pub fn claim_referral_reward(env: Env, referrer: Address, referred_technician: Address) {
         referrer.require_auth();
 
-        let referred_info = Self::load_planter(&env, referred_planter.clone());
+        let referred_info = Self::load_technician(&env, referred_technician.clone());
         
         // Verify the referrer is correct
         if referred_info.referrer != Some(referrer.clone()) {
             panic_with_error!(&env, Error::Unauthorized);
         }
 
-        // Verify the referred planter has completed at least one job
+        // Verify the referred technician has completed at least one job
         if referred_info.jobs_completed == 0 {
-            panic_with_error!(&env, Error::PlanterNotFound);
+            panic_with_error!(&env, Error::WaterTechnicianNotFound);
         }
 
         // Verify reward hasn't been claimed yet
@@ -247,7 +247,7 @@ impl PlanterContract {
         // Mark reward as claimed
         let mut updated_info = referred_info;
         updated_info.first_job_reward_claimed = true;
-        Self::save_planter(&env, referred_planter.clone(), &updated_info);
+        Self::save_technician(&env, referred_technician.clone(), &updated_info);
 
         // Update referrer's successful referral count
         let mut referral_info = Self::load_referral_info(&env, referrer.clone());
@@ -264,18 +264,18 @@ impl PlanterContract {
             ("ReferralRewardClaimed", referrer.clone()),
             ReferralRewardClaimedEvent {
                 referrer,
-                referred_planter,
+                referred_technician,
                 amount: reward_amount,
             },
         );
     }
 
-    /// Get planter information.
+    /// Get technician information.
     ///
     /// # Arguments
-    /// * `planter` — Planter address.
-    pub fn get_planter(env: Env, planter: Address) -> PlanterInfo {
-        Self::load_planter(&env, planter)
+    /// * `technician` — WaterTechnician address.
+    pub fn get_technician(env: Env, technician: Address) -> WaterTechnicianInfo {
+        Self::load_technician(&env, technician)
     }
 
     /// Get referral information.
@@ -318,16 +318,16 @@ impl PlanterContract {
     // Private helpers
     // -----------------------------------------------------------------------
 
-    fn load_planter(env: &Env, planter: Address) -> PlanterInfo {
-        let key = DataKey::Planter(planter);
+    fn load_technician(env: &Env, technician: Address) -> WaterTechnicianInfo {
+        let key = DataKey::WaterTechnician(technician);
         env.storage()
             .persistent()
             .get(&key)
-            .unwrap_or_else(|| panic_with_error!(env, Error::PlanterNotFound))
+            .unwrap_or_else(|| panic_with_error!(env, Error::WaterTechnicianNotFound))
     }
 
-    fn save_planter(env: &Env, planter: Address, info: &PlanterInfo) {
-        let key = DataKey::Planter(planter);
+    fn save_technician(env: &Env, technician: Address, info: &WaterTechnicianInfo) {
+        let key = DataKey::WaterTechnician(technician);
         env.storage().persistent().set(&key, info);
         env.storage()
             .persistent()
@@ -355,21 +355,21 @@ impl PlanterContract {
         env.storage().instance().extend_ttl(LEDGER_THRESHOLD, LEDGER_BUMP);
     }
 
-    /// Return aggregate metrics for a planter wallet.
-    pub fn get_planter_metrics(env: Env, wallet: Address) -> PlanterMetrics {
+    /// Return aggregate metrics for a technician wallet.
+    pub fn get_technician_metrics(env: Env, wallet: Address) -> WaterTechnicianMetrics {
         env.storage()
             .persistent()
             .get(&wallet)
-            .unwrap_or(PlanterMetrics {
-                trees_completed: 0,
+            .unwrap_or(WaterTechnicianMetrics {
+                wells_completed: 0,
                 avg_completion_time: 0,
                 success_rate: 0,
                 current_bond_locked: 0,
             })
     }
 
-    /// Persist aggregate metrics for a planter wallet.
-    pub fn set_planter_metrics(env: Env, wallet: Address, metrics: PlanterMetrics) {
+    /// Persist aggregate metrics for a technician wallet.
+    pub fn set_technician_metrics(env: Env, wallet: Address, metrics: WaterTechnicianMetrics) {
         env.storage().persistent().set(&wallet, &metrics);
     }
 }
@@ -389,9 +389,9 @@ mod tests {
     /// Deploy and initialise the contract with a real reward token.
     ///
     /// Returns `(admin, reward_token, contract_id, client)`.
-    fn setup(env: &Env) -> (Address, Address, Address, PlanterContractClient) {
-        let contract_id = env.register(PlanterContract, ());
-        let client = PlanterContractClient::new(env, &contract_id);
+    fn setup(env: &Env) -> (Address, Address, Address, WaterTechnicianContractClient) {
+        let contract_id = env.register(WaterTechnicianContract, ());
+        let client = WaterTechnicianContractClient::new(env, &contract_id);
         let admin = Address::generate(env);
         let token_admin = Address::generate(env);
         let reward_token = env
@@ -411,30 +411,30 @@ mod tests {
     }
 
     #[test]
-    fn test_register_planter() {
+    fn test_register_technician() {
         let env = Env::default();
         env.mock_all_auths();
         let (_, _, _, client) = setup(&env);
 
-        let planter = Address::generate(&env);
-        client.register_planter(&planter, &None);
+        let technician = Address::generate(&env);
+        client.register_technician(&technician, &None);
 
-        let info = client.get_planter(&planter);
+        let info = client.get_technician(&technician);
         assert_eq!(info.jobs_completed, 0);
         assert_eq!(info.first_job_reward_claimed, false);
     }
 
     #[test]
-    fn test_register_planter_with_referrer() {
+    fn test_register_technician_with_referrer() {
         let env = Env::default();
         env.mock_all_auths();
         let (_, _, _, client) = setup(&env);
 
         let referrer = Address::generate(&env);
-        let planter = Address::generate(&env);
-        client.register_planter(&planter, &Some(referrer.clone()));
+        let technician = Address::generate(&env);
+        client.register_technician(&technician, &Some(referrer.clone()));
 
-        let info = client.get_planter(&planter);
+        let info = client.get_technician(&technician);
         assert_eq!(info.referrer, Some(referrer.clone()));
 
         let referral_info = client.get_referral_info(&referrer);
@@ -447,11 +447,11 @@ mod tests {
         env.mock_all_auths();
         let (_, _, _, client) = setup(&env);
 
-        let planter = Address::generate(&env);
-        client.register_planter(&planter, &None);
-        client.complete_job(&planter);
+        let technician = Address::generate(&env);
+        client.register_technician(&technician, &None);
+        client.complete_job(&technician);
 
-        let info = client.get_planter(&planter);
+        let info = client.get_technician(&technician);
         assert_eq!(info.jobs_completed, 1);
     }
 
@@ -462,18 +462,18 @@ mod tests {
         let (_, reward_token, contract_id, client) = setup(&env);
 
         let referrer = Address::generate(&env);
-        let planter = Address::generate(&env);
+        let technician = Address::generate(&env);
 
-        client.register_planter(&planter, &Some(referrer.clone()));
-        client.complete_job(&planter);
+        client.register_technician(&technician, &Some(referrer.clone()));
+        client.complete_job(&technician);
 
         // Fund the contract so it can pay out the reward.
         let token_admin_client = StellarAssetClient::new(&env, &reward_token);
         token_admin_client.mint(&contract_id, &DEFAULT_REWARD);
 
-        client.claim_referral_reward(&referrer, &planter);
+        client.claim_referral_reward(&referrer, &technician);
 
-        let info = client.get_planter(&planter);
+        let info = client.get_technician(&technician);
         assert_eq!(info.jobs_completed, 1);
         assert_eq!(info.first_job_reward_claimed, true);
 
