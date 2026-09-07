@@ -103,10 +103,10 @@ export function createResolvers(defaultDataSource?: StreamDataSource) {
         return campaigns.map(toCampaignPayload);
       },
 
-      trees: async (
+      waterProjects: async (
         _: unknown,
         args: {
-          filter?: { planter?: string; region?: string; status?: StreamStatusFilter; search?: string };
+          filter?: { technician?: string; region?: string; status?: StreamStatusFilter; search?: string };
           pagination?: PaginationInput;
           network?: Network;
         },
@@ -115,7 +115,7 @@ export function createResolvers(defaultDataSource?: StreamDataSource) {
         const streams = await resolveDataSource(ctx, defaultDataSource).getStreams(args.network ?? "testnet");
         const filter = args.filter ?? {};
         const filtered = streams.filter((stream) => {
-          if (filter.planter && stream.recipient !== filter.planter) return false;
+          if (filter.technician && stream.recipient !== filter.technician) return false;
           if (filter.region && stream.region !== filter.region) return false;
           if (filter.status && stream.status !== filter.status) return false;
           if (filter.search) {
@@ -126,7 +126,7 @@ export function createResolvers(defaultDataSource?: StreamDataSource) {
         });
         return paginate(filtered.map((stream) => ({
           id: stream.id,
-          planter: stream.recipient,
+          technician: stream.recipient,
           region: stream.region ?? null,
           category: stream.category ?? null,
           status: stream.status,
@@ -136,24 +136,24 @@ export function createResolvers(defaultDataSource?: StreamDataSource) {
         })), args.pagination);
       },
 
-      planters: async (
+      waterTechnicians: async (
         _: unknown,
         args: { region?: string; pagination?: PaginationInput; network?: Network },
         ctx: ResolverContext,
       ) => {
         const streams = await resolveDataSource(ctx, defaultDataSource).getStreams(args.network ?? "testnet");
-        const groups = new Map<string, { region: string | null; treeCount: number; sponsoredAmount: bigint }>();
+        const groups = new Map<string, { region: string | null; wellCount: number; sponsoredAmount: bigint }>();
         for (const stream of streams) {
           if (args.region && stream.region !== args.region) continue;
-          const current = groups.get(stream.recipient) ?? { region: stream.region ?? null, treeCount: 0, sponsoredAmount: 0n };
-          current.treeCount += 1;
+          const current = groups.get(stream.recipient) ?? { region: stream.region ?? null, wellCount: 0, sponsoredAmount: 0n };
+          current.wellCount += 1;
           current.sponsoredAmount += toBigInt(stream.totalAmount);
           groups.set(stream.recipient, current);
         }
         return paginate(Array.from(groups, ([address, value]) => ({
           address,
           region: value.region,
-          treeCount: value.treeCount,
+          wellCount: value.wellCount,
           sponsoredAmount: value.sponsoredAmount.toString(),
         })), args.pagination);
       },
