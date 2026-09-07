@@ -1,13 +1,13 @@
 # Azable
 
-Azable is a Stellar/Soroban platform for payment streaming and reforestation
+Azable is a Stellar/Soroban platform for payment streaming and clean-water-access
 crowdfunding: creators run recurring payment streams, launch milestone-based
-funding campaigns, and get on-chain, donor-verifiable credit for the trees
+funding campaigns, and get on-chain, donor-verifiable credit for the wells
 their campaigns fund.
 
-![Contracts CI](https://github.com/anitajordan22244-afk/mitros/actions/workflows/contracts.yml/badge.svg)
-![Backend CI](https://github.com/anitajordan22244-afk/mitros/actions/workflows/backend.yml/badge.svg)
-![Frontend CI](https://github.com/anitajordan22244-afk/mitros/actions/workflows/frontend.yml/badge.svg)
+![Contracts CI](https://github.com/skiboso/Azable/actions/workflows/contracts.yml/badge.svg)
+![Backend CI](https://github.com/skiboso/Azable/actions/workflows/backend.yml/badge.svg)
+![Frontend CI](https://github.com/skiboso/Azable/actions/workflows/frontend.yml/badge.svg)
 
 ## 🚀 Quickstart (5 minutes)
 
@@ -25,8 +25,8 @@ their campaigns fund.
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/anitajordan22244-afk/mitros.git
-cd mitros
+git clone https://github.com/skiboso/Azable.git
+cd Azable
 pnpm install
 ```
 
@@ -75,7 +75,7 @@ azable/
 │   ├── campaign-funding/       # Campaign fundraising
 │   ├── nft-stream/             # NFT-gated streams
 │   ├── soulbound-badge/        # Contributor badges
-│   ├── planter/                # Tree-planting job tracking
+│   ├── water-technician/       # Well-completion job tracking & referral rewards
 │   ├── dispute-arbiter/        # Stream/campaign dispute resolution
 │   ├── verifier-penalty/       # Verifier staking & slashing
 │   ├── timelock/                # Timelocked admin actions
@@ -100,7 +100,7 @@ azable/
 
 - **Payment streaming** — continuous, revocable token streams for subscriptions, salaries, and recurring transfers
 - **Campaign funding** — milestone-based on-chain fundraising with escrow, refunds, and creator payouts
-- **Reforestation tracking** — verified tree-planting records, CO₂ impact estimates, and donor-facing certificates
+- **Clean water access tracking** — verified well-completion records, liters-per-year impact estimates, and donor-facing certificates
 - **Donor verification** — ZK nullifier-based proof of contribution without exposing donor identity
 - **Sponsor tools** — crowdfunded sponsor pools, insurance pools, and leaderboard/referral rewards
 - **Multi-asset support** — USDC, XLM, and other Stellar assets

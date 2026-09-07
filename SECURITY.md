@@ -10,7 +10,7 @@ We take security issues seriously and appreciate responsible disclosure.
 Report privately using one of these channels, in order of preference:
 
 1. **GitHub Security Advisories** — open a
-   [private vulnerability report](https://github.com/anitajordan22244-afk/mitros/security/advisories/new)
+   [private vulnerability report](https://github.com/skiboso/Azable/security/advisories/new)
    on this repository. This is the preferred channel: it's private by
    default and lets us coordinate a fix and disclosure timeline with you
    directly in GitHub.

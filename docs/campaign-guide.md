@@ -17,7 +17,7 @@ This guide covers the full lifecycle of a Azable campaign: creation, sponsorship
 
 ## Overview
 
-A Azable campaign lets a creator raise tokens from sponsors to fund a real-world tree-planting effort. The contract enforces every financial rule — escrow, fees, insurance, milestones, refunds, and payouts — with no trusted intermediary.
+An Azable campaign lets a creator raise tokens from sponsors to fund a real-world clean-water-access effort. The contract enforces every financial rule — escrow, fees, insurance, milestones, refunds, and payouts — with no trusted intermediary.
 
 The lifecycle looks like this:
 

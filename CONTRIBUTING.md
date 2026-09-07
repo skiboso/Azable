@@ -27,8 +27,8 @@ docs/             Architecture, API, and contract documentation
 ## Getting set up
 
 ```bash
-git clone https://github.com/anitajordan22244-afk/mitros.git
-cd mitros
+git clone https://github.com/skiboso/Azable.git
+cd Azable
 pnpm install
 cp .env.example .env
 ```

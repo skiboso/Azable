@@ -21,7 +21,7 @@ members = [
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
-repository = "https://github.com/anitajordan22244-afk/mitros"
+repository = "https://github.com/skiboso/Azable"
 
 [workspace.dependencies]
 soroban-sdk = "=25.3.2"
