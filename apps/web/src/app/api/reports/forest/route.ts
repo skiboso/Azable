@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const pdfBytes = await buildForestReportPdf(body);
-    const filename = `fundable-sponsor-forest-${new Date()
+    const filename = `azable-sponsor-forest-${new Date()
       .toISOString()
       .slice(0, 10)}.pdf`;
 

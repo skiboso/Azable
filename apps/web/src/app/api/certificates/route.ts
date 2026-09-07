@@ -17,7 +17,7 @@ import {
  *
  * @returns
  *   200 — `application/pdf` binary stream with headers:
- *     - `Content-Disposition: attachment; filename="fundable-receipt-<id>.pdf"`
+ *     - `Content-Disposition: attachment; filename="azable-receipt-<id>.pdf"`
  *     - `X-Certificate-Id: <uuid>`
  *     - `X-Generated-At: <iso8601>`
  *   400 — `{ error: string }` — invalid input
@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
     const docType = (body as CertificateInput).documentType ?? "certificate";
     const filename = docType === "carbon-credit"
       ? `carbon-credit-${certificateId}.pdf`
-      : `fundable-${docType}-${certificateId}.pdf`;
+      : `azable-${docType}-${certificateId}.pdf`;
 
     return new NextResponse(pdfBytes as unknown as BodyInit, {
       status: 200,

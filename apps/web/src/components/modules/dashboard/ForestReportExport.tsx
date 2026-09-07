@@ -57,7 +57,7 @@ export default function ForestReportExport({
       const contentDisposition = response.headers.get("Content-Disposition");
       const filename =
         contentDisposition?.match(/filename="([^"]+)"/)?.[1] ??
-        "fundable-sponsor-forest.pdf";
+        "azable-sponsor-forest.pdf";
       downloadBlob(blob, filename);
     } catch (exportError) {
       setError(
@@ -83,7 +83,7 @@ export default function ForestReportExport({
           type="button"
           onClick={exportReport}
           disabled={!canExport}
-          className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-fundable-purple-2 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-fundable-purple-2/90 disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-azable-purple-2 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-azable-purple-2/90 disabled:cursor-not-allowed disabled:opacity-50"
           aria-label="Download sponsor forest report"
         >
           {isExporting ? (
