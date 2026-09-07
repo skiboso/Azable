@@ -1,6 +1,6 @@
 # Campaign API Rate Limits & Throttling Policy
 
-This document outlines the API rate limits, throttling strategy, response headers, and procedure for requesting higher usage limits across the Fundable Campaign API platform.
+This document outlines the API rate limits, throttling strategy, response headers, and procedure for requesting higher usage limits across the Azable Campaign API platform.
 
 ---
 
@@ -23,7 +23,7 @@ Rate limits are evaluated per client IP address (or authenticated API key/Stella
 
 ## 🛠️ Throttling Strategy & Implementation
 
-Fundable uses an atomic **Sliding-Window Counter** algorithm backed by Redis sorted sets (`ZSET`) and Lua scripts (`SLIDING_WINDOW_SCRIPT`).
+Azable uses an atomic **Sliding-Window Counter** algorithm backed by Redis sorted sets (`ZSET`) and Lua scripts (`SLIDING_WINDOW_SCRIPT`).
 
 ### Algorithm Characteristics
 1. **Precision Sliding Window:** Unlike fixed-window counters, the sliding window prevents traffic bursts at window boundaries (up to 2x limit).
@@ -77,7 +77,7 @@ RATE_LIMIT_SKIP_IPS="192.168.1.10,10.0.4.15"
 
 ### 2. Requesting Enterprise Tier API Keys
 To request an enterprise rate limit expansion:
-1. Submit an enterprise expansion request to `api-support@fundable.protocol`.
+1. Submit an enterprise expansion request to `api-support@azable.protocol`.
 2. Provide your wallet address, organization name, target endpoint list, and expected peak requests per minute.
 3. Upon approval, you will receive an authenticated API Key (`X-API-Key`) with elevated quota tier limits up to 5,000 req/min.
 

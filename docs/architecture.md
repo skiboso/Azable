@@ -1,6 +1,6 @@
 # Architecture
 
-This document provides a high-level overview of the Fundable Stellar project's architecture, which is composed of three main parts: a web frontend, a TypeScript SDK, and Soroban smart contracts.
+This document provides a high-level overview of the Azable Stellar project's architecture, which is composed of three main parts: a web frontend, a TypeScript SDK, and Soroban smart contracts.
 
 ## High-Level Architecture
 
@@ -10,7 +10,7 @@ The following diagram illustrates the interaction between the main components of
 graph TD
     A[User] --> B{Frontend (Next.js)}
     B <--> C{Backend (Node.js API)}
-    B --> SDK{SDK (@fundable/sdk)}
+    B --> SDK{SDK (@azable/sdk)}
     C --> SDK
     SDK --> D{Soroban Smart Contracts}
     D --> E((Stellar Blockchain))
@@ -36,8 +36,8 @@ graph TD
 
 ### Components
 
--   **Frontend (Next.js):** The user-facing web application that allows users to interact with the Fundable Protocol.
--   **SDK (@fundable/sdk):** A TypeScript library that abstracts the communication with the Soroban smart contracts, providing a simple API for the frontend.
+-   **Frontend (Next.js):** The user-facing web application that allows users to interact with the Azable.
+-   **SDK (@azable/sdk):** A TypeScript library that abstracts the communication with the Soroban smart contracts, providing a simple API for the frontend.
 -   **Soroban Smart Contracts:** The on-chain logic that governs payment streams and token distribution.
 -   **Stellar Blockchain:** The underlying blockchain where the smart contracts are deployed and transactions are recorded.
 

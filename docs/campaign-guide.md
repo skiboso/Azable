@@ -1,6 +1,6 @@
 # Campaign Guide
 
-This guide covers the full lifecycle of a Fundable campaign: creation, sponsorship, tree-verification, and payouts. It is aimed at campaign creators and sponsors who want to understand what happens on-chain at each step.
+This guide covers the full lifecycle of a Azable campaign: creation, sponsorship, tree-verification, and payouts. It is aimed at campaign creators and sponsors who want to understand what happens on-chain at each step.
 
 ---
 
@@ -17,7 +17,7 @@ This guide covers the full lifecycle of a Fundable campaign: creation, sponsorsh
 
 ## Overview
 
-A Fundable campaign lets a creator raise tokens from sponsors to fund a real-world tree-planting effort. The contract enforces every financial rule — escrow, fees, insurance, milestones, refunds, and payouts — with no trusted intermediary.
+A Azable campaign lets a creator raise tokens from sponsors to fund a real-world tree-planting effort. The contract enforces every financial rule — escrow, fees, insurance, milestones, refunds, and payouts — with no trusted intermediary.
 
 The lifecycle looks like this:
 
@@ -65,7 +65,7 @@ create_campaign  →  contribute (×N)  →  trigger_expiry
 ### SDK example
 
 ```typescript
-import { CampaignFundingClient } from '@fundable/sdk';
+import { CampaignFundingClient } from '@azable/sdk';
 
 const client = new CampaignFundingClient({ /* config */ });
 
@@ -155,7 +155,7 @@ The contribution record is cleared before the transfer (check-effects-interactio
 
 ## Verification Process
 
-After a campaign is claimed, Fundable's admin team verifies that the trees were planted. This step determines whether sponsors receive reward streams or insurance refunds.
+After a campaign is claimed, Azable's admin team verifies that the trees were planted. This step determines whether sponsors receive reward streams or insurance refunds.
 
 ### Normal outcome — trees alive
 
