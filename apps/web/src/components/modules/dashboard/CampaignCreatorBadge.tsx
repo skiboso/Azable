@@ -33,7 +33,7 @@ export function CampaignCreatorBadge() {
   return (
     <section
       aria-labelledby="campaign-creator-badges-heading"
-      className="mb-8 rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6"
+      className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6"
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>

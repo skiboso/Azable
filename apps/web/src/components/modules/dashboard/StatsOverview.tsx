@@ -43,7 +43,7 @@ const StatsOverview = () => {
     );
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
             {stats.map((stat, i) => (
                 <div key={i} className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
                     <p className="text-sm text-zinc-400 mb-1">{stat.label}</p>

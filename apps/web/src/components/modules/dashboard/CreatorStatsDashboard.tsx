@@ -24,7 +24,7 @@ export const CreatorStatsDashboard: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 mb-8 space-y-6">
+      <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 space-y-6">
         <Skeleton className="h-7 w-64 bg-zinc-800" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[...Array(4)].map((_, i) => (
@@ -75,7 +75,7 @@ export const CreatorStatsDashboard: React.FC = () => {
   ];
 
   return (
-    <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 mb-8" data-testid="creator-stats-dashboard">
+    <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6" data-testid="creator-stats-dashboard">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-2">
         <div>
           <h2 className="text-xl font-bold text-white flex items-center gap-2">

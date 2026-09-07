@@ -54,7 +54,7 @@ const DashboardOverview: React.FC<DashboardOverviewProps> = ({
   const chartData = useMemo(() => processChartData(data), [data]);
 
   return (
-    <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 mb-8">
+    <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
       <div className="mb-4">
         <h3 className="text-lg font-semibold text-white">{title}</h3>
         {description && <p className="text-sm text-zinc-400">{description}</p>}
