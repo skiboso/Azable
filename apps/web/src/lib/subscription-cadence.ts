@@ -3,12 +3,12 @@
  * Program (issue #781).
  *
  * Deliberately scoped to pure, chain-independent logic only. This module
- * has no dependency on @fundable/sdk, Soroban, or any network call, so it
+ * has no dependency on @azable/sdk, Soroban, or any network call, so it
  * can be unit tested in isolation and reused by both the subscription
  * creation form and any future renewal-reminder/cron job.
  *
  * NOT in scope here (see PR description): the actual recurring charge
- * itself. Fundable already has an audited `payment-stream` contract
+ * itself. Azable already has an audited `payment-stream` contract
  * (contracts/payment-stream) capable of moving funds from backer to
  * creator over a fixed duration — the intent is for a subscription to
  * create one `payment-stream` per billing cycle rather than introduce new

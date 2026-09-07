@@ -202,8 +202,8 @@ describe("TokenBalanceList Component", () => {
       expect(emptyStateMessage.length).toBeGreaterThan(0);
     });
 
-    it("should use Fundable theme styling for empty state", () => {
-      // Requirement 7.3: Use styling consistent with Fundable theme
+    it("should use Azable theme styling for empty state", () => {
+      // Requirement 7.3: Use styling consistent with Azable theme
       const emptyStateStyles = {
         container: "p-6 bg-zinc-800 rounded-lg border border-zinc-700",
         text: "text-center text-zinc-400",
@@ -626,8 +626,8 @@ describe("TokenBalanceList Component", () => {
       expect(errorState.loading).toBe(false);
     });
 
-    it("should use Fundable theme styling for error state", () => {
-      // Requirement 9.5: Error state uses Fundable theme styling
+    it("should use Azable theme styling for error state", () => {
+      // Requirement 9.5: Error state uses Azable theme styling
       const errorStateStyles = {
         container: "p-6 bg-zinc-800 rounded-lg border border-red-900/50",
         titleText: "text-red-400 font-semibold mb-2",
