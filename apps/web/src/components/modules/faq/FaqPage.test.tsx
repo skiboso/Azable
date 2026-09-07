@@ -35,7 +35,7 @@ describe("FaqPage", () => {
   it("filters questions by category", () => {
     render(<FaqPage />);
 
-    fireEvent.click(screen.getByText("For Planters"));
+    fireEvent.click(screen.getByText("For Technicians"));
 
     expect(screen.getByText("How do I withdraw earnings?")).toBeTruthy();
     expect(screen.queryByText("Can I cancel a sponsorship or stream I've funded?")).toBeNull();
@@ -45,12 +45,12 @@ describe("FaqPage", () => {
     render(<FaqPage />);
 
     const question = screen.getByText("How does verification work?");
-    expect(screen.queryByText(/Eligible donors and planters/)).toBeNull();
+    expect(screen.queryByText(/Eligible donors and technicians/)).toBeNull();
 
     fireEvent.click(question);
-    expect(screen.getByText(/Eligible donors and planters/)).toBeTruthy();
+    expect(screen.getByText(/Eligible donors and technicians/)).toBeTruthy();
 
     fireEvent.click(question);
-    expect(screen.queryByText(/Eligible donors and planters/)).toBeNull();
+    expect(screen.queryByText(/Eligible donors and technicians/)).toBeNull();
   });
 });
