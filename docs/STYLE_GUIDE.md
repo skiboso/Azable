@@ -1,6 +1,6 @@
 # Code Style Guide
 
-This document outlines the coding style and conventions to be followed when contributing to the Fundable Stellar project. Adhering to these guidelines ensures consistency and readability across the codebase.
+This document outlines the coding style and conventions to be followed when contributing to the Azable Stellar project. Adhering to these guidelines ensures consistency and readability across the codebase.
 
 ## Branches, Commits, and Pull Requests
 
