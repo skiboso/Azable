@@ -8,7 +8,7 @@ const FeatureCards = () => {
     "View all your Stellar token balances in one place. Track your XLM and custom tokens with real-time updates and easy-to-read formatting.";
 
   const referrals =
-    "Invite planters to the platform and earn 2 XLM for each referred planter who completes their first job. Share your unique link to get started.";
+    "Invite water technicians to the platform and earn 2 XLM for each referred technician who completes their first job. Share your unique link to get started.";
 
   return (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-4 md:gap-8">
@@ -26,7 +26,7 @@ const FeatureCards = () => {
       />
       <FeatureCard
         title="Referrals"
-        linkText="Invite Planters"
+        linkText="Invite Technicians"
         description={referrals}
         link="/social"
       />
