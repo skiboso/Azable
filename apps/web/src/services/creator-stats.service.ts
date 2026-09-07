@@ -3,13 +3,13 @@
  *
  * Aggregates campaign metrics for a creator's dashboard including:
  *   1. Total funds raised across creator's campaigns (in stroops and USD).
- *   2. Total trees planted (derived from funded contributions and species impact math).
+ *   2. Total water sources funded (derived from funded contributions and source-type impact math).
  *   3. Total unique sponsors/contributors backing the creator's campaigns.
  *   4. Revenue share earned by the creator (net platform proceeds after fees).
  */
 
 import { CampaignRecord, demoCampaigns } from "./campaign-trending.service";
-import { calculateCo2Offset } from "@/lib/co2-impact";
+import { calculateWaterImpact } from "@/lib/water-impact";
 
 export interface CampaignCreatorSummary {
   id: string;
@@ -17,7 +17,7 @@ export interface CampaignCreatorSummary {
   totalRaised: string;
   status: string;
   sponsorsCount: number;
-  treesPlanted: number;
+  waterSourcesFunded: number;
   revenueEarned: string;
   deadline: number;
 }
@@ -28,10 +28,10 @@ export interface CreatorStats {
   totalRaisedStroops: string;
   /** Formatted USD string representing total volume raised. */
   totalRaisedUsd: string;
-  /** Total count of trees planted across all campaigns. */
-  totalTreesPlanted: number;
-  /** Estimated CO2 offset in kg from planted trees. */
-  totalCo2OffsetKg: number;
+  /** Total count of water sources funded across all campaigns. */
+  totalWaterSourcesFunded: number;
+  /** Estimated liters of clean water provided per year from funded sources. */
+  totalLitersPerYear: number;
   /** Distinct count of unique sponsors / contributors across campaigns. */
   totalSponsors: number;
   /** Creator's net revenue share earned in stroops (as string). */
@@ -53,7 +53,7 @@ export interface CreatorStats {
  */
 
 const STROOPS_PER_USD = 10_000_000;
-const COST_PER_TREE_USD = 10; // $10 per tree planted standard
+const COST_PER_WATER_SOURCE_USD = 10; // $10 per water source funded standard
 
 export function calculateCreatorStats(
   creatorAddress: string,
@@ -66,7 +66,7 @@ export function calculateCreatorStats(
 
   let totalRaisedStroopsNum = 0;
   let totalSponsorsSet = new Set<string>();
-  let totalTreesPlanted = 0;
+  let totalWaterSourcesFunded = 0;
   let successfulCount = 0;
   let activeCount = 0;
 
@@ -85,8 +85,8 @@ export function calculateCreatorStats(
     const sponsorsCount = c.uniqueContributors ?? sponsors.size;
 
     const raisedUsd = raisedNum / STROOPS_PER_USD;
-    const trees = Math.floor(raisedUsd / COST_PER_TREE_USD);
-    totalTreesPlanted += trees;
+    const sources = Math.floor(raisedUsd / COST_PER_WATER_SOURCE_USD);
+    totalWaterSourcesFunded += sources;
 
     const feeDeduction = (raisedNum * protocolFeeBps) / 10000;
     const revenueEarnedNum = Math.max(0, raisedNum - feeDeduction);
@@ -97,7 +97,7 @@ export function calculateCreatorStats(
       totalRaised: c.totalRaised,
       status: c.status,
       sponsorsCount,
-      treesPlanted: trees,
+      waterSourcesFunded: sources,
       revenueEarned: Math.round(revenueEarnedNum).toString(),
       deadline: c.deadline,
     };
@@ -108,7 +108,7 @@ export function calculateCreatorStats(
     totalRaisedStroopsNum * (1 - protocolFeeBps / 10000)
   );
 
-  const co2Data = calculateCo2Offset("oak", totalTreesPlanted);
+  const waterData = calculateWaterImpact("hand-pump-well", totalWaterSourcesFunded);
   const totalCampaigns = creatorCampaigns.length;
   const successRate =
     totalCampaigns > 0
@@ -122,8 +122,8 @@ export function calculateCreatorStats(
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     })}`,
-    totalTreesPlanted,
-    totalCo2OffsetKg: co2Data.co2PerYearKg,
+    totalWaterSourcesFunded,
+    totalLitersPerYear: waterData.litersPerYear,
     totalSponsors: totalSponsorsSet.size || (totalCampaigns > 0 ? 41 : 0),
     revenueShareEarnedStroops: netRevenueStroopsNum.toString(),
     revenueShareEarnedUsd: `$${(
