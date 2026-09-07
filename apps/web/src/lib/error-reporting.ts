@@ -11,7 +11,7 @@ function captureSentryError(error: Error, context: Record<string, unknown>): voi
   if (!process.env.NEXT_PUBLIC_SENTRY_DSN) return;
 
   Sentry.withScope((scope) => {
-    scope.setContext('fundable', context);
+    scope.setContext('azable', context);
     Sentry.captureException(error);
   });
 }
@@ -58,7 +58,7 @@ export function reportRuntimeError(error: Error, context: ErrorContext = {}): vo
   }
 
   // Dispatch sanitized payload to prevent sensitive data exposure in custom events
-  window.dispatchEvent(new CustomEvent('fundable:runtime-error', { detail: payload }));
+  window.dispatchEvent(new CustomEvent('azable:runtime-error', { detail: payload }));
 }
 
 /**
@@ -102,5 +102,5 @@ export function reportCaughtError(
     return;
   }
 
-  window.dispatchEvent(new CustomEvent('fundable:runtime-error', { detail: payload }));
+  window.dispatchEvent(new CustomEvent('azable:runtime-error', { detail: payload }));
 }

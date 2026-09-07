@@ -31,7 +31,7 @@ describe("error reporting", () => {
     const [captured] = captureException.mock.calls[0] as [Error];
     expect(captured.message).not.toContain(publicKey);
     expect(captured.message).toContain("GAAA...AAAAA");
-    expect(setContext).toHaveBeenCalledWith("fundable", {
+    expect(setContext).toHaveBeenCalledWith("azable", {
       boundaryName: "root-layout",
       componentStack: undefined,
     });
@@ -47,7 +47,7 @@ describe("error reporting", () => {
     expect(captureException).toHaveBeenCalledWith(
       expect.objectContaining({ message: "Request failed" })
     );
-    expect(setContext).toHaveBeenCalledWith("fundable", { route: "/api/streams" });
+    expect(setContext).toHaveBeenCalledWith("azable", { route: "/api/streams" });
   });
 
   it("does not call Sentry when no DSN is configured", () => {
