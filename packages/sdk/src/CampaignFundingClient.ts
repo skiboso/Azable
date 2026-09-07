@@ -79,7 +79,7 @@ export const CampaignFundingErrors: Record<number, { message: string }> = {
  *
  * ## Example
  * ```ts
- * import { CampaignFundingClient, signAndWait } from "@fundable/sdk";
+ * import { CampaignFundingClient, signAndWait } from "@azable/sdk";
  *
  * const client = new CampaignFundingClient({
  *   contractId: "C...",
@@ -120,7 +120,7 @@ export class CampaignFundingClient {
    *                               parameters and set the stream contract.
    * @param params.fee_collector - Address that receives protocol fees.
    * @param params.fee_rate      - Protocol fee in basis points (0–500).
-   * @throws {FundableStellarError} If initialisation fails.
+   * @throws {AzableStellarError} If initialisation fails.
    */
   public async initialize(params: {
     admin: AddressParam;
@@ -146,7 +146,7 @@ export class CampaignFundingClient {
    * Create a new funding campaign.
    *
    * @returns An `AssembledTransaction` that resolves to the new campaign ID.
-   * @throws {FundableStellarError} On validation failure.
+   * @throws {AzableStellarError} On validation failure.
    */
   public async createCampaign(params: {
     creator: AddressParam;
@@ -171,7 +171,7 @@ export class CampaignFundingClient {
   /**
    * Contribute tokens to an active campaign.
    *
-   * @throws {FundableStellarError} If the campaign is not active, amount is
+   * @throws {AzableStellarError} If the campaign is not active, amount is
    *   invalid, or the contribution would exceed the hard cap.
    */
   public async contribute(params: {
@@ -196,7 +196,7 @@ export class CampaignFundingClient {
    *
    * This call is permissionless — anyone may trigger expiry.
    *
-   * @throws {FundableStellarError} If the campaign is not active or the
+   * @throws {AzableStellarError} If the campaign is not active or the
    *   deadline has not yet been reached.
    */
   public async triggerExpiry(params: {
@@ -214,7 +214,7 @@ export class CampaignFundingClient {
    * Only the campaign creator may call this.  A protocol fee is deducted and
    * the net proceeds are sent to the creator.
    *
-   * @throws {FundableStellarError} If the campaign is not successful, already
+   * @throws {AzableStellarError} If the campaign is not successful, already
    *   claimed, or the caller is not the creator.
    */
   public async claimFunds(params: {
@@ -231,7 +231,7 @@ export class CampaignFundingClient {
    *
    * Each contributor calls this to recover their contribution.
    *
-   * @throws {FundableStellarError} If the campaign is not failed or the caller
+   * @throws {AzableStellarError} If the campaign is not failed or the caller
    *   has no contribution.
    */
   public async refund(params: {
@@ -275,7 +275,7 @@ export class CampaignFundingClient {
    * @param params.contributor  - Sponsor address to receive the reward stream.
    * @returns An `AssembledTransaction` that resolves to the new stream ID
    *   (assigned by the payment-stream contract).
-   * @throws {FundableStellarError} With a human-readable message for each
+   * @throws {AzableStellarError} With a human-readable message for each
    *   pre-condition failure.
    *
    * @example
@@ -330,7 +330,7 @@ export class CampaignFundingClient {
   /**
    * Fetch the full campaign record for a given ID.
    *
-   * @throws {FundableStellarError} If no campaign exists with that ID.
+   * @throws {AzableStellarError} If no campaign exists with that ID.
    */
   public async getCampaign(params: {
     campaign_id: bigint;
@@ -413,7 +413,7 @@ export class CampaignFundingClient {
    * Update the protocol fee rate.
    *
    * @param params.new_fee_rate - New rate in basis points (0–500).
-   * @throws {FundableStellarError} If caller is not admin or rate exceeds 500.
+   * @throws {AzableStellarError} If caller is not admin or rate exceeds 500.
    */
   public async setFeeRate(params: {
     new_fee_rate: number;
@@ -427,7 +427,7 @@ export class CampaignFundingClient {
   /**
    * Update the protocol fee collector address.
    *
-   * @throws {FundableStellarError} If caller is not admin.
+   * @throws {AzableStellarError} If caller is not admin.
    */
   public async setFeeCollector(params: {
     new_fee_collector: AddressParam;
@@ -449,7 +449,7 @@ export class CampaignFundingClient {
    *
    * @param params.stream_contract - Address of the deployed payment-stream
    *   contract.
-   * @throws {FundableStellarError} If caller is not admin.
+   * @throws {AzableStellarError} If caller is not admin.
    */
   public async setStreamContract(params: {
     stream_contract: AddressParam;

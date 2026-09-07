@@ -1,5 +1,5 @@
 /**
- * Error handling utilities for Fundable Stellar smart contracts.
+ * Error handling utilities for Azable Stellar smart contracts.
  *
  * Provides utilities to parse Soroban simulation errors and transaction result XDR
  * to deliver human-readable error messages to developers.
@@ -396,7 +396,7 @@ export function parseContractError(error: unknown, operationContext?: string): P
  * Custom error class for SDK operations
  * Provides structured error information to calling code
  */
-export class FundableStellarError extends Error {
+export class AzableStellarError extends Error {
   public readonly code?: number;
   public readonly type: string;
   public readonly details?: string;
@@ -405,7 +405,7 @@ export class FundableStellarError extends Error {
 
   constructor(parsed: ParsedContractError) {
     super(parsed.message);
-    this.name = "FundableStellarError";
+    this.name = "AzableStellarError";
     this.code = parsed.code;
     this.type = parsed.type;
     this.details = parsed.details;
@@ -413,7 +413,7 @@ export class FundableStellarError extends Error {
     this.operation = parsed.operation;
 
     // Set prototype for instanceof checks
-    Object.setPrototypeOf(this, FundableStellarError.prototype);
+    Object.setPrototypeOf(this, AzableStellarError.prototype);
   }
 
   /**
@@ -459,7 +459,7 @@ export class FundableStellarError extends Error {
  * Wrapper function to safely execute contract operations and handle errors
  * @param operation Async function that executes a contract operation
  * @param operationName Name of the operation for error context
- * @returns Result of the operation or throws FundableStellarError
+ * @returns Result of the operation or throws AzableStellarError
  */
 export async function executeWithErrorHandling<T>(
   operation: () => Promise<T>,
@@ -469,7 +469,7 @@ export async function executeWithErrorHandling<T>(
     return await operation();
   } catch (error) {
     const parsed = parseContractError(error, operationName);
-    const fundableError = new FundableStellarError(parsed);
-    throw fundableError;
+    const azableError = new AzableStellarError(parsed);
+    throw azableError;
   }
 }

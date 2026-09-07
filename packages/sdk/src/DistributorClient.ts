@@ -50,7 +50,7 @@ export class DistributorClient {
   /**
    * Distribute tokens equally among a list of recipients.
    * @param params Parameters including sender, token, total amount, and recipients.
-   * @throws {FundableStellarError} If distribution fails with a human-readable error message
+   * @throws {AzableStellarError} If distribution fails with a human-readable error message
    */
   public async distributeEqual(params: {
     sender: AddressParam;
@@ -73,7 +73,7 @@ export class DistributorClient {
   /**
    * Distribute tokens among a list of recipients with specific amounts for each.
    * @param params Parameters including sender, token, recipients, and amounts.
-   * @throws {FundableStellarError} If distribution fails with a human-readable error message
+   * @throws {AzableStellarError} If distribution fails with a human-readable error message
    */
   public async distributeWeighted(params: {
     sender: AddressParam;
@@ -95,7 +95,7 @@ export class DistributorClient {
 
   /**
    * Get the administrator address for the contract.
-   * @throws {FundableStellarError} If fetch fails with a human-readable error message
+   * @throws {AzableStellarError} If fetch fails with a human-readable error message
    */
   public async getAdmin(): Promise<AssembledTransaction<string | undefined>> {
     return executeWithErrorHandling(
@@ -107,7 +107,7 @@ export class DistributorClient {
   /**
    * Get stats for a specific user.
    * @param user The address of the user.
-   * @throws {FundableStellarError} If fetch fails with a human-readable error message
+   * @throws {AzableStellarError} If fetch fails with a human-readable error message
    */
   public async getUserStats(
     user: AddressParam
@@ -124,7 +124,7 @@ export class DistributorClient {
   /**
    * Get stats for a specific token.
    * @param token The address of the token contract.
-   * @throws {FundableStellarError} If fetch fails with a human-readable error message
+   * @throws {AzableStellarError} If fetch fails with a human-readable error message
    */
   public async getTokenStats(
     token: AddressParam
@@ -140,7 +140,7 @@ export class DistributorClient {
 
   /**
    * Get the total number of distributions made through the contract.
-   * @throws {FundableStellarError} If fetch fails with a human-readable error message
+   * @throws {AzableStellarError} If fetch fails with a human-readable error message
    */
   public async getTotalDistributions(): Promise<AssembledTransaction<bigint>> {
     return executeWithErrorHandling(
@@ -151,7 +151,7 @@ export class DistributorClient {
 
   /**
    * Get the total amount distributed through the contract.
-   * @throws {FundableStellarError} If fetch fails with a human-readable error message
+   * @throws {AzableStellarError} If fetch fails with a human-readable error message
    */
   public async getTotalDistributedAmount(): Promise<
     AssembledTransaction<bigint>
@@ -166,7 +166,7 @@ export class DistributorClient {
    * Get distribution history with pagination.
    * @param startId The ID to start from, or an object containing startId and limit.
    * @param limit The maximum number of records to return.
-   * @throws {FundableStellarError} If fetch fails with a human-readable error message
+   * @throws {AzableStellarError} If fetch fails with a human-readable error message
    */
   public async getDistributionHistory(
     startId: bigint,
@@ -198,7 +198,7 @@ export class DistributorClient {
 
   /**
    * Initialize the contract.
-   * @throws {FundableStellarError} If initialization fails with a human-readable error message
+   * @throws {AzableStellarError} If initialization fails with a human-readable error message
    */
   public async initialize(params: {
     admin: AddressParam;
@@ -220,7 +220,7 @@ export class DistributorClient {
    * Set the protocol fee. Only the administrator can call this.
    * @param admin The administrator address, or an object containing admin and newFeePercent.
    * @param newFeePercent The new fee percentage.
-   * @throws {FundableStellarError} If operation fails with a human-readable error message
+   * @throws {AzableStellarError} If operation fails with a human-readable error message
    */
   public async setProtocolFee(
     admin: string,

@@ -57,7 +57,7 @@ export class PaymentStreamClient {
    * Create a new payment stream.
    * @param params Stream parameters including sender, recipient, token, and time range.
    * @returns An AssembledTransaction that returns the new stream ID.
-   * @throws {FundableStellarError} If stream creation fails with a human-readable error message
+   * @throws {AzableStellarError} If stream creation fails with a human-readable error message
    */
   public async createStream(params: {
     sender: AddressParam;
@@ -87,7 +87,7 @@ export class PaymentStreamClient {
    * Deposit tokens to an existing stream.
    * @param streamId The ID of the stream to deposit into, or an object containing streamId and amount.
    * @param amount The amount of tokens to deposit.
-   * @throws {FundableStellarError} If deposit fails with a human-readable error message
+   * @throws {AzableStellarError} If deposit fails with a human-readable error message
    */
   public async deposit(
     streamId: bigint,
@@ -122,7 +122,7 @@ export class PaymentStreamClient {
    * Withdraw tokens from a stream.
    * @param streamId The ID of the stream to withdraw from, or an object containing streamId and amount.
    * @param amount The amount of tokens to withdraw.
-   * @throws {FundableStellarError} If withdrawal fails with a human-readable error message
+   * @throws {AzableStellarError} If withdrawal fails with a human-readable error message
    */
   public async withdraw(
     streamId: bigint,
@@ -156,7 +156,7 @@ export class PaymentStreamClient {
   /**
    * Withdraw the maximum available amount from a stream.
    * @param streamId The ID of the stream to withdraw from, or an object containing streamId.
-   * @throws {FundableStellarError} If withdrawal fails with a human-readable error message
+   * @throws {AzableStellarError} If withdrawal fails with a human-readable error message
    */
   public async withdrawMax(streamId: bigint): Promise<AssembledTransaction<null>>;
   public async withdrawMax(params: { streamId: bigint }): Promise<AssembledTransaction<null>>;
@@ -174,7 +174,7 @@ export class PaymentStreamClient {
   /**
    * Pause a stream. Only the sender can pause a stream.
    * @param streamId The ID of the stream to pause, or an object containing streamId.
-   * @throws {FundableStellarError} If pause fails with a human-readable error message
+   * @throws {AzableStellarError} If pause fails with a human-readable error message
    */
   public async pauseStream(streamId: bigint): Promise<AssembledTransaction<null>>;
   public async pauseStream(params: { streamId: bigint }): Promise<AssembledTransaction<null>>;
@@ -192,7 +192,7 @@ export class PaymentStreamClient {
   /**
    * Resume a paused stream. Only the sender can resume a stream.
    * @param streamId The ID of the stream to resume, or an object containing streamId.
-   * @throws {FundableStellarError} If resume fails with a human-readable error message
+   * @throws {AzableStellarError} If resume fails with a human-readable error message
    */
   public async resumeStream(streamId: bigint): Promise<AssembledTransaction<null>>;
   public async resumeStream(params: { streamId: bigint }): Promise<AssembledTransaction<null>>;
@@ -210,7 +210,7 @@ export class PaymentStreamClient {
   /**
    * Cancel a stream.
    * @param streamId The ID of the stream to cancel, or an object containing streamId.
-   * @throws {FundableStellarError} If cancellation fails with a human-readable error message
+   * @throws {AzableStellarError} If cancellation fails with a human-readable error message
    */
   public async cancelStream(streamId: bigint): Promise<AssembledTransaction<null>>;
   public async cancelStream(params: { streamId: bigint }): Promise<AssembledTransaction<null>>;
@@ -228,7 +228,7 @@ export class PaymentStreamClient {
   /**
    * Get stream details by ID.
    * @param streamId The ID of the stream, or an object containing streamId.
-   * @throws {FundableStellarError} If fetch fails with a human-readable error message
+   * @throws {AzableStellarError} If fetch fails with a human-readable error message
    */
   public async getStream(streamId: bigint): Promise<AssembledTransaction<Stream>>;
   public async getStream(params: { streamId: bigint }): Promise<AssembledTransaction<Stream>>;
@@ -246,7 +246,7 @@ export class PaymentStreamClient {
   /**
    * Calculate the current withdrawable amount for a stream.
    * @param streamId The ID of the stream, or an object containing streamId.
-   * @throws {FundableStellarError} If calculation fails with a human-readable error message
+   * @throws {AzableStellarError} If calculation fails with a human-readable error message
    */
   public async getWithdrawableAmount(streamId: bigint): Promise<AssembledTransaction<bigint>>;
   public async getWithdrawableAmount(params: { streamId: bigint }): Promise<AssembledTransaction<bigint>>;
@@ -265,7 +265,7 @@ export class PaymentStreamClient {
    * Set a delegate for withdrawal rights on a stream.
    * @param streamId The ID of the stream, or an object containing streamId and delegate.
    * @param delegate The address of the delegate.
-   * @throws {FundableStellarError} If delegation fails with a human-readable error message
+   * @throws {AzableStellarError} If delegation fails with a human-readable error message
    */
   public async setDelegate(
     streamId: bigint,
@@ -299,7 +299,7 @@ export class PaymentStreamClient {
   /**
    * Revoke the delegate for a stream.
    * @param streamId The ID of the stream, or an object containing streamId.
-   * @throws {FundableStellarError} If revocation fails with a human-readable error message
+   * @throws {AzableStellarError} If revocation fails with a human-readable error message
    */
   public async revokeDelegate(streamId: bigint): Promise<AssembledTransaction<null>>;
   public async revokeDelegate(params: { streamId: bigint }): Promise<AssembledTransaction<null>>;
@@ -317,7 +317,7 @@ export class PaymentStreamClient {
   /**
    * Get the delegate for a stream.
    * @param streamId The ID of the stream, or an object containing streamId.
-   * @throws {FundableStellarError} If fetch fails with a human-readable error message
+   * @throws {AzableStellarError} If fetch fails with a human-readable error message
    */
   public async getDelegate(streamId: bigint): Promise<AssembledTransaction<string | undefined>>;
   public async getDelegate(params: { streamId: bigint }): Promise<AssembledTransaction<string | undefined>>;
@@ -338,7 +338,7 @@ export class PaymentStreamClient {
   /**
    * Get stream-specific metrics.
    * @param streamId The ID of the stream, or an object containing streamId.
-   * @throws {FundableStellarError} If fetch fails with a human-readable error message
+   * @throws {AzableStellarError} If fetch fails with a human-readable error message
    */
   public async getStreamMetrics(streamId: bigint): Promise<AssembledTransaction<StreamMetrics>>;
   public async getStreamMetrics(params: { streamId: bigint }): Promise<AssembledTransaction<StreamMetrics>>;
@@ -355,7 +355,7 @@ export class PaymentStreamClient {
 
   /**
    * Get protocol-wide metrics.
-   * @throws {FundableStellarError} If fetch fails with a human-readable error message
+   * @throws {AzableStellarError} If fetch fails with a human-readable error message
    */
   public async getProtocolMetrics(): Promise<
     AssembledTransaction<ProtocolMetrics>
@@ -368,7 +368,7 @@ export class PaymentStreamClient {
 
   /**
    * Get the current protocol fee collector address.
-   * @throws {FundableStellarError} If fetch fails with a human-readable error message
+   * @throws {AzableStellarError} If fetch fails with a human-readable error message
    */
   public async getFeeCollector(): Promise<AssembledTransaction<string>> {
     return executeWithErrorHandling(
@@ -379,7 +379,7 @@ export class PaymentStreamClient {
 
   /**
    * Get the current protocol fee rate.
-   * @throws {FundableStellarError} If fetch fails with a human-readable error message
+   * @throws {AzableStellarError} If fetch fails with a human-readable error message
    */
   public async getProtocolFeeRate(): Promise<AssembledTransaction<number>> {
     return executeWithErrorHandling(
@@ -390,7 +390,7 @@ export class PaymentStreamClient {
 
   /**
    * Initialize the contract.
-   * @throws {FundableStellarError} If initialization fails with a human-readable error message
+   * @throws {AzableStellarError} If initialization fails with a human-readable error message
    */
   public async initialize(params: {
     admin: AddressParam;
