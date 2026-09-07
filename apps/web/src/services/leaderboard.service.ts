@@ -1,5 +1,5 @@
 /**
- * Monthly leaderboard for top sponsors and planters (issue #643).
+ * Monthly leaderboard for top sponsors and water technicians (issue #643).
  *
  * Points are recorded per address, bucketed by calendar month (UTC), following
  * the same store-injectable, localStorage-backed pattern as `social.service.ts`.
@@ -10,14 +10,14 @@
  *
  * Scoring is a placeholder pending real activity data:
  *  - Sponsors are scored by total stroops contributed this month.
- *  - Planters are scored by trees completed this month, mirroring the
- *    `trees_completed` field on the on-chain `PlanterMetrics` type
- *    (contracts/planter) — there is no SDK binding for that contract yet,
- *    so `recordPlanterCompletion` is called from application code in the
+ *  - Technicians are scored by wells completed this month, mirroring the
+ *    `wells_completed` field on the on-chain `WaterTechnicianMetrics` type
+ *    (contracts/water-technician) — there is no SDK binding for that contract yet,
+ *    so `recordTechnicianCompletion` is called from application code in the
  *    meantime rather than reading the chain directly.
  */
 
-export type LeaderboardRole = "sponsor" | "planter";
+export type LeaderboardRole = "sponsor" | "technician";
 
 export type LeaderboardPoint = {
   address: string;
@@ -43,8 +43,8 @@ export interface LeaderboardStore {
   setItem(key: string, value: string): void;
 }
 
-const SPONSOR_POINTS_KEY = "fundable:leaderboard-sponsor-points";
-const PLANTER_POINTS_KEY = "fundable:leaderboard-planter-points";
+const SPONSOR_POINTS_KEY = "azable:leaderboard-sponsor-points";
+const TECHNICIAN_POINTS_KEY = "azable:leaderboard-technician-points";
 
 const browserStore: LeaderboardStore = {
   getItem: (key) => (typeof window === "undefined" ? null : window.localStorage.getItem(key)),
@@ -69,7 +69,7 @@ export function monthKey(date = new Date()): string {
 }
 
 function keyFor(role: LeaderboardRole): string {
-  return role === "sponsor" ? SPONSOR_POINTS_KEY : PLANTER_POINTS_KEY;
+  return role === "sponsor" | "technician"? SPONSOR_POINTS_KEY : TECHNICIAN_POINTS_KEY;
 }
 
 function read(store: LeaderboardStore, key: string): LeaderboardPoint[] {
@@ -114,14 +114,14 @@ export function recordSponsorContribution(
   return recordPoints("sponsor", address, amountStroops, store, now);
 }
 
-/** Record a planter completing one or more trees toward this month's leaderboard. */
-export function recordPlanterCompletion(
+/** Record a water technician completing one or more wells toward this month's leaderboard. */
+export function recordTechnicianCompletion(
   address: string,
-  treesCompleted = 1,
+  wellsCompleted = 1,
   store: LeaderboardStore = browserStore,
   now = new Date()
 ): LeaderboardPoint | null {
-  return recordPoints("planter", address, treesCompleted, store, now);
+  return recordPoints("technician", address, wellsCompleted, store, now);
 }
 
 /** Ranked leaderboard for a role, for the given month (defaults to the current month). */
