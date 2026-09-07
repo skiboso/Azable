@@ -111,7 +111,7 @@ function LeaderboardTable({ entries, role }: { entries: LeaderboardEntry[]; role
   if (entries.length === 0) {
     return (
       <p className="px-4 py-8 text-center text-sm text-muted-foreground">
-        No {role === "sponsor" ? "sponsorships" : "completed trees"} recorded yet this month.
+        No {role === "sponsor" ? "sponsorships" : "completed wells"} recorded yet this month.
       </p>
     );
   }

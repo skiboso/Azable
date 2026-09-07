@@ -69,7 +69,7 @@ export function monthKey(date = new Date()): string {
 }
 
 function keyFor(role: LeaderboardRole): string {
-  return role === "sponsor" | "technician"? SPONSOR_POINTS_KEY : TECHNICIAN_POINTS_KEY;
+  return role === "sponsor" ? SPONSOR_POINTS_KEY : TECHNICIAN_POINTS_KEY;
 }
 
 function read(store: LeaderboardStore, key: string): LeaderboardPoint[] {
