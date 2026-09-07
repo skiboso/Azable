@@ -2,7 +2,7 @@
 
 ## Overview
 
-The `PaymentStreamContract` is the main Soroban contract for Fundable's streaming engine. It manages escrowed token payments, vesting schedules, optional cliff periods, protocol fee accounting, sender/delegate controls, emergency pauses, and admin-managed dispute resolution.
+The `PaymentStreamContract` is the main Soroban contract for Azable's streaming engine. It manages escrowed token payments, vesting schedules, optional cliff periods, protocol fee accounting, sender/delegate controls, emergency pauses, and admin-managed dispute resolution.
 
 This document reflects the live contract interface and is intended as an ABI-style reference, including data shapes, function signatures, return types, and event payloads.
 

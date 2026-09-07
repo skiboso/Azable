@@ -1,6 +1,6 @@
 # waitForTransaction Guide
 
-This guide explains how to use the transaction utilities provided by the Fundable SDK to handle the lifecycle of Stellar transactions, from submission to on-chain confirmation.
+This guide explains how to use the transaction utilities provided by the Azable SDK to handle the lifecycle of Stellar transactions, from submission to on-chain confirmation.
 
 ## Overview
 
@@ -18,7 +18,7 @@ Use this method when you have already called `signAndSend()` on an `AssembledTra
 ### Usage Example
 
 ```typescript
-import { PaymentStreamClient, waitForTransaction } from "@fundable/sdk";
+import { PaymentStreamClient, waitForTransaction } from "@azable/sdk";
 
 const client = new PaymentStreamClient(config);
 const tx = await client.createStream(params);
@@ -53,7 +53,7 @@ This is the recommended way to handle most transactions. it combines signing, se
 ### Usage Example
 
 ```typescript
-import { PaymentStreamClient, signAndWait } from "@fundable/sdk";
+import { PaymentStreamClient, signAndWait } from "@azable/sdk";
 
 const client = new PaymentStreamClient(config);
 const tx = await client.createStream(params);

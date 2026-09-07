@@ -1,6 +1,6 @@
 # Webhook Delivery System
 
-The Fundable Webhook Delivery System enables real-time notification of events on the platform (e.g., when a stream status is updated, milestone funds are released, or a campaign reaches a funding milestone) directly to external HTTP endpoints.
+The Azable Webhook Delivery System enables real-time notification of events on the platform (e.g., when a stream status is updated, milestone funds are released, or a campaign reaches a funding milestone) directly to external HTTP endpoints.
 
 ## 🚀 Subscription Management API
 
@@ -72,7 +72,7 @@ Every webhook payload delivered includes the following headers to enable authent
 
 ### Verifying Signatures (Node.js Example)
 
-To verify the payload was sent by Fundable and was not tampered with, sign the string: `<X-Webhook-Timestamp>.<stringified_json_body>` using the shared subscription `secret`:
+To verify the payload was sent by Azable and was not tampered with, sign the string: `<X-Webhook-Timestamp>.<stringified_json_body>` using the shared subscription `secret`:
 
 ```javascript
 import { createHmac } from 'crypto';
