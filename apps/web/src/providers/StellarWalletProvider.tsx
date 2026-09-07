@@ -101,7 +101,7 @@ function loadPersistedSession(): {
     return { address: null, walletId: null, network: null };
   }
   const savedAddress = safeGetItem("stellar_wallet_address");
-  const savedWalletId = safeGetItem("@fundable/web:selected_wallet");
+  const savedWalletId = safeGetItem("@azable/web:selected_wallet");
   const savedNetwork = safeGetItem("stellar_wallet_network") as WalletNetwork | null;
 
   if (
@@ -180,7 +180,7 @@ export const StellarWalletProvider = ({
       if (savedNetwork !== network) {
         // The user previously connected on a different network — do not restore.
         safeRemoveItem("stellar_wallet_address");
-        safeRemoveItem("@fundable/web:selected_wallet");
+        safeRemoveItem("@azable/web:selected_wallet");
         safeRemoveItem("stellar_wallet_network");
         setAddress(null);
         setSelectedWalletId(null);
@@ -212,7 +212,7 @@ export const StellarWalletProvider = ({
           if (cancelled) return;
           // Wallet is locked, removed, or rejected the request — clear stale state.
           safeRemoveItem("stellar_wallet_address");
-          safeRemoveItem("@fundable/web:selected_wallet");
+          safeRemoveItem("@azable/web:selected_wallet");
           safeRemoveItem("stellar_wallet_network");
           setAddress(null);
           setSelectedWalletId(null);
@@ -256,7 +256,7 @@ export const StellarWalletProvider = ({
     setAddress(null);
     setSelectedWalletId(null);
     safeRemoveItem("stellar_wallet_address");
-    safeRemoveItem("@fundable/web:selected_wallet");
+    safeRemoveItem("@azable/web:selected_wallet");
     safeRemoveItem("stellar_wallet_network");
     setConnectionStatus("idle");
   }, [kit]);
@@ -376,7 +376,7 @@ export const StellarWalletProvider = ({
       setSelectedWalletId(walletId);
       setConnectionStatus("connected");
       safeSetItem("stellar_wallet_address", resolvedAddress);
-      safeSetItem("@fundable/web:selected_wallet", walletId);
+      safeSetItem("@azable/web:selected_wallet", walletId);
       safeSetItem("stellar_wallet_network", network);
 
       // Sync with backend on new connection
