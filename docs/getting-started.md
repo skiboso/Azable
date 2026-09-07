@@ -28,7 +28,7 @@ Follow these steps to get the project up and running on your local machine.
 First, clone the `stellar_client` repository to your local machine:
 
 ```bash
-git clone git@github.com:Fundable-Protocol/stellar_client.git
+git clone git@github.com:anitajordan22244-afk/mitros.git
 cd stellar_client
 ```
 

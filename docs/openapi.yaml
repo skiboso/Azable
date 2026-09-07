@@ -1,9 +1,9 @@
 openapi: 3.0.3
 info:
-  title: Fundable Stellar API
+  title: Azable Stellar API
   version: 0.1.0
   description: |
-    HTTP API exposed by the Fundable Stellar Next.js application.
+    HTTP API exposed by the Azable Stellar Next.js application.
 
     The API includes contribution certificates, Soroban compilation, public
     stream-map queries, milestone-photo verification, S3 upload presigning,
@@ -20,13 +20,13 @@ info:
     url: https://opensource.org/license/mit/
 security: []
 servers:
-  - url: https://api.fundable.network
-    description: Fundable API server
+  - url: https://api.azable.network
+    description: Azable API server
   - url: https://{host}
     description: Deployed application
     variables:
       host:
-        default: fundable.network
+        default: azable.network
         description: Application hostname
 
 tags:
@@ -660,7 +660,7 @@ paths:
             schema:
               $ref: '#/components/schemas/CreateWebhookSubscriptionRequest'
             example:
-              url: https://example.com/webhooks/fundable
+              url: https://example.com/webhooks/azable
               events: [stream.status_updated, milestone.funds_released]
               secret: replace-with-a-secret
       responses:

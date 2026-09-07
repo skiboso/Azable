@@ -1,6 +1,6 @@
 # Tax Document Generation — issue #792
 
-The Fundable Protocol auto-generates tax documents for campaign creators based
+The Azable auto-generates tax documents for campaign creators based
 on the funding they received in a given tax year. Creators receive documents
 matching their tax jurisdiction:
 
@@ -82,7 +82,7 @@ filename="tax-us-1099-nec-2025-GAAA...pdf"`.
 
 ## SDK support
 
-`@fundable/sdk` exposes the same logic in the `tax` module for clients that
+`@azable/sdk` exposes the same logic in the `tax` module for clients that
 compile their own reports:
 
 - `computeAnnualEarnings(transactions, taxYear)` — sum + count within the year
