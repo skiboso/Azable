@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getEligibleNFTTier, CampaignProgress, NFTTier } from '@fundable/sdk';
+import { getEligibleNFTTier, CampaignProgress, NFTTier } from '@azable/sdk';
 
 export function useMilestoneNFT(campaign: CampaignProgress | null) {
   const [eligibleTier, setEligibleTier] = useState<NFTTier | null>(null);
