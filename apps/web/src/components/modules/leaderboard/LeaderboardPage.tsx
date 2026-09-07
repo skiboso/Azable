@@ -16,7 +16,7 @@ type LeaderboardTab = LeaderboardRole | "campaign";
 
 const TABS: { role: LeaderboardTab; label: string }[] = [
   { role: "sponsor", label: "Top Sponsors" },
-  { role: "planter", label: "Top Planters" },
+  { role: "technician", label: "Top Technicians" },
   { role: "campaign", label: "Top Campaigns" },
 ];
 
@@ -133,7 +133,7 @@ function LeaderboardTable({ entries, role }: { entries: LeaderboardEntry[]; role
           </div>
           <div className="flex items-center gap-3">
             <span className="text-sm text-muted-foreground">
-              {entry.points.toLocaleString()} {role === "sponsor" ? "stroops" : "trees"}
+              {entry.points.toLocaleString()} {role === "sponsor" ? "stroops" : "wells"}
             </span>
             {entry.bonus && <Badge variant={bonusVariant(entry.bonus.type)}>{entry.bonus.label}</Badge>}
           </div>
@@ -160,7 +160,7 @@ export function LeaderboardPage() {
           Monthly Leaderboard
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          {formatMonthLabel(currentMonth)} · top sponsors and planters earn a monthly bonus. Campaigns are ranked
+          {formatMonthLabel(currentMonth)} · top sponsors and water technicians earn a monthly bonus. Campaigns are ranked
           by total trees planted.
         </p>
       </div>
