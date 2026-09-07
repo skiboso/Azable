@@ -1,5 +1,5 @@
 /**
- * Event parsing utilities for Fundable Stellar smart contract events.
+ * Event parsing utilities for Azable Stellar smart contract events.
  *
  * These helpers make it easier for dApp developers to consume
  * contract event streams with type-safe event payloads.

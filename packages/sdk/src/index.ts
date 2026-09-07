@@ -1,7 +1,7 @@
 /**
- * Fundable Stellar SDK
+ * Azable Stellar SDK
  *
- * TypeScript SDK for interacting with Fundable Protocol smart contracts on Stellar.
+ * TypeScript SDK for interacting with Azable smart contracts on Stellar.
  */
 
 export const VERSION = "0.2.0";
@@ -22,16 +22,16 @@ export {
   DistributionHistory,
 } from "./generated/distributor/src/index";
 
-// Re-export generated types for Planter
+// Re-export generated types for Water Technician
 export {
-  PlanterInfo,
+  WaterTechnicianInfo,
   ReferralInfo,
-} from "./generated/planter/src/index";
+} from "./generated/water-technician/src/index";
 
 // Export high-level clients
 export * from "./PaymentStreamClient";
 export * from "./DistributorClient";
-export * from "./PlanterClient";
+export * from "./WaterTechnicianClient";
 
 // Export deployment module
 export * from "./deployer";
@@ -55,7 +55,7 @@ export * from "./tax";
 export {
   parseContractError,
   executeWithErrorHandling,
-  FundableStellarError,
+  AzableStellarError,
   CONTRACT_ERRORS,
   type ParsedContractError,
 } from "./utils/errors";

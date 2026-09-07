@@ -2,7 +2,7 @@
  * SorobanEventParser
  *
  * A class-based, type-safe utility for parsing raw Soroban contract events
- * emitted by Fundable smart contracts. Designed for dApp developers who need
+ * emitted by Azable smart contracts. Designed for dApp developers who need
  * to react to on-chain actions in a structured, predictable way.
  *
  * Supports both PaymentStream and Distributor contract event streams.

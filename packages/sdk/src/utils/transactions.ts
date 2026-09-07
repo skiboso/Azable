@@ -1,5 +1,5 @@
 /**
- * Transaction utilities for Fundable Stellar smart contracts.
+ * Transaction utilities for Azable Stellar smart contracts.
  *
  * Provides convenience methods for waiting on AssembledTransaction confirmations
  * and handling transaction lifecycle events.
@@ -10,7 +10,7 @@ import {
   SorobanRpc,
   AnalogSignaturePayload,
 } from "@stellar/stellar-sdk";
-import { parseContractError, FundableStellarError } from "./errors";
+import { parseContractError, AzableStellarError } from "./errors";
 
 /**
  * Configuration options for waiting on a transaction
@@ -63,7 +63,7 @@ export interface TransactionWaitResult<T = unknown> {
  *
  * @example
  * ```typescript
- * import { PaymentStreamClient, waitForTransaction } from '@fundable/sdk';
+ * import { PaymentStreamClient, waitForTransaction } from '@azable/sdk';
  *
  * const client = new PaymentStreamClient(options);
  * const tx = await client.createStream(params);
@@ -107,7 +107,7 @@ export async function waitForTransaction<T = unknown>(
         `Transaction confirmation timeout after ${timeout}ms. Hash: ${tx.hash}`,
         "Transaction confirmation"
       );
-      throw new FundableStellarError(timeoutError);
+      throw new AzableStellarError(timeoutError);
     }
 
     try {
@@ -137,7 +137,7 @@ export async function waitForTransaction<T = unknown>(
           "Transaction confirmation"
         );
         
-        throw new FundableStellarError(error);
+        throw new AzableStellarError(error);
       }
 
       // Status is PENDING, continue polling
@@ -166,7 +166,7 @@ export async function waitForTransaction<T = unknown>(
         `Error polling transaction status: ${rpcError instanceof Error ? rpcError.message : String(rpcError)}`,
         "Transaction polling"
       );
-      throw new FundableStellarError(parsedError);
+      throw new AzableStellarError(parsedError);
     }
   }
 }
@@ -186,7 +186,7 @@ export async function waitForTransaction<T = unknown>(
  *
  * @example
  * ```typescript
- * import { PaymentStreamClient, signAndWait } from '@fundable/sdk';
+ * import { PaymentStreamClient, signAndWait } from '@azable/sdk';
  *
  * const client = new PaymentStreamClient(options);
  * const tx = await client.createStream(params);
