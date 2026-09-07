@@ -170,7 +170,7 @@ export const typeDefs = /* GraphQL */`
     toTimestamp: Int
   }
 
-  """Sort options for the Planter job board."""
+  """Sort options for the Technician job board."""
   enum JobSort {
     """Sort by highest pay rate first."""
     PAY_HIGHEST
@@ -180,7 +180,7 @@ export const typeDefs = /* GraphQL */`
     ALTITUDE_LOWEST
   }
 
-  """A job posting on the Planter job board."""
+  """A job posting on the Technician job board."""
   type Job {
     """Unique job identifier."""
     id: ID!
@@ -211,7 +211,7 @@ export const typeDefs = /* GraphQL */`
     goalAmount
     raisedAmount
     sponsorCount
-    treeCount
+    wellCount
   }
 
   enum SortDirection {
@@ -294,7 +294,7 @@ export const typeDefs = /* GraphQL */`
     goalAmount: String!
     raisedAmount: String!
     sponsorCount: Int!
-    treeCount: Int!
+    wellCount: Int!
     createdAt: Int!
     updatedAt: Int!
     statusChangedAt: Int!
@@ -313,16 +313,16 @@ export const typeDefs = /* GraphQL */`
     statusHistory: [CampaignStatusHistory!]!
   }
 
-  input TreeFilter {
-    planter: String
+  input WaterProjectFilter {
+    technician: String
     region: String
     status: StreamStatus
     search: String
   }
 
-  type Tree {
+  type WaterProject {
     id: ID!
-    planter: String!
+    technician: String!
     region: String
     category: String
     status: StreamStatus!
@@ -331,10 +331,10 @@ export const typeDefs = /* GraphQL */`
     createdAt: Int!
   }
 
-  type Planter {
+  type WaterTechnician {
     address: ID!
     region: String
-    treeCount: Int!
+    wellCount: Int!
     sponsoredAmount: String!
   }
 
@@ -485,16 +485,16 @@ export const typeDefs = /* GraphQL */`
 
   type Query {
     """
-    Search individual sponsored trees derived from indexed payment streams.
+    Search individual sponsored water projects derived from indexed payment streams.
     """
     campaigns(filter: CampaignFilter, sort: CampaignSort, pagination: PaginationInput, network: Network): [Campaign!]!
 
-    trees(filter: TreeFilter, pagination: PaginationInput, network: Network): [Tree!]!
+    waterProjects(filter: WaterProjectFilter, pagination: PaginationInput, network: Network): [WaterProject!]!
 
     """
-    List planters with aggregate sponsorship counts and volume.
+    List water technicians with aggregate sponsorship counts and volume.
     """
-    planters(region: String, pagination: PaginationInput, network: Network): [Planter!]!
+    waterTechnicians(region: String, pagination: PaginationInput, network: Network): [WaterTechnician!]!
 
     """
     List contract/token aggregates used by the payment-stream protocol.
@@ -603,10 +603,24 @@ export const typeDefs = /* GraphQL */`
     endTime: Int!
   }
 
+  input UpdateCampaignInput {
+    name: String
+    description: String
+    goalAmount: String
+    deadline: Int
+  }
+
   type Mutation {
     """
     Clones an indexed stream so a creator can start from an existing campaign.
     """
     cloneCampaign(id: ID!, network: Network): CloneResult
+
+    """
+    Updates a campaign's editable fields before it launches. Was previously
+    implemented in resolvers.ts but missing from this schema, making it
+    unreachable via GraphQL.
+    """
+    updateCampaign(id: ID!, input: UpdateCampaignInput!, network: Network): Campaign
   }
 `;
