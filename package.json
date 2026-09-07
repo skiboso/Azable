@@ -15,10 +15,7 @@
     "test:sdk": "pnpm --filter @azable/sdk test",
     "test:sdk:coverage": "pnpm --filter @azable/sdk test:coverage",
     "test:sdk:integration": "pnpm --filter @azable/sdk test:integration",
-    "lint": "pnpm --filter @azable/web lint",
-    "changeset": "changeset",
-    "changeset:version": "changeset version",
-    "changeset:publish": "pnpm --filter @azable/sdk build && changeset publish"
+    "lint": "pnpm --filter @azable/web lint"
   },
   "keywords": [
     "stellar",
@@ -29,9 +26,6 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/anitajordan22244-afk/mitros.git"
-  },
-  "devDependencies": {
-    "@changesets/cli": "^2.31.0"
+    "url": "https://github.com/skiboso/Azable.git"
   }
 }

@@ -79,9 +79,6 @@ pnpm --filter @azable/sdk test
 pnpm --filter @azable/sdk generate   # regenerate bindings from built contract WASM
 ```
 
-- The SDK is versioned with [Changesets](https://github.com/changesets/changesets).
-  If your PR changes anything under `packages/sdk/`, run `pnpm changeset` and
-  describe the change — CI checks for this on SDK-touching PRs.
 - `src/generated/` is auto-generated per-contract; don't hand-edit it — hand-written
   high-level clients (`PaymentStreamClient.ts`, etc.) live alongside it in `src/`.
 
