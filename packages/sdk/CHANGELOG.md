@@ -1,4 +1,4 @@
-# @fundable/sdk
+# @azable/sdk
 
 ## 0.2.0
 

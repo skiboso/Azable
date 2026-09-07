@@ -1,6 +1,6 @@
 # SDK Development Guide
 
-This guide covers how to set up, develop, test, and maintain the `@fundable/sdk` package within the monorepo.
+This guide covers how to set up, develop, test, and maintain the `@azable/sdk` package within the monorepo.
 
 ---
 
@@ -31,7 +31,7 @@ pnpm install
 Or from the monorepo root using workspace filter:
 
 ```bash
-pnpm install --filter @fundable/sdk
+pnpm install --filter @azable/sdk
 ```
 
 ### 2. Build the SDK
@@ -214,7 +214,7 @@ Follow the [STYLE_GUIDE.md](../../STYLE_GUIDE.md) for general TypeScript convent
 For local development against a Soroban node at `http://localhost:8000` (or `http://127.0.0.1`, `http://[::1]`), pass `allowHttp: true` explicitly. Remote `http://` URLs are rejected by default.
 
 ```typescript
-import { ContractDeployer } from '@fundable/sdk';
+import { ContractDeployer } from '@azable/sdk';
 
 const deployer = new ContractDeployer({
   rpcUrl: 'http://localhost:8000',

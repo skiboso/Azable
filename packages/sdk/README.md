@@ -1,6 +1,6 @@
-# @fundable/sdk
+# @azable/sdk
 
-TypeScript SDK for interacting with the Fundable Protocol's smart contracts on the Stellar network.
+TypeScript SDK for interacting with the Azable's smart contracts on the Stellar network.
 
 **Note:** This SDK is currently under development. The API is not yet stable and may change.
 
@@ -9,11 +9,11 @@ TypeScript SDK for interacting with the Fundable Protocol's smart contracts on t
 Once published, you can install the SDK using your package manager of choice:
 
 ```bash
-pnpm add @fundable/sdk
+pnpm add @azable/sdk
 # or
-npm install @fundable/sdk
+npm install @azable/sdk
 # or
-yarn add @fundable/sdk
+yarn add @azable/sdk
 ```
 
 ## Peer Dependencies
@@ -29,7 +29,7 @@ pnpm add @stellar/stellar-sdk
 Regenerate the SDK's generated contract clients from the current local contract WASM files:
 
 ```bash
-pnpm --filter @fundable/sdk generate
+pnpm --filter @azable/sdk generate
 ```
 
 The script builds the SDK contracts with `stellar contract build --optimize`, then runs `stellar contract bindings typescript --wasm` into `src/generated/payment-stream` and `src/generated/distributor`.
@@ -41,7 +41,7 @@ All SDK methods that accept address parameters now support both string addresses
 **Example:**
 
 ```typescript
-import { PaymentStreamClient, Address } from "@fundable/sdk";
+import { PaymentStreamClient, Address } from "@azable/sdk";
 import { Address as StellarAddress } from "@stellar/stellar-sdk";
 
 const client = new PaymentStreamClient(config);
@@ -85,7 +85,7 @@ The `PaymentStreamClient` provides a high-level interface for creating and manag
 
 **Initialize:**
 ```typescript
-import { PaymentStreamClient } from "@fundable/sdk";
+import { PaymentStreamClient } from "@azable/sdk";
 
 const client = new PaymentStreamClient({
   contractId: "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM",
@@ -123,7 +123,7 @@ The `DistributorClient` is used for one-to-many token distributions, such as air
 
 **Initialize:**
 ```typescript
-import { DistributorClient } from "@fundable/sdk";
+import { DistributorClient } from "@azable/sdk";
 
 const distributor = new DistributorClient({
   contractId: "CB...",
@@ -172,7 +172,7 @@ Waits for an `AssembledTransaction` to be confirmed on-chain. This simplifies th
 **Example:**
 
 ```typescript
-import { PaymentStreamClient, waitForTransaction } from "@fundable/sdk";
+import { PaymentStreamClient, waitForTransaction } from "@azable/sdk";
 
 const client = new PaymentStreamClient(config);
 const tx = await client.createStream(params);
@@ -196,7 +196,7 @@ Convenience method that combines `signAndSend` with `waitForTransaction` in a si
 **Example:**
 
 ```typescript
-import { PaymentStreamClient, signAndWait } from "@fundable/sdk";
+import { PaymentStreamClient, signAndWait } from "@azable/sdk";
 
 const client = new PaymentStreamClient(config);
 const tx = await client.createStream(params);
@@ -237,7 +237,7 @@ export interface Stream {
 Here's a complete example of creating a payment stream and waiting for confirmation:
 
 ```typescript
-import { PaymentStreamClient, signAndWait } from "@fundable/sdk";
+import { PaymentStreamClient, signAndWait } from "@azable/sdk";
 
 const client = new PaymentStreamClient({
   contractId: "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM",
