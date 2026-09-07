@@ -43,19 +43,19 @@ pnpm install
 To run all SDK tests:
 
 ```bash
-pnpm test -w @fundable/sdk
+pnpm test -w @azable/sdk
 ```
 
 To run only the transaction tests:
 
 ```bash
-pnpm test -w @fundable/sdk -- transactions.test.ts
+pnpm test -w @azable/sdk -- transactions.test.ts
 ```
 
 To run tests in watch mode (for development):
 
 ```bash
-pnpm test:watch -w @fundable/sdk -- transactions.test.ts
+pnpm test:watch -w @azable/sdk -- transactions.test.ts
 ```
 
 ### Test Coverage
@@ -107,7 +107,7 @@ Verify the exports are correctly available:
 
 ```bash
 node -e "
-const sdk = require('@fundable/sdk');
+const sdk = require('@azable/sdk');
 console.log('waitForTransaction:', typeof sdk.waitForTransaction);
 console.log('signAndWait:', typeof sdk.signAndWait);
 console.log('Exports OK');
@@ -132,7 +132,7 @@ import {
   DistributorClient,
   waitForTransaction,
   signAndWait,
-} from "@fundable/sdk";
+} from "@azable/sdk";
 
 const config = {
   contractId: "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM",
@@ -337,7 +337,7 @@ const result = await signAndWait(tx, rpcUrl, signTransaction);
 
 1. **Run the tests** to verify everything works:
    ```bash
-   pnpm test -w @fundable/sdk -- transactions.test.ts
+   pnpm test -w @azable/sdk -- transactions.test.ts
    ```
 
 2. **Review the implementation** in:
