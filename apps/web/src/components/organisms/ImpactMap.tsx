@@ -138,7 +138,7 @@ export function ImpactMap({ className }: ImpactMapProps) {
             role="status"
             aria-label="Switching map layer"
           >
-            <div className="size-8 animate-spin rounded-full border-4 border-fundable-purple-2 border-t-transparent" />
+            <div className="size-8 animate-spin rounded-full border-4 border-azable-purple-2 border-t-transparent" />
           </div>
         )}
 
@@ -151,7 +151,7 @@ export function ImpactMap({ className }: ImpactMapProps) {
             <button
               type="button"
               onClick={tileError.retry}
-              className="rounded-md bg-fundable-purple-2 px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-fundable-purple-2/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fundable-purple-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900"
+              className="rounded-md bg-azable-purple-2 px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-azable-purple-2/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-azable-purple-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900"
             >
               Retry
             </button>

@@ -332,9 +332,9 @@ export function ImpactComparison({ className }: ImpactComparisonProps) {
               className="flex flex-col gap-4 rounded-xl border border-zinc-800 bg-zinc-950/40 p-4 sm:flex-row sm:items-center sm:justify-between"
             >
               <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-fundable-purple-2/10">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-azable-purple-2/10">
                   <Trophy
-                    className="h-5 w-5 text-fundable-purple-2"
+                    className="h-5 w-5 text-azable-purple-2"
                     aria-hidden="true"
                   />
                 </div>
