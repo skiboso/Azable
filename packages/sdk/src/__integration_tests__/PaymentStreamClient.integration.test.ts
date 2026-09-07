@@ -13,7 +13,7 @@
  *   3. `stellar` CLI must be installed and on PATH.
  *
  * Run with:
- *   pnpm --filter @fundable/sdk test:integration
+ *   pnpm --filter @azable/sdk test:integration
  *
  * Environment variables (optional — sensible defaults apply):
  *   SOROBAN_RPC_URL            – defaults to http://localhost:8000/soroban/rpc
