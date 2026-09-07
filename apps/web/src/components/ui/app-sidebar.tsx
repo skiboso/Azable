@@ -150,11 +150,11 @@ export function AppSidebar() {
   // Desktop sidebar
   return (
     <Sidebar
-      className="!top-20 !h-[calc(100svh-5rem)] pt-7 bg-fundable-mid-grey/10 border-r-0"
+      className="!top-20 !h-[calc(100svh-5rem)] pt-7 bg-azable-mid-grey/10 border-r-0"
       aria-label="Main navigation"
     >
-      <Link href="https://fundable.finance">
-        <Image src={"/fundable_logo.svg"} alt="Fundable Logo" width={153} height={33} priority className="pl-8 mb-12" />
+      <Link href="/">
+        <Image src={"/azable_logo.svg"} alt="Azable Logo" width={153} height={33} priority className="pl-8 mb-12" />
       </Link>
       <div className="pr-4 pl-5 pb-16 flex-1 flex flex-col justify-between">
         <nav
@@ -171,10 +171,10 @@ export function AppSidebar() {
                   <Link
                     href={link.url}
                     onClick={() => setOpenMobile(false)}
-                    className={`flex items-center gap-x-2 rounded p-2  transition-colors focus:outline-none focus:ring-1 focus:ring-fundable-purple-2 focus:ring-offset-2 focus:ring-offset-black 
+                    className={`flex items-center gap-x-2 rounded p-2  transition-colors focus:outline-none focus:ring-1 focus:ring-azable-purple-2 focus:ring-offset-2 focus:ring-offset-black 
                     ${isActive
-                        ? "bg-fundable-purple-2 text-black"
-                        : "hover:ring-2 hover:ring-fundable-purple-2 text-white"
+                        ? "bg-azable-purple-2 text-black"
+                        : "hover:ring-2 hover:ring-azable-purple-2 text-white"
                       }`}
                     data-slot="sidebar-menu"
                     aria-current={isActive ? "page" : undefined}
@@ -201,7 +201,7 @@ export function AppSidebar() {
 
         {true ? (
           <div
-            className="text-white flex items-center gap-x-4 cursor-pointer hover:bg-fundable-purple-2 p-2 rounded hover:text-black transition-all active:bg-fundable-purple-2"
+            className="text-white flex items-center gap-x-4 cursor-pointer hover:bg-azable-purple-2 p-2 rounded hover:text-black transition-all active:bg-azable-purple-2"
             onClick={() => {
               setOpenMobile(false);
             }}
