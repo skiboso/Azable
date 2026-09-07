@@ -6,9 +6,9 @@ import type {
 } from "./types";
 
 export function getClusterColor(count: number): string {
-  if (count === 1) return "#b102cd";
-  if (count <= 3) return "#8256ff";
-  return "#5b21b6";
+  if (count === 1) return "#0891b2";
+  if (count <= 3) return "#22d3ee";
+  return "#0e7490";
 }
 
 export function getClusterRadius(count: number): number {
@@ -20,13 +20,13 @@ export function getClusterRadius(count: number): number {
 export function getStatusColor(status: string): string {
   switch (status) {
     case "active":
-      return "#b102cd";
+      return "#0891b2";
     case "funded":
       return "#22c55e";
     case "pending":
       return "#eab308";
     default:
-      return "#8792ab";
+      return "#7c93a8";
   }
 }
 

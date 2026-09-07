@@ -370,7 +370,7 @@ describe("AzableMap Component", () => {
 
   describe("getStatusColor", () => {
     it("should return purple for active", () => {
-      expect(getStatusColor("active")).toBe("#b102cd");
+      expect(getStatusColor("active")).toBe("#0891b2");
     });
 
     it("should return green for funded", () => {
@@ -382,23 +382,23 @@ describe("AzableMap Component", () => {
     });
 
     it("should return fallback for unknown status", () => {
-      expect(getStatusColor("unknown")).toBe("#8792ab");
+      expect(getStatusColor("unknown")).toBe("#7c93a8");
     });
   });
 
   describe("getClusterColor", () => {
     it("should return purple for single item", () => {
-      expect(getClusterColor(1)).toBe("#b102cd");
+      expect(getClusterColor(1)).toBe("#0891b2");
     });
 
     it("should return mid-purple for 2-3 items", () => {
-      expect(getClusterColor(2)).toBe("#8256ff");
-      expect(getClusterColor(3)).toBe("#8256ff");
+      expect(getClusterColor(2)).toBe("#22d3ee");
+      expect(getClusterColor(3)).toBe("#22d3ee");
     });
 
     it("should return deep purple for 4+ items", () => {
-      expect(getClusterColor(4)).toBe("#5b21b6");
-      expect(getClusterColor(10)).toBe("#5b21b6");
+      expect(getClusterColor(4)).toBe("#0e7490");
+      expect(getClusterColor(10)).toBe("#0e7490");
     });
   });
 
