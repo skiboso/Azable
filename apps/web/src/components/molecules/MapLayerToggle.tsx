@@ -39,10 +39,10 @@ export function MapLayerToggle({
           onClick={() => onLayerChange(id)}
           className={cn(
             "inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-all",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fundable-purple-2 focus-visible:ring-offset-1 focus-visible:ring-offset-zinc-900",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-azable-purple-2 focus-visible:ring-offset-1 focus-visible:ring-offset-zinc-900",
             "disabled:cursor-not-allowed disabled:opacity-50",
             layer === id
-              ? "bg-fundable-purple-2 text-white shadow-sm"
+              ? "bg-azable-purple-2 text-white shadow-sm"
               : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800"
           )}
         >

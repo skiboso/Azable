@@ -21,7 +21,7 @@ import { formatBalance } from "@/utils/format-balance";
  * - 2.1: Display asset code
  * - 2.2: Display formatted balance with appropriate decimal precision
  * - 2.3: Display token icon where available
- * - 2.5: Apply Tailwind CSS with Fundable theme
+ * - 2.5: Apply Tailwind CSS with Azable theme
  * - 5.3: Display fallback placeholder icon on error
  * - 8.1: React functional component compatible with React 19
  *

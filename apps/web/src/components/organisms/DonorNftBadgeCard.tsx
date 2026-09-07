@@ -99,9 +99,9 @@ const TIER_CONFIG: Record<
     icon: Zap,
   },
   legendary: {
-    gradient: "from-fundable-deep-purple/80 via-fundable-purple/50 to-fundable-purple-2/30",
-    border: "border-fundable-purple-2/60",
-    glow: "shadow-fundable-purple/50",
+    gradient: "from-azable-deep-purple/80 via-azable-purple/50 to-azable-purple-2/30",
+    border: "border-azable-purple-2/60",
+    glow: "shadow-azable-purple/50",
     label: "Legendary",
     icon: Award,
   },
@@ -151,7 +151,7 @@ function BadgeIcon({
       <Icon
         className={cn(
           "transition-transform duration-300",
-          tier === "legendary" ? "h-12 w-12 text-fundable-purple-2" :
+          tier === "legendary" ? "h-12 w-12 text-azable-purple-2" :
           tier === "platinum"  ? "h-10 w-10 text-purple-300" :
           tier === "gold"      ? "h-10 w-10 text-yellow-400" :
           tier === "silver"    ? "h-9 w-9 text-slate-300" :
@@ -205,12 +205,12 @@ export function DonorNftBadgeCard({
       style={style}
       className={cn(
         "group relative flex flex-col overflow-hidden rounded-2xl border",
-        "bg-fundable-dark/90 backdrop-blur-sm",
+        "bg-azable-dark/90 backdrop-blur-sm",
         "transition-shadow duration-300",
         tierConfig.border,
         isHovered && isActive && `shadow-2xl ${tierConfig.glow}`,
         interactive && "cursor-pointer select-none",
-        interactive && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fundable-purple-2 focus-visible:ring-offset-2 focus-visible:ring-offset-fundable-dark",
+        interactive && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-azable-purple-2 focus-visible:ring-offset-2 focus-visible:ring-offset-azable-dark",
         className
       )}
     >
@@ -276,7 +276,7 @@ export function DonorNftBadgeCard({
         {badge.contributionAmount && (
           <div className="flex items-center gap-1 text-xs">
             <span className="text-white/40">Contribution:</span>
-            <span className="font-semibold text-fundable-purple-2">
+            <span className="font-semibold text-azable-purple-2">
               {badge.contributionAmount}
               {badge.contributionToken && (
                 <span className="ml-1 text-white/50">{badge.contributionToken}</span>
@@ -316,7 +316,7 @@ export function DonorNftBadgeCard({
                 className={cn(
                   "rounded-sm p-0.5 text-white/30 hover:text-white/70",
                   "focus-visible:outline-none focus-visible:ring-2",
-                  "focus-visible:ring-fundable-purple-2 transition-colors"
+                  "focus-visible:ring-azable-purple-2 transition-colors"
                 )}
               >
                 <ExternalLink aria-hidden="true" className="h-3 w-3" />
@@ -337,7 +337,7 @@ function tier_text_color(tier: BadgeTier): string {
     silver:    "text-slate-300",
     gold:      "text-yellow-400",
     platinum:  "text-purple-300",
-    legendary: "text-fundable-purple-2",
+    legendary: "text-azable-purple-2",
   }[tier];
 }
 
