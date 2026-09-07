@@ -39,11 +39,11 @@ export default function ReferralLink() {
   return (
     <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
       <div className="flex items-center gap-2 mb-3">
-        <LinkIcon className="w-5 h-5 text-fundable-purple-2" />
+        <LinkIcon className="w-5 h-5 text-azable-purple-2" />
         <h3 className="text-lg font-semibold text-white">Your Referral Link</h3>
       </div>
       <p className="text-sm text-zinc-400 mb-4">
-        Share this link with friends. When they register as a planter and complete
+        Share this link with friends. When they register as a technician and complete
         their first job, you earn <span className="text-white font-medium">2 XLM</span>.
       </p>
       <div className="flex items-center gap-2">

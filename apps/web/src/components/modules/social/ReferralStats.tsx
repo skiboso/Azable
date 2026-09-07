@@ -21,7 +21,7 @@ export default function ReferralStats() {
     {
       label: "Total Referrals",
       value: totalReferrals,
-      icon: <Users className="w-5 h-5 text-fundable-purple-2" />,
+      icon: <Users className="w-5 h-5 text-azable-purple-2" />,
     },
     {
       label: "Successful Referrals",

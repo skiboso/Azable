@@ -9,16 +9,16 @@ import { notify } from "@/utils/notification";
 
 /**
  * Displays pending referral rewards that can be claimed.
- * Uses the referral info to find referred planters whose first job was completed
+ * Uses the referral info to find referred technicians whose first job was completed
  * but whose reward hasn't been claimed yet.
  */
 export default function ClaimRewards() {
   const { address } = useWallet();
-  const { referralInfo, planterInfo, isLoading } = useReferrals();
+  const { referralInfo, technicianInfo, isLoading } = useReferrals();
   const { claimReward, isClaiming } = useReferralRewardClaim();
 
   // The referral info tracks total and successful referrals.
-  // In this implementation, rewards are claimed per referred planter via the contract.
+  // In this implementation, rewards are claimed per referred technician via the contract.
   // We show a summary and a "Claim All Available" button.
 
   const hasPendingRewards =
@@ -27,9 +27,9 @@ export default function ClaimRewards() {
 
   const handleClaim = () => {
     if (!address || !hasPendingRewards) return;
-    // NOTE: In production, this would iterate over specific referred planters
+    // NOTE: In production, this would iterate over specific referred technicians
     // For now, we show the user info about their pending referrals
-    notify.info("Claim rewards will be processed for each eligible referred planter on-chain.");
+    notify.info("Claim rewards will be processed for each eligible referred technician on-chain.");
   };
 
   if (isLoading) {
@@ -41,14 +41,14 @@ export default function ClaimRewards() {
     );
   }
 
-  if (!address || !planterInfo) {
+  if (!address || !technicianInfo) {
     return null;
   }
 
   return (
     <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
       <div className="flex items-center gap-2 mb-3">
-        <Gift className="w-5 h-5 text-fundable-purple-2" />
+        <Gift className="w-5 h-5 text-azable-purple-2" />
         <h3 className="text-lg font-semibold text-white">Pending Rewards</h3>
       </div>
 
@@ -64,7 +64,7 @@ export default function ClaimRewards() {
           <Button
             onClick={handleClaim}
             disabled={isClaiming}
-            className="bg-fundable-purple-2 hover:bg-fundable-purple-2/80 text-white"
+            className="bg-azable-purple-2 hover:bg-azable-purple-2/80 text-white"
           >
             {isClaiming ? (
               "Claiming..."
