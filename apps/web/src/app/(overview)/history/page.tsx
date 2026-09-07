@@ -217,7 +217,7 @@ const HistoryPage = () => {
                                             setStartDate(e.target.value);
                                             setPage(1);
                                         }}
-                                        className="w-full h-10 px-3 rounded-xl bg-[#0F1621] border border-white/10 text-white text-sm focus:outline-none focus:border-fundable-purple-2 transition-colors [color-scheme:dark]"
+                                        className="w-full h-10 px-3 rounded-xl bg-[#0F1621] border border-white/10 text-white text-sm focus:outline-none focus:border-azable-purple-2 transition-colors [color-scheme:dark]"
                                     />
                                 </div>
                                 <div className="w-36">
@@ -229,7 +229,7 @@ const HistoryPage = () => {
                                             setEndDate(e.target.value);
                                             setPage(1);
                                         }}
-                                        className="w-full h-10 px-3 rounded-xl bg-[#0F1621] border border-white/10 text-white text-sm focus:outline-none focus:border-fundable-purple-2 transition-colors [color-scheme:dark]"
+                                        className="w-full h-10 px-3 rounded-xl bg-[#0F1621] border border-white/10 text-white text-sm focus:outline-none focus:border-azable-purple-2 transition-colors [color-scheme:dark]"
                                     />
                                 </div>
                             </div>

@@ -117,7 +117,7 @@ export default function OfframpPage() {
                         )}
                     >
                         <div className="space-y-8 pb-10">
-                            <p className="text-fundable-light-grey max-w-2xl px-2">
+                            <p className="text-azable-light-grey max-w-2xl px-2">
                                 Withdraw Stellar USDC instantly to your bank account in Nigeria, Ghana, or Kenya.
                             </p>
 
@@ -175,19 +175,19 @@ export default function OfframpPage() {
                                 )}
 
                                 {step === "completed" && (
-                                    <div className="max-w-xl mx-auto text-center space-y-6 py-12 rounded-3xl bg-fundable-mid-dark border border-green-500/20">
+                                    <div className="max-w-xl mx-auto text-center space-y-6 py-12 rounded-3xl bg-azable-mid-dark border border-green-500/20">
                                         <div className="w-20 h-20 rounded-full bg-green-500/10 mx-auto flex items-center justify-center">
                                             <CheckCircle2 className="h-10 w-10 text-green-500" />
                                         </div>
                                         <h3 className="text-2xl font-bold text-white">
                                             Offramp Successful
                                         </h3>
-                                        <p className="text-fundable-light-grey">
+                                        <p className="text-azable-light-grey">
                                             The funds have been successfully transferred to your bank account.
                                         </p>
                                         <button
                                             onClick={reset}
-                                            className="px-8 py-4 rounded-xl font-bold text-fundable-dark bg-gradient-to-r from-fundable-purple-2 to-purple-500 hover:opacity-90 transition-all"
+                                            className="px-8 py-4 rounded-xl font-bold text-azable-dark bg-gradient-to-r from-azable-purple-2 to-purple-500 hover:opacity-90 transition-all"
                                         >
                                             New Transfer
                                         </button>

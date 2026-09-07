@@ -25,7 +25,7 @@ export default function GlobalError({
           <button
             type="button"
             onClick={() => reset()}
-            className="rounded-md bg-fundable-purple-2 px-4 py-2 text-sm font-medium text-white hover:bg-fundable-purple-2/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fundable-purple-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+            className="rounded-md bg-azable-purple-2 px-4 py-2 text-sm font-medium text-white hover:bg-azable-purple-2/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-azable-purple-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
           >
             Try again
           </button>
