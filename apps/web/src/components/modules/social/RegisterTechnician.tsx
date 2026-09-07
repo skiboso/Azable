@@ -1,17 +1,17 @@
 "use client";
 
-import { useRegisterPlanter, useReferrals } from "@/hooks/use-referrals";
+import { useRegisterTechnician, useReferrals } from "@/hooks/use-referrals";
 import { useWallet } from "@/providers/StellarWalletProvider";
 import { Button } from "@/components/ui/button";
-import { Sprout, CheckCircle } from "lucide-react";
+import { Droplets, CheckCircle } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { notify } from "@/utils/notification";
 
-function RegisterPlanterInner() {
+function RegisterTechnicianInner() {
   const { address } = useWallet();
   const { isRegistered, isLoading } = useReferrals();
-  const { register, isRegistering } = useRegisterPlanter();
+  const { register, isRegistering } = useRegisterTechnician();
   const searchParams = useSearchParams();
   const referrerFromUrl = searchParams.get("referrer");
 
@@ -24,10 +24,10 @@ function RegisterPlanterInner() {
       <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
         <div className="flex items-center gap-2 mb-2">
           <CheckCircle className="w-5 h-5 text-green-400" />
-          <h3 className="text-lg font-semibold text-white">You&apos;re a Planter!</h3>
+          <h3 className="text-lg font-semibold text-white">You&apos;re a Water Technician!</h3>
         </div>
         <p className="text-sm text-zinc-400">
-          You&apos;re registered on the platform. Complete jobs and refer friends to earn rewards.
+          You&apos;re registered on the platform. Complete water-access jobs and refer friends to earn rewards.
         </p>
       </div>
     );
@@ -36,7 +36,7 @@ function RegisterPlanterInner() {
   const handleRegister = () => {
     register(referrerFromUrl || undefined, {
       onSuccess: () => {
-        notify.success("Successfully registered as a planter!");
+        notify.success("Successfully registered as a water technician!");
       },
       onError: (error) => {
         notify.error(`Registration failed: ${error.message}`);
@@ -47,13 +47,13 @@ function RegisterPlanterInner() {
   return (
     <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
       <div className="flex items-center gap-2 mb-3">
-        <Sprout className="w-5 h-5 text-fundable-purple-2" />
-        <h3 className="text-lg font-semibold text-white">Become a Planter</h3>
+        <Droplets className="w-5 h-5 text-azable-purple-2" />
+        <h3 className="text-lg font-semibold text-white">Become a Water Technician</h3>
       </div>
       <p className="text-sm text-zinc-400 mb-4">
-        Register as a planter to start completing jobs and earning referral rewards.
+        Register as a water technician to start completing jobs and earning referral rewards.
         {referrerFromUrl && (
-          <span className="block mt-1 text-fundable-purple-2">
+          <span className="block mt-1 text-azable-purple-2">
             Referred by a friend — you&apos;ll help them earn 2 XLM when you complete your first job!
           </span>
         )}
@@ -61,18 +61,18 @@ function RegisterPlanterInner() {
       <Button
         onClick={handleRegister}
         disabled={!address || isRegistering}
-        className="bg-fundable-purple-2 hover:bg-fundable-purple-2/80 text-white"
+        className="bg-azable-purple-2 hover:bg-azable-purple-2/80 text-white"
       >
-        {isRegistering ? "Registering..." : "Register as Planter"}
+        {isRegistering ? "Registering..." : "Register as Technician"}
       </Button>
     </div>
   );
 }
 
-export default function RegisterPlanter() {
+export default function RegisterTechnician() {
   return (
     <Suspense fallback={null}>
-      <RegisterPlanterInner />
+      <RegisterTechnicianInner />
     </Suspense>
   );
 }
