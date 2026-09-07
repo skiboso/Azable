@@ -1,6 +1,6 @@
 # Soroban Smart Contracts
 
-This directory contains the Soroban smart contracts for the Fundable Protocol, written in Rust. The contracts are organized as a Cargo workspace.
+This directory contains the Soroban smart contracts for the Azable, written in Rust. The contracts are organized as a Cargo workspace.
 
 ## Workspace Structure
 
