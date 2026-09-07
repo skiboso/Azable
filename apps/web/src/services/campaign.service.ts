@@ -450,7 +450,7 @@ function milestoneEmailHtml(campaignName: string, percentage: number): string {
     `<h2>${campaignName}</h2>`,
     `<p>${headline}</p>`,
     `<p><a href="/campaigns">View your campaign</a></p>`,
-    `<p>— Fundable Protocol</p>`,
+    `<p>— Azable</p>`,
   ].join("\n");
 }
 

@@ -5,7 +5,7 @@ const initialCollaborators: CoCreator[] = [
     id: "col-1",
     campaignId: "camp-101",
     name: "Alex Rivera (Owner)",
-    email: "alex@fundable.org",
+    email: "alex@azable.org",
     stellarAddress: "GD6W...X892",
     role: "OWNER",
     avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80",
