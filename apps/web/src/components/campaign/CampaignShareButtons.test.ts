@@ -8,7 +8,7 @@ describe("CampaignShareButtons", () => {
     description: "Plant 1,000 trees.",
     raisedAmount: "750",
     goalAmount: "1000",
-    shareUrl: "https://fundable.example/campaigns/campaign%2F42",
+    shareUrl: "https://azable.example/campaigns/campaign%2F42",
   };
 
   it("builds an impact-oriented message", () => {
