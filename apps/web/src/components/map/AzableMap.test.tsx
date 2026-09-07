@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { FundableMap } from "./FundableMap";
-import { FundableMapView } from "./FundableMapView";
+import { AzableMap } from "./AzableMap";
+import { AzableMapView } from "./AzableMapView";
 import {
   clusterStreams,
   getClusterColor,
@@ -11,9 +11,9 @@ import {
   getCategories,
 } from "./cluster-utils";
 import type {
-  FundableStream,
-  FundableMapProps,
-  FundableMapFilters,
+  AzableStream,
+  AzableMapProps,
+  AzableMapFilters,
 } from "./types";
 import type { StreamStatus } from "./types";
 
@@ -45,7 +45,7 @@ vi.mock("react-leaflet", () => ({
   })),
 }));
 
-const mockStreams: FundableStream[] = [
+const mockStreams: AzableStream[] = [
   {
     id: "1",
     title: "Solar Grid Africa",
@@ -103,7 +103,7 @@ const mockStreams: FundableStream[] = [
   },
 ];
 
-const nearbyStreams: FundableStream[] = [
+const nearbyStreams: AzableStream[] = [
   {
     id: "6",
     title: "Tech Hub Nairobi",
@@ -128,22 +128,22 @@ const nearbyStreams: FundableStream[] = [
   },
 ];
 
-describe("FundableMap Component", () => {
+describe("AzableMap Component", () => {
   describe("component exports", () => {
-    it("should export FundableMap component", () => {
-      expect(FundableMap).toBeDefined();
-      expect(typeof FundableMap).toBe("function");
+    it("should export AzableMap component", () => {
+      expect(AzableMap).toBeDefined();
+      expect(typeof AzableMap).toBe("function");
     });
 
-    it("should export FundableMapView component", () => {
-      expect(FundableMapView).toBeDefined();
-      expect(typeof FundableMapView).toBe("function");
+    it("should export AzableMapView component", () => {
+      expect(AzableMapView).toBeDefined();
+      expect(typeof AzableMapView).toBe("function");
     });
   });
 
   describe("props interface", () => {
-    it("should accept valid FundableMapProps", () => {
-      const validProps: FundableMapProps = {
+    it("should accept valid AzableMapProps", () => {
+      const validProps: AzableMapProps = {
         streams: mockStreams,
       };
 
@@ -153,7 +153,7 @@ describe("FundableMap Component", () => {
     });
 
     it("should accept props with className", () => {
-      const propsWithClass: FundableMapProps = {
+      const propsWithClass: AzableMapProps = {
         streams: mockStreams,
         className: "custom-class",
       };
@@ -162,7 +162,7 @@ describe("FundableMap Component", () => {
     });
 
     it("should accept empty streams array", () => {
-      const propsWithEmpty: FundableMapProps = {
+      const propsWithEmpty: AzableMapProps = {
         streams: [],
       };
 
@@ -172,9 +172,9 @@ describe("FundableMap Component", () => {
     it("should accept filters and callbacks", () => {
       const onSelect = vi.fn();
       const onFilter = vi.fn();
-      const filters: FundableMapFilters = { status: ["active"] };
+      const filters: AzableMapFilters = { status: ["active"] };
 
-      const props: FundableMapProps = {
+      const props: AzableMapProps = {
         streams: mockStreams,
         filters,
         onStreamSelect: onSelect,
@@ -420,67 +420,67 @@ describe("FundableMap Component", () => {
 
   describe("rendering states", () => {
     it("should render loading skeleton via dynamic import", () => {
-      const { container } = render(<FundableMap streams={mockStreams} />);
+      const { container } = render(<AzableMap streams={mockStreams} />);
       const skeleton = container.querySelector('[role="status"]');
       expect(skeleton).toBeTruthy();
     });
 
     it("should render map with streams", () => {
-      render(<FundableMapView streams={mockStreams} />);
+      render(<AzableMapView streams={mockStreams} />);
       expect(screen.getByRole("application")).toBeDefined();
     });
 
     it("should render loading overlay when isLoading is true", () => {
-      render(<FundableMapView streams={mockStreams} isLoading={true} />);
+      render(<AzableMapView streams={mockStreams} isLoading={true} />);
       expect(screen.getByRole("status")).toBeDefined();
     });
 
     it("should not show loading overlay when isLoading is false", () => {
-      render(<FundableMapView streams={mockStreams} isLoading={false} />);
+      render(<AzableMapView streams={mockStreams} isLoading={false} />);
       expect(screen.queryByRole("status")).toBeNull();
     });
 
     it("should render empty state for no streams", () => {
-      render(<FundableMapView streams={[]} />);
+      render(<AzableMapView streams={[]} />);
       expect(screen.getByRole("application")).toBeDefined();
     });
 
     it("should show empty state when streams array is empty", () => {
-      render(<FundableMapView streams={[]} />);
-      expect(screen.getByText("No fundable streams to display")).toBeDefined();
+      render(<AzableMapView streams={[]} />);
+      expect(screen.getByText("No azable streams to display")).toBeDefined();
     });
 
     it("should not show empty state when streams are present", () => {
-      render(<FundableMapView streams={mockStreams} />);
+      render(<AzableMapView streams={mockStreams} />);
       expect(
-        screen.queryByText("No fundable streams to display"),
+        screen.queryByText("No azable streams to display"),
       ).toBeNull();
     });
 
     it("should not show empty state when loading", () => {
-      render(<FundableMapView streams={[]} isLoading={true} />);
+      render(<AzableMapView streams={[]} isLoading={true} />);
       expect(
-        screen.queryByText("No fundable streams to display"),
+        screen.queryByText("No azable streams to display"),
       ).toBeNull();
     });
   });
 
   describe("accessibility", () => {
     it("should have role application on map container", () => {
-      render(<FundableMapView streams={mockStreams} />);
+      render(<AzableMapView streams={mockStreams} />);
       expect(screen.getByRole("application")).toBeDefined();
     });
 
     it("should have aria-label on map container", () => {
-      render(<FundableMapView streams={mockStreams} />);
+      render(<AzableMapView streams={mockStreams} />);
       const map = screen.getByRole("application");
       expect(map.getAttribute("aria-label")).toBe(
-        "Fundable streams world map",
+        "Azable streams world map",
       );
     });
 
     it("should have aria-label on circle markers", () => {
-      render(<FundableMapView streams={mockStreams} />);
+      render(<AzableMapView streams={mockStreams} />);
       const markers = screen.getAllByTestId("circle-marker");
       expect(markers.length).toBeGreaterThan(0);
       markers.forEach((marker) => {
@@ -489,7 +489,7 @@ describe("FundableMap Component", () => {
     });
 
     it("should have aria-label on circle markers", () => {
-      render(<FundableMapView streams={mockStreams} />);
+      render(<AzableMapView streams={mockStreams} />);
       const markers = screen.getAllByTestId("circle-marker");
       markers.forEach((marker) => {
         expect(marker.getAttribute("aria-label")).toBeTruthy();
@@ -502,13 +502,13 @@ describe("FundableMap Component", () => {
   describe("marker rendering", () => {
     it("should render correct number of clusters", () => {
       const clusters = clusterStreams(mockStreams);
-      render(<FundableMapView streams={mockStreams} />);
+      render(<AzableMapView streams={mockStreams} />);
       const markers = screen.getAllByTestId("circle-marker");
       expect(markers.length).toBe(clusters.length);
     });
 
     it("should render no markers for empty streams", () => {
-      render(<FundableMapView streams={[]} />);
+      render(<AzableMapView streams={[]} />);
       expect(screen.queryByTestId("circle-marker")).toBeNull();
     });
   });
@@ -520,7 +520,7 @@ describe("FundableMap Component", () => {
       };
 
       render(
-        <FundableMapView streams={mockStreams} />,
+        <AzableMapView streams={mockStreams} />,
       );
 
       expect(screen.getByRole("application")).toBeDefined();

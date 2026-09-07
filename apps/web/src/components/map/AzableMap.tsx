@@ -3,11 +3,11 @@
 import dynamic from "next/dynamic";
 import { useMemo, useCallback, useState, type ReactNode } from "react";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
-import type { FundableMapProps, FundableMapFilters, FundableStream } from "./types";
+import type { AzableMapProps, AzableMapFilters, AzableStream } from "./types";
 import { filterStreams, getStatusColor } from "./cluster-utils";
 
 const MapView = dynamic(
-  () => import("./FundableMapView").then((mod) => mod.FundableMapView),
+  () => import("./AzableMapView").then((mod) => mod.AzableMapView),
   {
     ssr: false,
     loading: () => <MapSkeleton />,
@@ -23,7 +23,7 @@ function MapSkeleton() {
     >
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-2 border-fundable-purple border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-2 border-azable-purple border-t-transparent rounded-full animate-spin" />
           <p className="text-sm text-zinc-500">Loading map...</p>
         </div>
       </div>
@@ -95,7 +95,7 @@ function MapErrorFallback({
         <p className="text-xs text-zinc-500 max-w-md">{error.message}</p>
         <button
           onClick={reset}
-          className="px-4 py-1.5 text-xs font-medium rounded-lg bg-fundable-purple text-white hover:bg-fundable-purple/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fundable-purple"
+          className="px-4 py-1.5 text-xs font-medium rounded-lg bg-azable-purple text-white hover:bg-azable-purple/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-azable-purple"
           type="button"
         >
           Try again
@@ -105,7 +105,7 @@ function MapErrorFallback({
   );
 }
 
-export function FundableMap(props: FundableMapProps) {
+export function AzableMap(props: AzableMapProps) {
   const {
     streams,
     className,
@@ -120,7 +120,7 @@ export function FundableMap(props: FundableMapProps) {
     [streams, filters],
   );
 
-  const [internalFilters, setInternalFilters] = useState<FundableMapFilters>(
+  const [internalFilters, setInternalFilters] = useState<AzableMapFilters>(
     {},
   );
 
@@ -128,7 +128,7 @@ export function FundableMap(props: FundableMapProps) {
   const setActiveFilters = onFilterChange ?? setInternalFilters;
 
   const handleFilterChange = useCallback(
-    (newFilters: FundableMapFilters) => {
+    (newFilters: AzableMapFilters) => {
       setActiveFilters(newFilters);
     },
     [setActiveFilters],
@@ -151,7 +151,7 @@ export function FundableMap(props: FundableMapProps) {
   }, [streams]);
 
   const handleStreamSelect = useCallback(
-    (stream: FundableStream) => {
+    (stream: AzableStream) => {
       onStreamSelect?.(stream);
     },
     [onStreamSelect],
@@ -159,7 +159,7 @@ export function FundableMap(props: FundableMapProps) {
 
   return (
     <ErrorBoundary
-      boundaryName="FundableMap"
+      boundaryName="AzableMap"
       fallbackRender={({ error, reset }) => (
         <MapErrorFallback error={error} reset={reset} />
       )}
