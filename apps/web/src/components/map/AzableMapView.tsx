@@ -15,7 +15,7 @@ import {
   useMap,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import type { FundableMapProps, StreamCluster, FundableStream } from "./types";
+import type { AzableMapProps, StreamCluster, AzableStream } from "./types";
 import {
   clusterStreams,
   getClusterColor,
@@ -85,7 +85,7 @@ const popupStyles = {
   } as React.CSSProperties,
 };
 
-function MapUpdater({ streams }: { streams: FundableStream[] }) {
+function MapUpdater({ streams }: { streams: AzableStream[] }) {
   const map = useMap();
 
   useEffect(() => {
@@ -107,8 +107,8 @@ function PopupItem({
   stream,
   onStreamSelect,
 }: {
-  stream: FundableStream;
-  onStreamSelect?: (stream: FundableStream) => void;
+  stream: AzableStream;
+  onStreamSelect?: (stream: AzableStream) => void;
 }) {
   const [itemHovered, setItemHovered] = useState(false);
 
@@ -165,7 +165,7 @@ function MapClusterMarker({
   onStreamSelect,
 }: {
   cluster: StreamCluster;
-  onStreamSelect?: (stream: FundableStream) => void;
+  onStreamSelect?: (stream: AzableStream) => void;
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -196,7 +196,7 @@ function MapClusterMarker({
       }}
       radius={isHovered ? radius + 3 : radius}
       eventHandlers={eventHandlers}
-      aria-label={`Cluster of ${cluster.count} fundable stream${cluster.count !== 1 ? "s" : ""}`}
+      aria-label={`Cluster of ${cluster.count} azable stream${cluster.count !== 1 ? "s" : ""}`}
     >
       <Popup>
         <div style={popupStyles.container}>
@@ -213,12 +213,12 @@ function MapClusterMarker({
   );
 }
 
-export function FundableMapView({
+export function AzableMapView({
   streams,
   className = "",
   onStreamSelect,
   isLoading,
-}: FundableMapProps) {
+}: AzableMapProps) {
   const [isMounted] = useState(() => typeof window !== 'undefined');
   // SSR hydration guard: true once mounted on the client, false during SSR.
   // useSyncExternalStore avoids the setState-in-effect anti-pattern while
@@ -237,7 +237,7 @@ export function FundableMapView({
     <div
       className={`relative w-full h-full min-h-[300px] sm:min-h-[400px] rounded-2xl overflow-hidden border border-zinc-800 ${className}`}
       role="application"
-      aria-label="Fundable streams world map"
+      aria-label="Azable streams world map"
     >
       {isLoading && (
         <div
@@ -246,7 +246,7 @@ export function FundableMapView({
           aria-label="Updating map data"
         >
           <div className="flex flex-col items-center gap-3">
-            <div className="w-8 h-8 border-2 border-fundable-purple border-t-transparent rounded-full animate-spin" />
+            <div className="w-8 h-8 border-2 border-azable-purple border-t-transparent rounded-full animate-spin" />
             <p className="text-sm text-zinc-400">Updating streams...</p>
           </div>
         </div>
@@ -261,7 +261,7 @@ export function FundableMapView({
                 <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
               </svg>
             </div>
-            <p className="text-sm text-zinc-500">No fundable streams to display</p>
+            <p className="text-sm text-zinc-500">No azable streams to display</p>
           </div>
         </div>
       )}
