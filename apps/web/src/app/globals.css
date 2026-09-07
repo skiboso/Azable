@@ -11,50 +11,50 @@
   --font-urbanist: var(--font-urbanist);
   --font-bricolage: var(--font-bricolage-grotesque);
 
-  /* Fundable Colors Inline */
+  /* Azable Colors Inline */
 
-  --color-fundable-dark: var(--fundable-dark);
-  --color-fundable-mid-dark: var(--fundable-mid-dark);
-  --color-fundable-grey: var(--fundable-grey);
-  --color-fundable-light-grey: var(--fundable-light-grey);
-  --color-fundable-mid-grey: var(--fundable-mid-grey);
-  --color-fundable-placeholder: var(--fundable-placeholder);
-  --color-fundable-violet: var(--fundable-violet);
-  --color-fundable-purple: var(--fundable-purple);
-  --color-fundable-purple-2: var(--fundable-purple-2);
-  --color-fundable-deep-purple: var(--fundable-deep-purple);
-  --color-fundable-white: #c9ccd2;
-  --color-fundable-faint-white: var(--fundable-faint-white);
+  --color-azable-dark: var(--azable-dark);
+  --color-azable-mid-dark: var(--azable-mid-dark);
+  --color-azable-grey: var(--azable-grey);
+  --color-azable-light-grey: var(--azable-light-grey);
+  --color-azable-mid-grey: var(--azable-mid-grey);
+  --color-azable-placeholder: var(--azable-placeholder);
+  --color-azable-violet: var(--azable-violet);
+  --color-azable-purple: var(--azable-purple);
+  --color-azable-purple-2: var(--azable-purple-2);
+  --color-azable-deep-purple: var(--azable-deep-purple);
+  --color-azable-white: #c9ccd2;
+  --color-azable-faint-white: var(--azable-faint-white);
 
-  --color-fundable-deep-purple-light: color-mix(
+  --color-azable-deep-purple-light: color-mix(
     in oklab,
-    var(--fundable-deep-purple),
+    var(--azable-deep-purple),
     white 10%
   );
-  --color-fundable-purple-light: color-mix(
+  --color-azable-purple-light: color-mix(
     in oklab,
-    var(--fundable-purple),
+    var(--azable-purple),
     white 10%
   );
-  --color-fundable-violet-light: color-mix(
+  --color-azable-violet-light: color-mix(
     in oklab,
-    var(--fundable-violet),
+    var(--azable-violet),
     white 10%
   );
 
-  --color-fundable-deep-purple-lighter: color-mix(
+  --color-azable-deep-purple-lighter: color-mix(
     in oklab,
-    var(--fundable-deep-purple),
+    var(--azable-deep-purple),
     white 20%
   );
-  --color-fundable-purple-lighter: color-mix(
+  --color-azable-purple-lighter: color-mix(
     in oklab,
-    var(--fundable-purple),
+    var(--azable-purple),
     white 20%
   );
-  --color-fundable-violet-lighter: color-mix(
+  --color-azable-violet-lighter: color-mix(
     in oklab,
-    var(--fundable-violet),
+    var(--azable-violet),
     white 20%
   );
 
@@ -119,19 +119,19 @@ body {
 }
 
 :root {
-  /* Fundable Colors */
+  /* Azable Colors */
 
-  --fundable-dark: #0d0019;
-  --fundable-mid-dark: #151617;
-  --fundable-grey: #4a4949;
-  --fundable-light-grey: #8792ab;
-  --fundable-mid-grey: #252939;
-  --fundable-placeholder: #4e5679;
-  --fundable-purple: #b102cd;
-  --fundable-purple-2: #8256ff;
-  --fundable-violet: #5b21b6;
-  --fundable-deep-purple: #440495;
-  --fundable-faint-white: #E1E1E1;
+  --azable-dark: #0d0019;
+  --azable-mid-dark: #151617;
+  --azable-grey: #4a4949;
+  --azable-light-grey: #8792ab;
+  --azable-mid-grey: #252939;
+  --azable-placeholder: #4e5679;
+  --azable-purple: #b102cd;
+  --azable-purple-2: #8256ff;
+  --azable-violet: #5b21b6;
+  --azable-deep-purple: #440495;
+  --azable-faint-white: #E1E1E1;
 
   /* Existing Styles */
   --radius: 0.625rem;
