@@ -409,7 +409,7 @@ mod test {
     fn test_campaign_created_event_emitted() {
         let (env, _, client) = setup();
         let organiser = Address::generate(&env);
-        let name = String::from_str(&env, "Fundable Launch");
+        let name = String::from_str(&env, "Azable Launch");
         client.create_campaign(&name, &250, &organiser).unwrap();
 
         let events = env.events().all();
