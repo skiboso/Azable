@@ -2,7 +2,7 @@
 
 ## ✅ What Was Implemented
 
-A complete `waitForTransaction` helper for the Fundable Stellar SDK that allows developers to easily wait for AssembledTransaction confirmations on-chain.
+A complete `waitForTransaction` helper for the Azable Stellar SDK that allows developers to easily wait for AssembledTransaction confirmations on-chain.
 
 ## 📦 Files Created/Modified
 
@@ -41,7 +41,7 @@ A complete `waitForTransaction` helper for the Fundable Stellar SDK that allows 
 
 ### Option 1: Sign and Wait Separately (Advanced)
 ```typescript
-import { PaymentStreamClient, waitForTransaction } from "@fundable/sdk";
+import { PaymentStreamClient, waitForTransaction } from "@azable/sdk";
 
 const client = new PaymentStreamClient(config);
 const tx = await client.createStream(params);
@@ -56,7 +56,7 @@ console.log(`Confirmed on ledger: ${result.ledger}`);
 
 ### Option 2: Combined Sign and Wait (Recommended)
 ```typescript
-import { PaymentStreamClient, signAndWait } from "@fundable/sdk";
+import { PaymentStreamClient, signAndWait } from "@azable/sdk";
 
 const client = new PaymentStreamClient(config);
 const tx = await client.createStream(params);
@@ -88,17 +88,17 @@ const result = await waitForTransaction(tx, rpcUrl, {
 ### Run All SDK Tests
 ```bash
 cd /workspaces/stellar_client_os
-pnpm test -w @fundable/sdk
+pnpm test -w @azable/sdk
 ```
 
 ### Run Only Transaction Tests
 ```bash
-pnpm test -w @fundable/sdk -- transactions.test.ts
+pnpm test -w @azable/sdk -- transactions.test.ts
 ```
 
 ### Run Tests in Watch Mode
 ```bash
-pnpm test:watch -w @fundable/sdk -- transactions.test.ts
+pnpm test:watch -w @azable/sdk -- transactions.test.ts
 ```
 
 ### Build to Check for TypeScript Errors
@@ -158,7 +158,7 @@ await tx.signAndSend({ signTransaction });
 ### After
 ```typescript
 // New way - built-in confirmation
-import { signAndWait } from "@fundable/sdk";
+import { signAndWait } from "@azable/sdk";
 
 const tx = await client.createStream(params);
 const result = await signAndWait(tx, rpcUrl, signTransaction);
