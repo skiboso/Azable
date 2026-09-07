@@ -18,14 +18,15 @@
 import type { ClientOptions as ContractClientOptions } from "@stellar/stellar-sdk/contract";
 
 export interface WaterTechnicianInfo {
-  registered_at: bigint;
-  jobs_completed: number;
+  address: string;
   referrer: string | undefined;
+  jobs_completed: bigint;
+  first_job_reward_claimed: boolean;
 }
 
 export interface ReferralInfo {
-  referred_count: number;
-  rewards_claimed: bigint;
+  referral_count: bigint;
+  successful_referrals: bigint;
 }
 
 function notImplemented(method: string): never {

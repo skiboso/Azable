@@ -24,9 +24,9 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json && node scripts/rename-cjs.js",
+    "build": "tsc -p tsconfig.json; tsc -p tsconfig.cjs.json; node scripts/rename-cjs.js",
     "build:esm": "tsc -p tsconfig.json",
-    "build:cjs": "tsc -p tsconfig.cjs.json && node scripts/rename-cjs.js",
+    "build:cjs": "tsc -p tsconfig.cjs.json; node scripts/rename-cjs.js",
     "dev": "tsc --watch",
     "test": "vitest --run",
     "test:watch": "vitest",
