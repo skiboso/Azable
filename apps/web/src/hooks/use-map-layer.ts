@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 
 export type MapLayer = "vector" | "satellite";
 
-const STORAGE_KEY = "fundable-map-layer";
+const STORAGE_KEY = "azable-map-layer";
 
 function getInitialLayer(): MapLayer {
   if (typeof window === "undefined") return "vector";

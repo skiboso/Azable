@@ -17,13 +17,13 @@ describe("useMapLayer", () => {
   });
 
   it("reads persisted layer from sessionStorage", () => {
-    sessionStorage.setItem("fundable-map-layer", "satellite");
+    sessionStorage.setItem("azable-map-layer", "satellite");
     const { result } = renderHook(() => useMapLayer());
     expect(result.current.layer).toBe("satellite");
   });
 
   it("falls back to vector for invalid stored values", () => {
-    sessionStorage.setItem("fundable-map-layer", "invalid");
+    sessionStorage.setItem("azable-map-layer", "invalid");
     const { result } = renderHook(() => useMapLayer());
     expect(result.current.layer).toBe("vector");
   });
@@ -61,7 +61,7 @@ describe("useMapLayer", () => {
       result.current.setLayer("satellite");
     });
 
-    expect(sessionStorage.getItem("fundable-map-layer")).toBe("satellite");
+    expect(sessionStorage.getItem("azable-map-layer")).toBe("satellite");
   });
 
   it("sets isSwitching to true on layer change", () => {
