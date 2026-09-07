@@ -2,7 +2,7 @@
 
 ## Assignment Overview
 
-**Task**: Implement a type-safe event parser utility for Fundable smart contract events to help dApp developers consume on-chain events with confidence and minimal boilerplate.
+**Task**: Implement a type-safe event parser utility for Azable smart contract events to help dApp developers consume on-chain events with confidence and minimal boilerplate.
 
 ---
 
@@ -56,7 +56,7 @@ cd c:\Users\HomePC\Documents\D\stellar_client_os
 corepack pnpm install
 
 # Run SDK tests
-corepack pnpm --filter @fundable/sdk test 2>&1 | findstr "events.test.ts"
+corepack pnpm --filter @azable/sdk test 2>&1 | findstr "events.test.ts"
 ```
 
 **Expected Output:** Should show:
@@ -127,11 +127,11 @@ Verify the utility can be imported by frontend code:
 ```bash
 cd c:\Users\HomePC\Documents\D\stellar_client_os\apps\web
 
-# Check if @fundable/sdk can import the new utility
-corepack pnpm list @fundable/sdk
+# Check if @azable/sdk can import the new utility
+corepack pnpm list @azable/sdk
 ```
 
-**Expected Output:** Should show `@fundable/sdk@0.1.0` is available as a workspace dependency.
+**Expected Output:** Should show `@azable/sdk@0.1.0` is available as a workspace dependency.
 
 ---
 
@@ -144,7 +144,7 @@ Create a quick validation script to test the parser at runtime:
 import {
   parsePaymentStreamContractEvent,
   parsePaymentStreamContractEvents,
-} from "@fundable/sdk";
+} from "@azable/sdk";
 
 // Test FeeCollected event
 const feeEvent = {
@@ -209,7 +209,7 @@ if (event.type === "StreamPaused") {
 
 ```typescript
 const allEvents = parsePaymentStreamContractEvents(rpcResponse.events);
-// Filters out non-Fundable events, returns only valid parsed events
+// Filters out non-Azable events, returns only valid parsed events
 ```
 
 ### 5. **Extensible Architecture**
@@ -228,7 +228,7 @@ Adding new event types requires:
 ### Basic Event Parsing
 
 ```typescript
-import { parsePaymentStreamContractEvent } from "@fundable/sdk";
+import { parsePaymentStreamContractEvent } from "@azable/sdk";
 
 const event = parsePaymentStreamContractEvent(rpcEvent);
 if (event) {
@@ -302,7 +302,7 @@ test -f packages/sdk/src/utils/events.ts && echo "✓ events.ts exists" || echo 
 test -f packages/sdk/src/__tests__/events.test.ts && echo "✓ events.test.ts exists" || echo "✗ Missing"
 
 echo "=== 2. Run tests ==="
-corepack pnpm --filter @fundable/sdk test 2>&1 | grep -E "(✓|×|FAIL|PASS)" | head -20
+corepack pnpm --filter @azable/sdk test 2>&1 | grep -E "(✓|×|FAIL|PASS)" | head -20
 
 echo "=== 3. Check build ==="
 cd packages/sdk && corepack pnpm run build && echo "✓ Build successful" || echo "✗ Build failed"
