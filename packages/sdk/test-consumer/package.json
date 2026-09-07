@@ -7,7 +7,7 @@
     "check": "tsc --noEmit && node check-esm.mjs && node check-cjs.cjs"
   },
   "dependencies": {
-    "@fundable/sdk": "file:.."
+    "@azable/sdk": "file:.."
   },
   "devDependencies": {
     "typescript": "^5",
