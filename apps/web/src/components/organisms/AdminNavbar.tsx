@@ -12,7 +12,7 @@ const AdminNavbar = () => {
   const currentPath = pathname?.slice(1);
 
   return (
-    <nav className="py-3 px-3 md:px-5 flex justify-between items-center border-b border-b-fundable-mid-dark text-white">
+    <nav className="py-3 px-3 md:px-5 flex justify-between items-center border-b border-b-azable-mid-dark text-white">
       <span className="flex items-center gap-x-2">
         <SidebarTrigger />
         <h2 className="hidden lg:block font-medium md:text-2xl font-bricolage capitalize">
@@ -20,7 +20,7 @@ const AdminNavbar = () => {
         </h2>
       </span>
       <div className="flex items-center gap-x-4">
-        <span className="size-12 hidden md:grid place-content-center rounded-full bg-fundable-mid-dark">
+        <span className="size-12 hidden md:grid place-content-center rounded-full bg-azable-mid-dark">
           <NotificationIcon />
         </span>
         {false ? (

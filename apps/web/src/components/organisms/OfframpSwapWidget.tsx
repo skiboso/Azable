@@ -99,19 +99,19 @@ function ProviderRow({ provider }: { provider: QuoteProvider }) {
       className={cn(
         "flex items-center justify-between rounded-lg px-3 py-2 text-sm",
         provider.isBest
-          ? "border border-fundable-purple-2/30 bg-fundable-purple-2/10"
+          ? "border border-azable-purple-2/30 bg-azable-purple-2/10"
           : "border border-white/5 bg-white/5"
       )}
     >
       <div className="flex items-center gap-2">
         {provider.isBest && (
-          <Zap aria-hidden="true" className="h-3.5 w-3.5 text-fundable-purple-2" />
+          <Zap aria-hidden="true" className="h-3.5 w-3.5 text-azable-purple-2" />
         )}
         <span className={cn("font-medium", provider.isBest ? "text-white" : "text-white/70")}>
           {provider.name}
         </span>
         {provider.isBest && (
-          <span className="rounded-full bg-fundable-purple-2/20 px-1.5 py-0.5 text-xs text-fundable-purple-2">
+          <span className="rounded-full bg-azable-purple-2/20 px-1.5 py-0.5 text-xs text-azable-purple-2">
             Best rate
           </span>
         )}
@@ -167,7 +167,7 @@ export function OfframpSwapWidget({
       data-testid="offramp-swap-widget"
       className={cn(
         "flex flex-col gap-4 rounded-2xl border border-white/10",
-        "bg-fundable-dark/90 p-5 shadow-xl backdrop-blur-sm",
+        "bg-azable-dark/90 p-5 shadow-xl backdrop-blur-sm",
         "w-full max-w-md",
         className
       )}
@@ -183,7 +183,7 @@ export function OfframpSwapWidget({
           className={cn(
             "rounded-md p-1.5 text-white/40 transition-colors",
             "hover:bg-white/10 hover:text-white",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fundable-purple-2",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-azable-purple-2",
             "disabled:cursor-not-allowed disabled:opacity-30"
           )}
         >
@@ -217,7 +217,7 @@ export function OfframpSwapWidget({
                 "transition-colors",
                 error
                   ? "border-red-500/50 focus:ring-red-500/30"
-                  : "border-white/10 focus:ring-fundable-purple-2/50 focus:border-fundable-purple-2/50"
+                  : "border-white/10 focus:ring-azable-purple-2/50 focus:border-azable-purple-2/50"
               )}
             />
           </div>
@@ -234,12 +234,12 @@ export function OfframpSwapWidget({
               className={cn(
                 "h-full appearance-none rounded-xl border border-white/10 bg-white/10",
                 "px-3 pr-8 text-sm font-semibold text-white",
-                "focus:outline-none focus:ring-2 focus:ring-fundable-purple-2/50",
+                "focus:outline-none focus:ring-2 focus:ring-azable-purple-2/50",
                 "cursor-pointer transition-colors hover:bg-white/15"
               )}
             >
               {SUPPORTED_TOKENS.map((t) => (
-                <option key={t} value={t} className="bg-fundable-dark text-white">
+                <option key={t} value={t} className="bg-azable-dark text-white">
                   {t}
                 </option>
               ))}
@@ -318,12 +318,12 @@ export function OfframpSwapWidget({
               className={cn(
                 "h-full appearance-none rounded-xl border border-white/10 bg-white/10",
                 "px-3 pr-8 text-sm font-semibold text-white",
-                "focus:outline-none focus:ring-2 focus:ring-fundable-purple-2/50",
+                "focus:outline-none focus:ring-2 focus:ring-azable-purple-2/50",
                 "cursor-pointer transition-colors hover:bg-white/15"
               )}
             >
               {SUPPORTED_CORRIDORS.map((c) => (
-                <option key={c.country} value={c.country} className="bg-fundable-dark text-white">
+                <option key={c.country} value={c.country} className="bg-azable-dark text-white">
                   {c.currency}
                 </option>
               ))}
@@ -376,7 +376,7 @@ export function OfframpSwapWidget({
           {/* Best provider */}
           <div className="flex items-center justify-between text-sm">
             <span className="text-white/50">Best via</span>
-            <span className="font-medium text-fundable-purple-2">{quote.bestProvider}</span>
+            <span className="font-medium text-azable-purple-2">{quote.bestProvider}</span>
           </div>
 
           {/* Quote expiry */}
@@ -405,7 +405,7 @@ export function OfframpSwapWidget({
               aria-controls={`${id}-providers`}
               className={cn(
                 "flex items-center gap-1 text-xs text-white/40 hover:text-white/70",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fundable-purple-2",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-azable-purple-2",
                 "transition-colors rounded-sm mt-1"
               )}
             >

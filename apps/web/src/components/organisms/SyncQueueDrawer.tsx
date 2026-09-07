@@ -225,7 +225,7 @@ export function SyncQueueDrawer({ open, onClose, syncQueue }: SyncQueueDrawerPro
         side="bottom"
         className={cn(
           "max-h-[85dvh] rounded-t-2xl border-white/10",
-          "bg-fundable-dark text-white",
+          "bg-azable-dark text-white",
           "flex flex-col gap-0 p-0",
           // Desktop: slide in from right instead
           "sm:side-right sm:max-h-full sm:rounded-none sm:rounded-l-2xl",
@@ -236,12 +236,12 @@ export function SyncQueueDrawer({ open, onClose, syncQueue }: SyncQueueDrawerPro
         {/* Header */}
         <SheetHeader className="border-b border-white/10 px-4 py-4">
           <div className="flex items-center gap-2">
-            <UploadCloud aria-hidden="true" className="h-5 w-5 text-fundable-purple-2" />
+            <UploadCloud aria-hidden="true" className="h-5 w-5 text-azable-purple-2" />
             <SheetTitle className="text-base text-white">Sync Queue</SheetTitle>
             {pendingCount > 0 && (
               <span
                 aria-label={`${pendingCount} pending`}
-                className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-fundable-purple-2 px-1.5 text-xs font-bold text-white"
+                className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-azable-purple-2 px-1.5 text-xs font-bold text-white"
               >
                 {pendingCount}
               </span>

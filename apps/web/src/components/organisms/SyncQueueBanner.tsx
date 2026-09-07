@@ -68,7 +68,7 @@ const VARIANT_STYLES: Record<
       `${pending} upload${pending !== 1 ? "s" : ""} waiting to sync`,
   },
   syncing: {
-    banner: "border-fundable-violet bg-fundable-deep-purple text-purple-100",
+    banner: "border-azable-violet bg-azable-deep-purple text-purple-100",
     icon: Loader2,
     label: ({ syncing }) =>
       `Syncing ${syncing} upload${syncing !== 1 ? "s" : ""}…`,
