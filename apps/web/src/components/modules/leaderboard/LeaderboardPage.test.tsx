@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { LeaderboardPage } from "./LeaderboardPage";
-import { recordPlanterCompletion, recordSponsorContribution } from "@/services/leaderboard.service";
+import { recordTechnicianCompletion, recordSponsorContribution } from "@/services/leaderboard.service";
 
 describe("LeaderboardPage", () => {
   beforeEach(() => {
@@ -51,12 +51,12 @@ describe("LeaderboardPage", () => {
     );
   });
 
-  it("switches to the planters tab and shows planter-specific units", () => {
-    recordPlanterCompletion("GPLANTER0000000000", 12);
+  it("switches to the technicians tab and shows technician-specific units", () => {
+    recordTechnicianCompletion("GTECHNICIAN0000000", 12);
 
     render(<LeaderboardPage />);
-    fireEvent.click(screen.getByRole("tab", { name: "Top Planters" }));
+    fireEvent.click(screen.getByRole("tab", { name: "Top Technicians" }));
 
-    expect(screen.getByText(/12 trees/)).toBeTruthy();
+    expect(screen.getByText(/12 wells/)).toBeTruthy();
   });
 });
