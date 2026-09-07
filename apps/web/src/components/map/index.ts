@@ -1,5 +1,5 @@
-export { FundableMap } from "./FundableMap";
-export { FundableMapView } from "./FundableMapView";
+export { AzableMap } from "./AzableMap";
+export { AzableMapView } from "./AzableMapView";
 export {
   clusterStreams,
   getClusterColor,
@@ -11,8 +11,8 @@ export {
 export type {
   StreamLocation,
   StreamStatus,
-  FundableStream,
+  AzableStream,
   StreamCluster,
-  FundableMapFilters,
-  FundableMapProps,
+  AzableMapFilters,
+  AzableMapProps,
 } from "./types";

@@ -5,7 +5,7 @@ export interface StreamLocation {
 
 export type StreamStatus = "active" | "funded" | "pending";
 
-export interface FundableStream {
+export interface AzableStream {
   id: string;
   title: string;
   description: string;
@@ -27,20 +27,20 @@ export interface StreamCluster {
   latitude: number;
   longitude: number;
   count: number;
-  streams: FundableStream[];
+  streams: AzableStream[];
 }
 
-export interface FundableMapFilters {
+export interface AzableMapFilters {
   status?: StreamStatus[];
   category?: string[];
   searchQuery?: string;
 }
 
-export interface FundableMapProps {
-  streams: FundableStream[];
+export interface AzableMapProps {
+  streams: AzableStream[];
   className?: string;
-  filters?: FundableMapFilters;
-  onStreamSelect?: (stream: FundableStream) => void;
-  onFilterChange?: (filters: FundableMapFilters) => void;
+  filters?: AzableMapFilters;
+  onStreamSelect?: (stream: AzableStream) => void;
+  onFilterChange?: (filters: AzableMapFilters) => void;
   isLoading?: boolean;
 }
