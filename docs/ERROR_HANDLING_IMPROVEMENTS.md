@@ -24,7 +24,7 @@ This document summarizes the enhancements made to error handling in high-level c
 - **Enhanced `ParsedContractError` interface** with:
   - `suggestion?: string` - Actionable advice for users
   - `operation?: string` - Context about which operation failed
-- **Updated `FundableStellarError` class** with:
+- **Updated `AzableStellarError` class** with:
   - `suggestion` property
   - `operation` property
   - `getUserMessageWithSuggestion()` method
@@ -66,12 +66,12 @@ This document summarizes the enhancements made to error handling in high-level c
 
 ### Basic Error Handling
 ```typescript
-import { executeWithErrorHandling } from '@fundable/sdk';
+import { executeWithErrorHandling } from '@azable/sdk';
 
 try {
   await client.createStream(params);
 } catch (error) {
-  if (error instanceof FundableStellarError) {
+  if (error instanceof AzableStellarError) {
     console.log(error.getUserMessageWithSuggestion());
     // Output: "Unauthorized - Caller does not have permission to perform this action
     // 💡 Check that you're using the correct account with proper permissions for this operation."
@@ -81,7 +81,7 @@ try {
 
 ### Transaction Error Analysis
 ```typescript
-import { parseContractError } from '@fundable/sdk';
+import { parseContractError } from '@azable/sdk';
 
 // Parse failed transaction with XDR
 const error = parseContractError({
