@@ -49,9 +49,20 @@ impl AppConfig {
             .map(str::to_string)
             .collect();
 
+        // Render (and some Railway configurations) assign a port at deploy
+        // time via $PORT and expect the app to bind to it, rather than a
+        // fixed address — an explicit BIND_ADDR always wins if set, since
+        // that's the more specific setting, but otherwise prefer $PORT over
+        // the 0.0.0.0:8080 default so this boots correctly on either
+        // platform with no per-service port wiring.
+        let bind_addr = env::var("BIND_ADDR").unwrap_or_else(|_| match env::var("PORT") {
+            Ok(port) => format!("0.0.0.0:{port}"),
+            Err(_) => "0.0.0.0:8080".to_string(),
+        });
+
         Ok(Self {
             database_url,
-            bind_addr: env_or("BIND_ADDR", "0.0.0.0:8080"),
+            bind_addr,
             soroban_rpc_url: env_or("SOROBAN_RPC_URL", "https://soroban-testnet.stellar.org"),
             network_passphrase: env_or("NETWORK_PASSPHRASE", "Test SDF Network ; September 2015"),
             contract_ids,
