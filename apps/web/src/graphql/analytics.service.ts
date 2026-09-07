@@ -198,28 +198,38 @@ export interface StreamDataSource {
 
 // ── Default data source (reads from env-configured Stellar RPC) ───────────────
 
+// Same env-gated-base-URL-with-fallback convention as
+// apps/web/src/services/offramp.service.ts — the only other place this app
+// calls an external backend from.
+const BACKEND_BASE_URL =
+  process.env.NEXT_PUBLIC_BACKEND_BASE_URL || process.env.NEXT_PUBLIC_API_URL || "";
+
 /**
- * Production data source that fetches stream events from the Stellar RPC.
- * Returns mock data in test / development environments to avoid network calls.
+ * Production data source. When NEXT_PUBLIC_BACKEND_BASE_URL (or
+ * NEXT_PUBLIC_API_URL) is configured, fetches indexed stream events from
+ * the services/backend GET /streams endpoint, whose response shape matches
+ * StreamRecord exactly. Falls back to an empty array — as it always has —
+ * when no backend is configured, so this gateway keeps working out of the
+ * box without one.
  */
 export class DefaultStreamDataSource implements StreamDataSource {
   async getStreams(): Promise<StreamRecord[]> {
-    // In production, this would call the Stellar RPC getEvents API and
-    // cross-reference with an indexer for metadata tags.
-    // Returning a well-typed empty array here so the gateway is functional
-    // out of the box — replace with real data fetching in production.
-    if (process.env.NODE_ENV === "test") {
+    if (process.env.NODE_ENV === "test" || !BACKEND_BASE_URL) {
       return [];
     }
 
-    // Real implementation sketch:
-    // const rpcUrl = network === "mainnet"
-    //   ? "https://soroban.stellar.org"
-    //   : "https://soroban-testnet.stellar.org";
-    // const rpc = new Server(rpcUrl);
-    // const events = await rpc.getEvents({ ... });
-    // return parseStreamEvents(events);
-    return [];
+    try {
+      const res = await fetch(`${BACKEND_BASE_URL}/streams`);
+      if (!res.ok) {
+        console.error(`GET /streams failed: ${res.status} ${res.statusText}`);
+        return [];
+      }
+      const data = (await res.json()) as unknown;
+      return Array.isArray(data) ? (data as StreamRecord[]) : [];
+    } catch (err) {
+      console.error("Failed to fetch streams from backend", err);
+      return [];
+    }
   }
 }
 
