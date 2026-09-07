@@ -30,5 +30,4 @@ jobs:
       - name: Run contract tests
         working-directory: contracts
         run: cargo test --all
-        continue-on-error: true
 
