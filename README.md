@@ -1,54 +1,55 @@
-# Fundable Stellar
+# Azable
 
-## 🚀 Quickstart (5 Minutes)
+Azable is a Stellar/Soroban platform for payment streaming and reforestation
+crowdfunding: creators run recurring payment streams, launch milestone-based
+funding campaigns, and get on-chain, donor-verifiable credit for the trees
+their campaigns fund.
 
-Get the Fundable Stellar client running on the Stellar testnet in about five minutes.
+![Contracts CI](https://github.com/anitajordan22244-afk/mitros/actions/workflows/contracts.yml/badge.svg)
+![Backend CI](https://github.com/anitajordan22244-afk/mitros/actions/workflows/backend.yml/badge.svg)
+![Frontend CI](https://github.com/anitajordan22244-afk/mitros/actions/workflows/frontend.yml/badge.svg)
+
+## 🚀 Quickstart (5 minutes)
 
 ### Prerequisites
 
 - [Node.js](https://nodejs.org) v18+
-- [pnpm](https://pnpm.io) v8+ (`npm install -g pnpm`)
-- [Rust](https://rustup.rs) (for building the Soroban contracts)
-- [Soroban CLI / stellar-cli](https://soroban.stellar.org/docs/getting-started/setup) v25.0.0+
-
+- [pnpm](https://pnpm.io) v9+ (`npm install -g pnpm`)
+- [Rust](https://rustup.rs) (for the Soroban contracts and the backend)
+- [Soroban CLI / stellar-cli](https://soroban.stellar.org/docs/getting-started/setup) v25.0.0+:
   ```bash
   cargo install --locked stellar-cli@25.0.0
   ```
+- [Docker](https://docs.docker.com/get-docker/) (optional — only needed to run `services/backend` locally)
 
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/Fundable-Protocol/stellar_client_os.git
-cd stellar_client_os
-```
-
-### 2. Install dependencies
+### 1. Clone and install
 
 ```bash
+git clone https://github.com/anitajordan22244-afk/mitros.git
+cd mitros
 pnpm install
 ```
 
-### 3. Fund a Stellar testnet account
-
-Create a testnet identity and fund it with test XLM using Friendbot:
+### 2. Fund a Stellar testnet account
 
 ```bash
 stellar keys generate my-account --network testnet --fund
-```
-
-This creates a keypair and funds it instantly on the SDF testnet. Copy the generated secret key into your environment:
-
-```bash
 cp .env.example .env
-# Set STELLAR_SECRET_KEY in .env to the secret printed above
+# set STELLAR_SECRET_KEY in .env to the secret printed above
 ```
 
-### 4. Build the smart contracts
+### 3. Build the contracts
 
 ```bash
 pnpm build:contracts
-# or, using cargo directly:
-# cd contracts && cargo build --release
+```
+
+### 4. (Optional) Run the backend
+
+```bash
+docker compose up -d postgres
+cp services/backend/.env.example services/backend/.env
+pnpm dev:backend
 ```
 
 ### 5. Run the frontend
@@ -57,271 +58,168 @@ pnpm build:contracts
 pnpm dev
 ```
 
-The web app starts at http://localhost:3000. Connect a wallet (e.g. Freighter) to interact with the contracts on testnet.
+The app starts at http://localhost:3000. Connect a wallet (e.g. Freighter) to interact with the contracts on testnet.
 
-> Need more detail? See [docs/getting-started.md](docs/getting-started.md) and [scripts/README.md](scripts/README.md).
+> Need more detail? See [docs/getting-started.md](docs/getting-started.md), [services/backend/README.md](services/backend/README.md), and [scripts/README.md](scripts/README.md).
 
-Stellar client and smart contracts for the Fundable Protocol – a decentralized payment platform enabling seamless Web3 payments, streaming, and subscriptions on the Stellar blockchain.
-
-## 🏗️ Project Structure
+## 🏗️ Project structure
 
 ```
-stellar_client/
+azable/
 ├── apps/
-│   └── web/                 # Next.js frontend application
-│       ├── src/
-│       ├── package.json
-│       └── ...
+│   └── web/                    # Next.js frontend
 │
-├── contracts/               # Soroban smart contracts (Rust)
-│   ├── payment-stream/      # Payment streaming contract
-│   ├── distributor/         # Token distribution contract
-│   ├── campaign/            # Campaign fundraising contract
-│   └── Cargo.toml           # Rust workspace config
+├── contracts/                  # Soroban smart contracts (Rust), one Cargo workspace
+│   ├── payment-stream/         # Payment streaming
+│   ├── distributor/            # Token distribution
+│   ├── campaign-funding/       # Campaign fundraising
+│   ├── nft-stream/             # NFT-gated streams
+│   ├── soulbound-badge/        # Contributor badges
+│   ├── planter/                # Tree-planting job tracking
+│   ├── dispute-arbiter/        # Stream/campaign dispute resolution
+│   ├── verifier-penalty/       # Verifier staking & slashing
+│   ├── timelock/                # Timelocked admin actions
+│   ├── upgrade-proxy/          # Contract upgrade proxy
+│   ├── sponsor-crowdfunding/   # Sponsor pool crowdfunding
+│   ├── sponsor-insurance/      # Sponsor insurance pools
+│   └── donor-verification/     # ZK nullifier-based donor verification
 │
-├── docs/                      # Project documentation
-│   ├── architecture.md
-│   ├── getting-started.md     # Project setup documentation
-│   ├── webhooks.md            # Webhook system documentation
-│   ├── contracts/             # Contracts documentation
-│   │   ├── distributor.md
-│   │   └── payment-stream.md
-│   └── frontend/              # Frontend documentation
-│       └── components.md
-├── packages/                  # Monorepo packages
-│   └── sdk/                   # TypeScript SDK for contract interaction
+├── services/
+│   └── backend/                # Rust/Axum: Soroban event indexer, wallet auth, off-chain data API
 │
-└── package.json             # Root workspace config
-
-
+├── packages/
+│   └── sdk/                    # @azable/sdk — TypeScript bindings for the contracts
+│
+├── docs/                       # Architecture, API, and contract documentation
+├── scripts/                    # Operational scripts (TTL renewal bot, digests, deploy helpers)
+├── migrations/                 # See services/backend/migrations/ (moved there)
+└── docker-compose.yml          # Local Postgres + backend for development
 ```
 
 ## 🌟 Features
 
-- **Payment Streaming** - Create and manage continuous token streams
-- **Token Distribution** - Efficiently distribute tokens to multiple recipients
-- **Campaign Funding** - Launch and manage on-chain fundraising campaigns with milestones
-- **Multi-Asset Support** - USDC, XLM, and other Stellar assets
-- **Offramp Integration** - Convert crypto to fiat currencies
+- **Payment streaming** — continuous, revocable token streams for subscriptions, salaries, and recurring transfers
+- **Campaign funding** — milestone-based on-chain fundraising with escrow, refunds, and creator payouts
+- **Reforestation tracking** — verified tree-planting records, CO₂ impact estimates, and donor-facing certificates
+- **Donor verification** — ZK nullifier-based proof of contribution without exposing donor identity
+- **Sponsor tools** — crowdfunded sponsor pools, insurance pools, and leaderboard/referral rewards
+- **Multi-asset support** — USDC, XLM, and other Stellar assets
+- **Offramp integration** — convert crypto to fiat
 
-## 🛠️ Tech Stack
+## 🛠️ Tech stack
 
-| Component | Technology |
-|-----------|------------|
-| **Frontend** | Next.js 16, React 19, TypeScript, Tailwind CSS v4 |
-| **Contracts** | Soroban SDK, Rust |
-| **SDK** | TypeScript, @stellar/stellar-sdk |
+| Component    | Technology                                         |
+| ------------ | --------------------------------------------------- |
+| **Frontend** | Next.js 16, React 19, TypeScript, Tailwind CSS v4    |
+| **Contracts**| Soroban SDK, Rust                                    |
+| **Backend**  | Rust, Axum, sqlx/Postgres                            |
+| **SDK**      | TypeScript, @stellar/stellar-sdk                     |
 
-## 📐 Campaign Contract Architecture
+## 📐 Campaign contract architecture
 
-The `contracts/campaign` Soroban contract powers on-chain fundraising campaigns.
+The `campaign-funding` Soroban contract powers on-chain fundraising campaigns.
 
-### State Machine
+**State machine**: `Draft → Active → Paused → Successful/Failed → PaidOut/Refunded`
 
-Campaigns progress through `Draft -> Active -> Paused -> Successful/Failed -> PaidOut/Refunded`.
+- `Draft` — creator configures the campaign and milestone payout schedule.
+- `Active` — contributions are accepted.
+- `Paused` — emergency stop; contributions suspended, state preserved.
+- `Successful` — all milestones verified and claimed by the creator.
+- `Failed` — end time reached without meeting the funding goal, or cancelled by an admin.
+- `PaidOut` — final milestone released and the campaign fully settled.
+- `Refunded` — backers can claim proportional refunds after failure.
 
-- `Draft` – creator configures campaign and milestone payout schedule.
-- `Active` – contributions are accepted.
-- `Paused` – emergency stop; contributions suspended but state preserved.
-- `Successful` – all milestones verified and claimed by the creator.
-- `Failed` – end time reached without meeting the funding goal or cancelled by admin.
-- `PaidOut` – final milestone released and campaign fully settled.
-- `Refunded` – backers can claim proportional refunds after failure.
+Only the `admin` or `campaign_owner` may invoke restricted transitions.
 
-Transitions are enforced by the contract and only the `admin` or `campaign_owner` may invoke restricted actions.
+**Security model**
 
-### Security Model
+- Admin-guarded privileged operations, validated per state transition.
+- Checks-effects-interactions: external token calls happen after internal state updates.
+- Checked/overflow-safe arithmetic throughout.
+- Escrow accounting — contributions are only released via explicit `payout`/`refund` calls.
+- Milestone approvals require reviewer sign-off before a creator can claim funds.
 
-- **Admin guard**: privileged operations use an `admin` address set at deployment.
-- **Capability checks**: every state transition validates caller and current state.
-- **Reentrancy protection**: external calls to token contracts happen after internal state updates.
-- **Overflow-safe math**: checked arithmetic from the Soroban SDK prevents balance errors.
-- **Escrow accounting**: contributions are held in contract balance and only released by explicit `payout` or `refund` functions.
-- **Milestone approvals**: fund release requires multi-sig/approval from designated reviewers before owner can claim.
+**Scalability**
 
-### Scalability
-
-- Campaigns are stored as persistent map entries keyed by `u32` campaign id, avoiding unbounded collections.
+- Campaigns are stored as persistent map entries keyed by campaign id — no unbounded collections.
 - Contributions are aggregated rather than stored as individual ledger entries.
 - Payouts batch milestone claims to minimize transaction count.
-- The contract is stateless with respect to off-chain indexers; event log entries enable efficient data replication.
-- Deployment uses a single contract with per-campaign storage, allowing the same contract ID to serve many campaigns without migrations.
+- The contract is stateless with respect to off-chain indexing; `services/backend`'s indexer replicates event data into Postgres for the frontend and analytics.
 
-## 🚀 Getting Started
+See [docs/CAMPAIGN_CONTRACT_ARCHITECTURE.md](docs/CAMPAIGN_CONTRACT_ARCHITECTURE.md) for the full design doc.
 
-### Prerequisites
+## 💡 Usage examples
 
-- Node.js v18+
-- pnpm v8+
-- Rust (for contracts)
-- [Soroban CLI](https://soroban.stellar.org/docs/getting-started/setup)
-
-### Installation
-
-```bash
-# Clone the repository
-git clone git@github.com:Fundable-Protocol/stellar_client.git
-cd stellar_client
-
-# Install frontend dependencies
-pnpm install
-
-# Build contracts
-cd contracts && cargo build --release
-```
-
-### Development
-
-```bash
-# Start the web app
-pnpm dev
-
-# Build contracts
-pnpm build:contracts
-
-# Run contract tests
-pnpm test:contracts
-```
-
-## 💡 Usage Examples
-
-### 🌌 Horizon Client (Classic Stellar)
-
-The Horizon client is used for interacting with the classic Stellar network, such as fetching account details, balances, and transaction history.
+### Horizon client (classic Stellar)
 
 ```typescript
-import { Horizon } from '@stellar/stellar-sdk';
+import { Horizon } from "@stellar/stellar-sdk";
 
-const server = new Horizon.Server('https://horizon-testnet.stellar.org');
+const server = new Horizon.Server("https://horizon-testnet.stellar.org");
 
-// Fetch account details and balances
 async function checkAccount(address: string) {
-  try {
-    const account = await server.loadAccount(address);
-    console.log(`Account ID: ${account.id}`);
-    
-    account.balances.forEach(balance => {
-      console.log(`Type: ${balance.asset_type}, Balance: ${balance.balance}`);
-    });
-  } catch (error) {
-    console.error('Error loading account:', error);
-  }
+  const account = await server.loadAccount(address);
+  console.log(`Account ID: ${account.id}`);
+  account.balances.forEach((balance) => {
+    console.log(`Type: ${balance.asset_type}, Balance: ${balance.balance}`);
+  });
 }
-
-checkAccount('GBBB...');
 ```
 
-### ⚡ Soroban Client (Smart Contracts)
-
-Use the `@fundable/sdk` to interact with Fundable smart contracts on the Soroban network. This example shows how to initialize the `PaymentStreamClient` and create a new payment stream.
+### Soroban client (smart contracts)
 
 ```typescript
-import { PaymentStreamClient, signAndWait } from '@fundable/sdk';
+import { PaymentStreamClient, signAndWait } from "@azable/sdk";
 
 const client = new PaymentStreamClient({
-  contractId: 'C...', // Deployed contract ID
-  networkPassphrase: 'Test SDF Network ; September 2015',
-  rpcUrl: 'https://soroban-testnet.stellar.org',
+  contractId: "C...", // deployed contract ID
+  networkPassphrase: "Test SDF Network ; September 2015",
+  rpcUrl: "https://soroban-testnet.stellar.org",
 });
 
-async function createNewStream() {
-  // 1. Prepare the stream creation transaction
-  const tx = await client.createStream({
-    sender: 'GAAA...',
-    recipient: 'GBBB...',
-    token: 'CDDD...', // Token contract address
-    total_amount: 1000000000n, // 100 tokens (assuming 7 decimals)
-    initial_amount: 0n,
-    start_time: BigInt(Math.floor(Date.now() / 1000)),
-    end_time: BigInt(Math.floor(Date.now() / 1000) + 86400 * 30), // 30 days duration
-  });
+const tx = await client.createStream({
+  sender: "GAAA...",
+  recipient: "GBBB...",
+  token: "CDDD...",
+  total_amount: 1_000_000_000n,
+  initial_amount: 0n,
+  start_time: BigInt(Math.floor(Date.now() / 1000)),
+  end_time: BigInt(Math.floor(Date.now() / 1000) + 86400 * 30),
+});
 
-  // 2. Sign, send, and wait for confirmation
-  const result = await signAndWait(
-    tx,
-    'https://soroban-testnet.stellar.org',
-    async (xdr) => {
-      // Logic to sign XDR with wallet (e.g., Freighter)
-      // return wallet.signTransaction(xdr);
-      return 'signed_xdr_here';
-    }
-  );
-
-  console.log(`Stream created successfully! Hash: ${result.hash}`);
-  console.log(`Stream ID: ${result.result}`);
-}
+const result = await signAndWait(tx, "https://soroban-testnet.stellar.org", async (xdr) => {
+  return wallet.signTransaction(xdr); // e.g. Freighter
+});
 ```
 
-### 🔐 S3 Presigned Uploads (Milestone Proof Photos)
+### Backend API
 
-`POST /api/presign-upload` generates a short-lived AWS S3 pre-signed PUT URL so clients can upload milestone proof photos directly to a **private** evidence bucket without exposing credentials. Signing uses AWS Signature V4 and is implemented dependency-free in `apps/web/src/lib/s3`.
+See [services/backend/README.md](services/backend/README.md) for the full route
+reference (wallet-signature auth, indexed stream events, campaigns).
 
-Request:
+### S3 presigned uploads (milestone proof photos)
 
-```bash
-curl -X POST http://localhost:3000/api/presign-upload \
-  -H "Content-Type: application/json" \
-  -d '{"campaignId":"42","milestoneId":"1","contentType":"image/jpeg"}'
-```
-
-Response (`200`):
-
-```json
-{
-  "url": "https://fundable-evidence.s3.us-east-1.amazonaws.com/evidence/42/1/<uuid>.jpg?X-Amz-Algorithm=...&X-Amz-Signature=...",
-  "key": "evidence/42/1/<uuid>.jpg",
-  "contentType": "image/jpeg",
-  "expiresAt": 1712000000,
-  "requestId": "..."
-}
-```
-
-Then `PUT` the file bytes to `url` with `Content-Type: image/jpeg`. URLs expire after `S3_PRESIGN_EXPIRES_SECONDS` (default `300`).
-
-Allowed content types: `image/jpeg`, `image/png`, `image/webp`, `image/heic`, `application/pdf`.
-
-Required environment variables (see `.env.example`): `AWS_REGION`, `AWS_S3_BUCKET`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`; optional `AWS_SESSION_TOKEN` (temporary STS credentials) and `S3_PRESIGN_EXPIRES_SECONDS` (60–900). The IAM user needs only `s3:PutObject` on the evidence bucket.
+`POST /api/presign-upload` issues a short-lived AWS S3 presigned PUT URL so
+clients can upload milestone proof photos directly to a private evidence
+bucket. See `.env.example` for the required `AWS_*` variables.
 
 ## 📦 Packages
 
-### `apps/web`
-Next.js frontend application for interacting with Fundable on Stellar.
+| Package | Description |
+| --- | --- |
+| [`apps/web`](apps/web) | Next.js frontend |
+| [`contracts/`](contracts) | 13 Soroban contracts (payment streaming, campaigns, badges, insurance, ...) |
+| [`packages/sdk`](packages/sdk) | `@azable/sdk` — generated + hand-written TypeScript bindings |
+| [`services/backend`](services/backend) | Rust/Axum indexer, auth, and data API |
 
-### `contracts/payment-stream`
-Soroban contract for creating and managing payment streams with:
-- Stream creation with linear vesting
-- Withdraw, pause, resume, cancel functionality
-- Multi-token support
+## Contributing
 
-### `contracts/distributor`
-Soroban contract for token distributions:
-- Equal distribution across recipients
-- Weighted distribution with custom amounts
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-### `contracts/campaign`
-Soroban contract for on-chain fundraising campaigns:
-- Campaign creation with funding goals and expiration
-- Milestone-based payout approvals
-- Emergency pause and refund flows
-- Multi-token contribution support
+## Security
 
-### `packages/sdk`
-TypeScript SDK for interacting with the deployed contracts.
-
-## 🔗 Related Repositories
-
-- [fundable](https://github.com/Fundable-Protocol/fundable) - Starknet smart contracts
-- [evm_client](https://github.com/Fundable-Protocol/evm_client) - EVM client
-- [backend-main](https://github.com/Fundable-Protocol/backend-main) - Backend API
-
-## Workflow badges
-- ![Contracts CI](https://github.com/Fundable-Protocol/stellar_client/actions/workflows/contracts.yml/badge.svg)
-
-- ![Frontend CI](https://github.com/Fundable-Protocol/stellar_client/actions/workflows/frontend.yml/badge.svg)
-
-- ![Testnet Deploy](https://github.com/Fundable-Protocol/stellar_client/actions/workflows/deploy-testnet.yml/badge.svg)
-
+See [SECURITY.md](SECURITY.md) to report a vulnerability.
 
 ## 📄 License
 
-MIT License - see [LICENSE](LICENSE) for details.
+MIT
