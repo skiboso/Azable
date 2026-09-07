@@ -8,21 +8,21 @@ import { useCallback } from "react";
 const SOCIAL_QUERY_KEY = "social";
 
 /**
- * Hook to fetch the current user's planter info and referral info.
- * Returns planter registration status, referral stats, and reward info.
+ * Hook to fetch the current user's water-technician info and referral info.
+ * Returns technician registration status, referral stats, and reward info.
  */
 export function useReferrals() {
   const { address } = useWallet();
   const queryClient = useQueryClient();
 
-  // Fetch planter info
+  // Fetch technician info
   const {
-    data: planterInfo,
-    isLoading: isLoadingPlanter,
-    error: planterError,
+    data: technicianInfo,
+    isLoading: isLoadingTechnician,
+    error: technicianError,
   } = useQuery({
-    queryKey: [SOCIAL_QUERY_KEY, "planter", address],
-    queryFn: () => socialService.getPlanter(address!),
+    queryKey: [SOCIAL_QUERY_KEY, "technician", address],
+    queryFn: () => socialService.getTechnician(address!),
     enabled: !!address,
   });
 
@@ -47,16 +47,16 @@ export function useReferrals() {
     enabled: !!address,
   });
 
-  const isLoading = isLoadingPlanter || isLoadingReferrals || isLoadingReward;
-  const error = planterError || referralError;
+  const isLoading = isLoadingTechnician || isLoadingReferrals || isLoadingReward;
+  const error = technicianError || referralError;
 
   return {
-    planterInfo,
+    technicianInfo,
     referralInfo,
     rewardAmount,
     isLoading,
     error,
-    isRegistered: !!planterInfo,
+    isRegistered: !!technicianInfo,
     pendingRewards:
       referralInfo
         ? Number(referralInfo.referral_count - referralInfo.successful_referrals)
@@ -65,15 +65,15 @@ export function useReferrals() {
 }
 
 /**
- * Hook to register as a planter.
+ * Hook to register as a water technician.
  */
-export function useRegisterPlanter() {
+export function useRegisterTechnician() {
   const { address } = useWallet();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: (referrerAddress?: string) =>
-      socialService.registerPlanter(address!, referrerAddress),
+      socialService.registerTechnician(address!, referrerAddress),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [SOCIAL_QUERY_KEY] });
     },
@@ -96,11 +96,11 @@ export function useReferralRewardClaim() {
   const mutation = useMutation({
     mutationFn: ({
       referrerAddress,
-      referredPlanterAddress,
+      referredTechnicianAddress,
     }: {
       referrerAddress: string;
-      referredPlanterAddress: string;
-    }) => socialService.claimReferralReward(referrerAddress, referredPlanterAddress),
+      referredTechnicianAddress: string;
+    }) => socialService.claimReferralReward(referrerAddress, referredTechnicianAddress),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [SOCIAL_QUERY_KEY] });
     },
