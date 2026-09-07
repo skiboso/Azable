@@ -5,7 +5,7 @@
  *  - Boundary error codes (0, negative, very large, non-integer)
  *  - Error messages that contain multiple numeric patterns
  *  - Deeply nested / unusual error object shapes
- *  - FundableStellarError serialisation and prototype chain
+ *  - AzableStellarError serialisation and prototype chain
  *  - executeWithErrorHandling with synchronous throws and re-thrown errors
  *  - CONTRACT_ERRORS completeness and format invariants
  */
@@ -13,7 +13,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import {
   parseContractError,
-  FundableStellarError,
+  AzableStellarError,
   executeWithErrorHandling,
   CONTRACT_ERRORS,
 } from '../utils/errors';
@@ -215,37 +215,37 @@ describe('parseContractError — boundary inputs', () => {
 });
 
 // ---------------------------------------------------------------------------
-// FundableStellarError — edge cases
+// AzableStellarError — edge cases
 // ---------------------------------------------------------------------------
-describe('FundableStellarError — edge cases', () => {
+describe('AzableStellarError — edge cases', () => {
   it('is an instance of Error', () => {
-    const err = new FundableStellarError({ type: 'unknown', message: 'test' });
+    const err = new AzableStellarError({ type: 'unknown', message: 'test' });
     expect(err).toBeInstanceOf(Error);
-    expect(err).toBeInstanceOf(FundableStellarError);
+    expect(err).toBeInstanceOf(AzableStellarError);
   });
 
-  it('has name "FundableStellarError"', () => {
-    const err = new FundableStellarError({ type: 'unknown', message: 'test' });
-    expect(err.name).toBe('FundableStellarError');
+  it('has name "AzableStellarError"', () => {
+    const err = new AzableStellarError({ type: 'unknown', message: 'test' });
+    expect(err.name).toBe('AzableStellarError');
   });
 
   it('code is undefined when parsed error has no code', () => {
-    const err = new FundableStellarError({ type: 'unknown', message: 'test' });
+    const err = new AzableStellarError({ type: 'unknown', message: 'test' });
     expect(err.code).toBeUndefined();
   });
 
   it('details is undefined when parsed error has no details', () => {
-    const err = new FundableStellarError({ type: 'unknown', message: 'test' });
+    const err = new AzableStellarError({ type: 'unknown', message: 'test' });
     expect(err.details).toBeUndefined();
   });
 
   it('toString does not include "Code:" when code is undefined', () => {
-    const err = new FundableStellarError({ type: 'unknown', message: 'test' });
+    const err = new AzableStellarError({ type: 'unknown', message: 'test' });
     expect(err.toString()).not.toContain('Code:');
   });
 
   it('toString includes "Details:" when details are present', () => {
-    const err = new FundableStellarError({
+    const err = new AzableStellarError({
       type: 'contract_error',
       code: 3,
       message: 'Unauthorized',
@@ -256,7 +256,7 @@ describe('FundableStellarError — edge cases', () => {
   });
 
   it('toString includes the error code', () => {
-    const err = new FundableStellarError({
+    const err = new AzableStellarError({
       type: 'contract_error',
       code: 10,
       message: 'InsufficientWithdrawable',
@@ -265,7 +265,7 @@ describe('FundableStellarError — edge cases', () => {
   });
 
   it('getUserMessage returns the message without technical details', () => {
-    const err = new FundableStellarError({
+    const err = new AzableStellarError({
       type: 'contract_error',
       code: 5,
       message: 'InvalidTimeRange',
@@ -278,17 +278,17 @@ describe('FundableStellarError — edge cases', () => {
   });
 
   it('instanceof check works across prototype chain', () => {
-    const err = new FundableStellarError({ type: 'unknown', message: 'test' });
-    expect(err instanceof FundableStellarError).toBe(true);
+    const err = new AzableStellarError({ type: 'unknown', message: 'test' });
+    expect(err instanceof AzableStellarError).toBe(true);
     expect(err instanceof Error).toBe(true);
   });
 
   it('can be caught as a generic Error', () => {
     const throwIt = () => {
-      throw new FundableStellarError({ type: 'unknown', message: 'oops' });
+      throw new AzableStellarError({ type: 'unknown', message: 'oops' });
     };
     expect(throwIt).toThrow(Error);
-    expect(throwIt).toThrow(FundableStellarError);
+    expect(throwIt).toThrow(AzableStellarError);
   });
 
   it('preserves all fields from a full ParsedContractError', () => {
@@ -298,7 +298,7 @@ describe('FundableStellarError — edge cases', () => {
       message: 'StreamNotActive',
       details: 'stream is paused',
     };
-    const err = new FundableStellarError(parsed);
+    const err = new AzableStellarError(parsed);
     expect(err.code).toBe(7);
     expect(err.type).toBe('contract_error');
     expect(err.details).toBe('stream is paused');
@@ -326,28 +326,28 @@ describe('executeWithErrorHandling — edge cases', () => {
     expect(result).toBeNull();
   });
 
-  it('wraps a thrown number as FundableStellarError', async () => {
+  it('wraps a thrown number as AzableStellarError', async () => {
     await expect(
       executeWithErrorHandling(async () => { throw 42; })
-    ).rejects.toBeInstanceOf(FundableStellarError);
+    ).rejects.toBeInstanceOf(AzableStellarError);
   });
 
-  it('wraps a thrown object as FundableStellarError', async () => {
+  it('wraps a thrown object as AzableStellarError', async () => {
     await expect(
       executeWithErrorHandling(async () => { throw { code: 3 }; })
-    ).rejects.toBeInstanceOf(FundableStellarError);
+    ).rejects.toBeInstanceOf(AzableStellarError);
   });
 
-  it('wraps a thrown null as FundableStellarError', async () => {
+  it('wraps a thrown null as AzableStellarError', async () => {
     await expect(
       executeWithErrorHandling(async () => { throw null; })
-    ).rejects.toBeInstanceOf(FundableStellarError);
+    ).rejects.toBeInstanceOf(AzableStellarError);
   });
 
-  it('wraps a thrown undefined as FundableStellarError', async () => {
+  it('wraps a thrown undefined as AzableStellarError', async () => {
     await expect(
       executeWithErrorHandling(async () => { throw undefined; })
-    ).rejects.toBeInstanceOf(FundableStellarError);
+    ).rejects.toBeInstanceOf(AzableStellarError);
   });
 
   it('wraps a synchronous throw inside an async function', async () => {
@@ -355,7 +355,7 @@ describe('executeWithErrorHandling — edge cases', () => {
       // synchronous throw inside async function
       throw new Error('Error: 4');
     };
-    await expect(executeWithErrorHandling(op)).rejects.toBeInstanceOf(FundableStellarError);
+    await expect(executeWithErrorHandling(op)).rejects.toBeInstanceOf(AzableStellarError);
   });
 
   it('preserves the contract error code through the wrapper', async () => {
@@ -363,8 +363,8 @@ describe('executeWithErrorHandling — edge cases', () => {
       await executeWithErrorHandling(async () => { throw new Error('Error: 10'); });
       expect.fail('should have thrown');
     } catch (err) {
-      expect(err).toBeInstanceOf(FundableStellarError);
-      expect((err as FundableStellarError).code).toBe(10);
+      expect(err).toBeInstanceOf(AzableStellarError);
+      expect((err as AzableStellarError).code).toBe(10);
     }
   });
 
@@ -376,8 +376,8 @@ describe('executeWithErrorHandling — edge cases', () => {
       );
       expect.fail('should have thrown');
     } catch (err) {
-      expect(err).toBeInstanceOf(FundableStellarError);
-      expect((err as FundableStellarError).code).toBe(6);
+      expect(err).toBeInstanceOf(AzableStellarError);
+      expect((err as AzableStellarError).code).toBe(6);
     }
   });
 
@@ -393,12 +393,12 @@ describe('executeWithErrorHandling — edge cases', () => {
 
   it('handles a rejected promise (not a thrown error)', async () => {
     const op = () => Promise.reject(new Error('Error: 11'));
-    await expect(executeWithErrorHandling(op)).rejects.toBeInstanceOf(FundableStellarError);
+    await expect(executeWithErrorHandling(op)).rejects.toBeInstanceOf(AzableStellarError);
   });
 
   it('handles a rejected promise with a non-Error value', async () => {
     const op = () => Promise.reject('raw string rejection');
-    await expect(executeWithErrorHandling(op)).rejects.toBeInstanceOf(FundableStellarError);
+    await expect(executeWithErrorHandling(op)).rejects.toBeInstanceOf(AzableStellarError);
   });
 });
 

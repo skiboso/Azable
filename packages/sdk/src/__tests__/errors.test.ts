@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import {
   parseContractError,
-  FundableStellarError,
+  AzableStellarError,
   executeWithErrorHandling,
   CONTRACT_ERRORS,
 } from "../utils/errors";
@@ -182,12 +182,12 @@ describe("Error Handling Utilities", () => {
     });
   });
 
-  describe("FundableStellarError", () => {
+  describe("AzableStellarError", () => {
     it("creates error from parsed error", () => {
       const parsed = parseContractError("Error: 5");
-      const error = new FundableStellarError(parsed);
+      const error = new AzableStellarError(parsed);
 
-      expect(error).toBeInstanceOf(FundableStellarError);
+      expect(error).toBeInstanceOf(AzableStellarError);
       expect(error).toBeInstanceOf(Error);
       expect(error.code).toBe(5);
       expect(error.type).toBe("contract_error");
@@ -195,7 +195,7 @@ describe("Error Handling Utilities", () => {
 
     it("provides user-friendly message", () => {
       const parsed = parseContractError("Error: 5");
-      const error = new FundableStellarError(parsed);
+      const error = new AzableStellarError(parsed);
 
       const userMessage = error.getUserMessage();
       expect(userMessage).toContain("InvalidTimeRange");
@@ -204,7 +204,7 @@ describe("Error Handling Utilities", () => {
 
     it("provides user-friendly message with suggestion", () => {
       const parsed = parseContractError("Error: 5");
-      const error = new FundableStellarError(parsed);
+      const error = new AzableStellarError(parsed);
 
       const userMessage = error.getUserMessageWithSuggestion();
       expect(userMessage).toContain("InvalidTimeRange");
@@ -214,10 +214,10 @@ describe("Error Handling Utilities", () => {
 
     it("provides formatted toString output", () => {
       const parsed = parseContractError("Error: 5");
-      const error = new FundableStellarError(parsed);
+      const error = new AzableStellarError(parsed);
 
       const formatted = error.toString();
-      expect(formatted).toContain("FundableStellarError");
+      expect(formatted).toContain("AzableStellarError");
       expect(formatted).toContain("InvalidTimeRange");
       expect(formatted).toContain("[Code: 5]");
       expect(formatted).toContain("Suggestion:");
@@ -225,7 +225,7 @@ describe("Error Handling Utilities", () => {
 
     it("includes operation context when available", () => {
       const parsed = parseContractError("Error: 3", "Create stream");
-      const error = new FundableStellarError(parsed);
+      const error = new AzableStellarError(parsed);
 
       const formatted = error.toString();
       expect(formatted).toContain("[Operation: Create stream]");
@@ -233,7 +233,7 @@ describe("Error Handling Utilities", () => {
 
     it("includes details in toString when available", () => {
       const parsed = parseContractError(new Error("Error: 5 - Extra details"));
-      const error = new FundableStellarError(parsed);
+      const error = new AzableStellarError(parsed);
 
       const formatted = error.toString();
       expect(formatted).toContain("Details:");
@@ -249,7 +249,7 @@ describe("Error Handling Utilities", () => {
       expect(result).toBe("success");
     });
 
-    it("wraps thrown errors as FundableStellarError", async () => {
+    it("wraps thrown errors as AzableStellarError", async () => {
       const operation = async () => {
         throw new Error("Error: 7");
       };
@@ -258,8 +258,8 @@ describe("Error Handling Utilities", () => {
         await executeWithErrorHandling(operation);
         expect.fail("Should have thrown");
       } catch (error) {
-        expect(error).toBeInstanceOf(FundableStellarError);
-        expect((error as FundableStellarError).code).toBe(7);
+        expect(error).toBeInstanceOf(AzableStellarError);
+        expect((error as AzableStellarError).code).toBe(7);
       }
     });
 
@@ -272,10 +272,10 @@ describe("Error Handling Utilities", () => {
         await executeWithErrorHandling(operation, "Authorize operation");
         expect.fail("Should have thrown");
       } catch (error) {
-        const fundableError = error as FundableStellarError;
-        expect(fundableError.type).toBe("contract_error");
-        expect(fundableError.message).toContain("Unauthorized");
-        expect(fundableError.operation).toBe("Authorize operation");
+        const azableError = error as AzableStellarError;
+        expect(azableError.type).toBe("contract_error");
+        expect(azableError.message).toContain("Unauthorized");
+        expect(azableError.operation).toBe("Authorize operation");
       }
     });
 
@@ -288,7 +288,7 @@ describe("Error Handling Utilities", () => {
         await executeWithErrorHandling(operation);
         expect.fail("Should have thrown");
       } catch (error) {
-        expect(error).toBeInstanceOf(FundableStellarError);
+        expect(error).toBeInstanceOf(AzableStellarError);
       }
     });
 
@@ -301,9 +301,9 @@ describe("Error Handling Utilities", () => {
         await executeWithErrorHandling(operation, "Create stream");
         expect.fail("Should have thrown");
       } catch (error) {
-        const fundableError = error as FundableStellarError;
-        expect(fundableError.operation).toBe("Create stream");
-        expect(fundableError.suggestion).toBeDefined();
+        const azableError = error as AzableStellarError;
+        expect(azableError.operation).toBe("Create stream");
+        expect(azableError.suggestion).toBeDefined();
       }
     });
   });
