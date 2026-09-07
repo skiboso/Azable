@@ -1,7 +1,7 @@
 import type {
-  FundableStream,
+  AzableStream,
   StreamCluster,
-  FundableMapFilters,
+  AzableMapFilters,
   JobSortOption,
 } from "./types";
 
@@ -30,11 +30,11 @@ export function getStatusColor(status: string): string {
   }
 }
 
-export function clusterStreams(streams: FundableStream[]): StreamCluster[] {
+export function clusterStreams(streams: AzableStream[]): StreamCluster[] {
   if (streams.length === 0) return [];
 
   const stridSize = 2;
-  const buckets = new Map<string, FundableStream[]>();
+  const buckets = new Map<string, AzableStream[]>();
 
   for (const stream of streams) {
     const lat = Math.round(stream.location.lat / gridSize) * gridSize;
@@ -58,9 +58,9 @@ export function clusterStreams(streams: FundableStream[]): StreamCluster[] {
 }
 
 export function filterStreams(
-  streams: FundableStream[],
-  filters?: FundableMapFilters,
-): FundableStream[] {
+  streams: AzableStream[],
+  filters?: AzableMapFilters,
+): AzableStream[] {
   if (!filters) return streams;
   let filtered = [...streams];
 
@@ -85,7 +85,7 @@ export function filterStreams(
   return filtered;
 }
 
-export function getCategories(streams: FundableStream[]): string[] {
+export function getCategories(streams: AzableStream[]): string[] {
   return [...new Set(streams.map((s) => s.category))].sort();
 }
 
@@ -97,16 +97,16 @@ export function getCategories(streams: FundableStream[]): string[] {
  * - "altitude"  -> lowest altitude first (missing altitudes go last)
  */
 export function sortStreams(
-  streams: FundableStream[],
+  streams: AzableStream[],
   sortBy: JobSortOption,
-): FundableStream[] {
+): AzableStream[] {
   const sorted = [...streams];
 
   switch (sortBy) {
     case "pay": {
       sorted.sort((a, b) => {
-        const aPay = a.payRate ?? parseFloat(a.amount) || 0;
-        const bPay = b.payRate ?? parseFloat(b.amount) || 0;
+        const aPay = a.payRate ?? (parseFloat(a.amount) || 0);
+        const bPay = b.payRate ?? (parseFloat(b.amount) || 0);
         return bPay - aPay;
       });
       break;
