@@ -173,7 +173,7 @@ impl HelloContract {
         <textarea
           value={sourceCode}
           onChange={(e) => setSourceCode(e.target.value)}
-          className="flex-1 w-full bg-zinc-950 border border-zinc-800 rounded-md p-4 font-mono text-sm text-zinc-300 focus:outline-none focus:ring-1 focus:ring-fundable-purple-2"
+          className="flex-1 w-full bg-zinc-950 border border-zinc-800 rounded-md p-4 font-mono text-sm text-zinc-300 focus:outline-none focus:ring-1 focus:ring-azable-purple-2"
           spellCheck={false}
           disabled={isDeploying}
         />

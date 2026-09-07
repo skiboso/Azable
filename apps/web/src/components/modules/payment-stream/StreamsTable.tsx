@@ -187,7 +187,7 @@ function StreamsTable({
                                                 const element = document.getElementById("create-stream-card");
                                                 element?.scrollIntoView({ behavior: "smooth" });
                                             }}
-                                            className="mt-4 px-4 py-2 bg-gradient-to-r from-fundable-purple to-purple-600 text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+                                            className="mt-4 px-4 py-2 bg-gradient-to-r from-azable-purple to-purple-600 text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
                                         >
                                             Create your first stream
                                         </button>
