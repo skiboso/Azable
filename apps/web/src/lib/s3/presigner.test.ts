@@ -13,7 +13,7 @@ const FIXED_NOW = 1_700_000_000; // deterministic "now" for stable signatures
 function testConfig(overrides: Partial<S3Config> = {}): S3Config {
   return {
     AWS_REGION: "us-east-1",
-    AWS_S3_BUCKET: "fundable-evidence",
+    AWS_S3_BUCKET: "azable-evidence",
     AWS_ACCESS_KEY_ID: "AKIAIOSFODNN7EXAMPLE",
     AWS_SECRET_ACCESS_KEY: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
     S3_PRESIGN_EXPIRES_SECONDS: 300,
@@ -45,7 +45,7 @@ describe("createPresignedPutUrl", () => {
 
     const url = new URL(result.url);
     expect(url.protocol).toBe("https:");
-    expect(url.hostname).toBe("fundable-evidence.s3.us-east-1.amazonaws.com");
+    expect(url.hostname).toBe("azable-evidence.s3.us-east-1.amazonaws.com");
     expect(url.searchParams.get("X-Amz-Algorithm")).toBe("AWS4-HMAC-SHA256");
     expect(url.searchParams.get("X-Amz-Credential")).toContain(
       "AKIAIOSFODNN7EXAMPLE/",
