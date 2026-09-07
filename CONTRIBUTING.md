@@ -24,11 +24,20 @@ services/backend/ Rust/Axum backend — indexer, auth, off-chain data API
 docs/             Architecture, API, and contract documentation
 ```
 
+## Branching
+
+- `main` tracks what's live — merges here go straight to the deployed app.
+- `develop` is the integration branch. **Open PRs against `develop`, not
+  `main`**, unless you're fixing something already broken in production.
+- Branch off `develop` for your work (`git checkout -b feat/thing develop`);
+  `develop` periodically merges into `main` for a release.
+
 ## Getting set up
 
 ```bash
 git clone https://github.com/skiboso/Azable.git
 cd Azable
+git checkout develop
 pnpm install
 cp .env.example .env
 ```

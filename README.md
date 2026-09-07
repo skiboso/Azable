@@ -9,6 +9,8 @@ their campaigns fund.
 ![Backend CI](https://github.com/skiboso/Azable/actions/workflows/backend.yml/badge.svg)
 ![Frontend CI](https://github.com/skiboso/Azable/actions/workflows/frontend.yml/badge.svg)
 
+🟢 **Live (testnet):** [azableweb-production.up.railway.app](https://azableweb-production.up.railway.app)
+
 ## 🚀 Quickstart (5 minutes)
 
 ### Prerequisites
