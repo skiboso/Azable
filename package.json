@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "description": "Azable - Stellar blockchain client and smart contracts",
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "pnpm --filter @azable/web dev",
     "build": "pnpm --filter @azable/web build",
