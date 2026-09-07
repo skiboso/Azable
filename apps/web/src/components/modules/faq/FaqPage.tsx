@@ -32,7 +32,7 @@ export function FaqPage() {
       <div>
         <h1 className="text-2xl font-bold text-white">Frequently Asked Questions</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Common questions from sponsors and planters. Search below or browse by category.
+          Common questions from sponsors and technicians. Search below or browse by category.
         </p>
       </div>
 

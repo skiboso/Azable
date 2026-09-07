@@ -1,6 +1,6 @@
 export interface FaqItem {
   id: string;
-  category: "General" | "For Sponsors" | "For Planters" | "Privacy & Verification";
+  category: "General" | "For Sponsors" | "For Technicians" | "Privacy & Verification";
   question: string;
   answer: string;
 }
@@ -11,14 +11,14 @@ export const FAQ_ITEMS: FaqItem[] = [
     category: "General",
     question: "What does this platform do?",
     answer:
-      "Sponsors fund tree-planting and impact campaigns, and planters get paid for verified work over time. Funds move through on-chain payment streams and distributions on Stellar, so both sides can see exactly where the money goes.",
+      "Sponsors fund water-access and impact campaigns, and technicians get paid for verified work over time. Funds move through on-chain payment streams and distributions on Stellar, so both sides can see exactly where the money goes.",
   },
   {
     id: "how-verification-works",
     category: "Privacy & Verification",
     question: "How does verification work?",
     answer:
-      "Eligible donors and planters are enrolled into a verification set off-chain, then only a single summary value (a Merkle root) is published on-chain — never the underlying list of participants. To take an action, you prove you belong to that set using a cryptographic inclusion proof, without revealing which entry is yours. A one-time-use marker (a nullifier) is recorded to stop the same enrollment from being used twice, but that marker cannot be traced back to your identity or wallet.",
+      "Eligible donors and technicians are enrolled into a verification set off-chain, then only a single summary value (a Merkle root) is published on-chain — never the underlying list of participants. To take an action, you prove you belong to that set using a cryptographic inclusion proof, without revealing which entry is yours. A one-time-use marker (a nullifier) is recorded to stop the same enrollment from being used twice, but that marker cannot be traced back to your identity or wallet.",
   },
   {
     id: "donate-anonymously",
@@ -29,14 +29,14 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     id: "withdraw-earnings",
-    category: "For Planters",
+    category: "For Technicians",
     question: "How do I withdraw earnings?",
     answer:
       "Earnings arrive through a payment stream that vests gradually over the stream's schedule. Open the Payment Stream page to see what's currently claimable and withdraw it to your connected wallet. From there, use the Offramp page if you'd like to convert your tokens to fiat through a supported provider.",
   },
   {
     id: "stream-vesting",
-    category: "For Planters",
+    category: "For Technicians",
     question: "Why can't I withdraw the full amount right away?",
     answer:
       "Streams release funds gradually between a start and end time rather than all at once, so the claimable amount grows over time. You can check exactly how much is currently claimable at any point from the Payment Stream page before you withdraw.",
@@ -64,7 +64,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     id: "offramp-tokens",
-    category: "For Planters",
+    category: "For Technicians",
     question: "Which tokens can I convert to fiat?",
     answer:
       "The Offramp page currently supports converting USDC, USDT, and EURC. It shows a live quote — exchange rate, fees, and estimated amount received — before you confirm, and you can compare providers if more than one is available.",
