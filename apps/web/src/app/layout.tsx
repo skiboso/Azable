@@ -30,7 +30,7 @@ const bricolageGrotesque = Bricolage_Grotesque({
 
 
 export const metadata: Metadata = {
-  title: "Fundable Stellar - Decentralized Payment Streams",
+  title: "Azable Stellar - Decentralized Payment Streams",
   description: "Create seamless payment streams and token distributions on the Stellar blockchain",
 };
 
