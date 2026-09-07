@@ -1,13 +1,13 @@
-import { Client as ContractClient } from "./generated/planter/src/index.js";
+import { Client as ContractClient } from "./generated/water-technician/src/index.js";
 import {
   AssembledTransaction,
   ClientOptions as ContractClientOptions,
   Address,
 } from "@stellar/stellar-sdk/contract";
 import {
-  PlanterInfo,
+  WaterTechnicianInfo,
   ReferralInfo,
-} from "./generated/planter/src/index.js";
+} from "./generated/water-technician/src/index.js";
 import { executeWithErrorHandling } from "./utils/errors.js";
 
 /**
@@ -23,17 +23,17 @@ function addressToString(address: AddressParam): string {
 }
 
 /**
- * High-level client for interacting with the Planter contract.
+ * High-level client for interacting with the Water technician contract.
  * Provides a type-safe and DX-optimized interface for all contract methods.
  *
  * All methods include error handling that parses Soroban simulation errors
  * and transaction result XDR to provide human-readable error messages.
  */
-export class PlanterClient {
+export class WaterTechnicianClient {
   private client: ContractClient;
 
   /**
-   * Create a new PlanterClient.
+   * Create a new WaterTechnicianClient.
    * @param options Configuration for the underlying contract client.
    */
   constructor(options: ContractClientOptions) {
@@ -41,9 +41,9 @@ export class PlanterClient {
   }
 
   /**
-   * Initialize the planter contract.
+   * Initialize the technician contract.
    * @param params Parameters including admin, reward token, and reward amount.
-   * @throws {FundableStellarError} If initialization fails with a human-readable error message
+   * @throws {AzableStellarError} If initialization fails with a human-readable error message
    */
   public async initialize(params: {
     admin: AddressParam;
@@ -59,63 +59,63 @@ export class PlanterClient {
   }
 
   /**
-   * Register a new planter with an optional referrer.
-   * @param params Parameters including planter address and optional referrer.
-   * @throws {FundableStellarError} If registration fails with a human-readable error message
+   * Register a new technician with an optional referrer.
+   * @param params Parameters including technician address and optional referrer.
+   * @throws {AzableStellarError} If registration fails with a human-readable error message
    */
-  public async registerPlanter(params: {
-    planter: AddressParam;
+  public async registerTechnician(params: {
+    technician: AddressParam;
     referrer?: AddressParam;
   }): Promise<AssembledTransaction> {
-    const tx = await this.client.register_planter({
-      planter: new Address(addressToString(params.planter)),
+    const tx = await this.client.register_technician({
+      technician: new Address(addressToString(params.technician)),
       referrer: params.referrer
         ? new Address(addressToString(params.referrer))
         : undefined,
     });
-    return executeWithErrorHandling(tx, "register_planter");
+    return executeWithErrorHandling(tx, "register_technician");
   }
 
   /**
-   * Record a job completion for a planter.
-   * @param params Parameters including planter address.
-   * @throws {FundableStellarError} If job completion fails with a human-readable error message
+   * Record a job completion for a technician.
+   * @param params Parameters including technician address.
+   * @throws {AzableStellarError} If job completion fails with a human-readable error message
    */
   public async completeJob(params: {
-    planter: AddressParam;
+    technician: AddressParam;
   }): Promise<AssembledTransaction> {
     const tx = await this.client.complete_job({
-      planter: new Address(addressToString(params.planter)),
+      technician: new Address(addressToString(params.technician)),
     });
     return executeWithErrorHandling(tx, "complete_job");
   }
 
   /**
-   * Claim referral reward for a referred planter's first job completion.
-   * @param params Parameters including referrer and referred planter addresses.
-   * @throws {FundableStellarError} If reward claim fails with a human-readable error message
+   * Claim referral reward for a referred technician's first job completion.
+   * @param params Parameters including referrer and referred technician addresses.
+   * @throws {AzableStellarError} If reward claim fails with a human-readable error message
    */
   public async claimReferralReward(params: {
     referrer: AddressParam;
-    referredPlanter: AddressParam;
+    referredTechnician: AddressParam;
   }): Promise<AssembledTransaction> {
     const tx = await this.client.claim_referral_reward({
       referrer: new Address(addressToString(params.referrer)),
-      referred_planter: new Address(addressToString(params.referredPlanter)),
+      referred_technician: new Address(addressToString(params.referredTechnician)),
     });
     return executeWithErrorHandling(tx, "claim_referral_reward");
   }
 
   /**
-   * Get planter information.
-   * @param params Parameters including planter address.
-   * @returns Planter information including job count and reward status.
+   * Get technician information.
+   * @param params Parameters including technician address.
+   * @returns Water technician information including job count and reward status.
    */
-  public async getPlanter(params: {
-    planter: AddressParam;
-  }): Promise<PlanterInfo> {
-    const result = await this.client.get_planter({
-      planter: new Address(addressToString(params.planter)),
+  public async getTechnician(params: {
+    technician: AddressParam;
+  }): Promise<WaterTechnicianInfo> {
+    const result = await this.client.get_technician({
+      technician: new Address(addressToString(params.technician)),
     });
     return result;
   }
@@ -146,7 +146,7 @@ export class PlanterClient {
   /**
    * Update reward amount (admin only).
    * @param params Parameters including new reward amount.
-   * @throws {FundableStellarError} If update fails with a human-readable error message
+   * @throws {AzableStellarError} If update fails with a human-readable error message
    */
   public async setRewardAmount(params: {
     newAmount: bigint;
