@@ -3,7 +3,7 @@ import {
   getBonusForRank,
   getMonthlyLeaderboard,
   monthKey,
-  recordPlanterCompletion,
+  recordTechnicianCompletion,
   recordSponsorContribution,
   type LeaderboardStore,
 } from "./leaderboard.service";
@@ -37,12 +37,12 @@ describe("leaderboard.service", () => {
 
   it("assigns bonus tiers to the top 3 ranks only", () => {
     const store = memoryStore();
-    recordPlanterCompletion("p1", 10, store, JAN);
-    recordPlanterCompletion("p2", 8, store, JAN);
-    recordPlanterCompletion("p3", 6, store, JAN);
-    recordPlanterCompletion("p4", 4, store, JAN);
+    recordTechnicianCompletion("p1", 10, store, JAN);
+    recordTechnicianCompletion("p2", 8, store, JAN);
+    recordTechnicianCompletion("p3", 6, store, JAN);
+    recordTechnicianCompletion("p4", 4, store, JAN);
 
-    const board = getMonthlyLeaderboard("planter", monthKey(JAN), store);
+    const board = getMonthlyLeaderboard("technician", monthKey(JAN), store);
 
     expect(board[0].bonus?.type).toBe("XLM");
     expect(board[1].bonus?.type).toBe("NFT");
@@ -61,16 +61,16 @@ describe("leaderboard.service", () => {
     expect(janBoard).toHaveLength(1);
   });
 
-  it("keeps sponsor and planter points in separate boards", () => {
+  it("keeps sponsor and technician points in separate boards", () => {
     const store = memoryStore();
     recordSponsorContribution("shared-address", 100, store, JAN);
-    recordPlanterCompletion("shared-address", 3, store, JAN);
+    recordTechnicianCompletion("shared-address", 3, store, JAN);
 
     const sponsorBoard = getMonthlyLeaderboard("sponsor", monthKey(JAN), store);
-    const planterBoard = getMonthlyLeaderboard("planter", monthKey(JAN), store);
+    const technicianBoard = getMonthlyLeaderboard("technician", monthKey(JAN), store);
 
     expect(sponsorBoard[0].points).toBe(100);
-    expect(planterBoard[0].points).toBe(3);
+    expect(technicianBoard[0].points).toBe(3);
   });
 
   it("ignores invalid or non-positive point amounts", () => {
