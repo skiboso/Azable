@@ -6,7 +6,7 @@ import {
   createSponsorTeam,
   inviteSponsorToTeam,
   listSponsorTeams,
-  recordTeamTreeSponsorship,
+  recordTeamWaterProjectSponsorship,
   type SponsorTeam,
 } from "@/services/social.service";
 
@@ -15,12 +15,12 @@ export function SponsorTeamDashboard() {
   const [teams, setTeams] = useState<SponsorTeam[]>(() => listSponsorTeams());
   const [name, setName] = useState("");
   const [invite, setInvite] = useState("");
-  const [treeId, setTreeId] = useState("");
+  const [projectId, setProjectId] = useState("");
   const [selectedTeamId, setSelectedTeamId] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isSubmittingTeam, setIsSubmittingTeam] = useState(false);
   const [isSubmittingInvite, setIsSubmittingInvite] = useState(false);
-  const [isSubmittingTree, setIsSubmittingTree] = useState(false);
+  const [isSubmittingProject, setIsSubmittingProject] = useState(false);
   const ownedTeams = useMemo(() => teams.filter((team) => team.owner === address), [teams, address]);
   const selectedTeam = teams.find((team) => team.id === selectedTeamId) ?? ownedTeams[0];
 
@@ -61,28 +61,28 @@ export function SponsorTeamDashboard() {
     }
   }
 
-  function submitTree(event: FormEvent) {
+  function submitProject(event: FormEvent) {
     event.preventDefault();
-    setIsSubmittingTree(true);
+    setIsSubmittingProject(true);
     try {
       if (!address || !selectedTeam) throw new Error("Create a team first");
-      recordTeamTreeSponsorship(selectedTeam.id, address, treeId);
-      setTreeId("");
+      recordTeamWaterProjectSponsorship(selectedTeam.id, address, projectId);
+      setProjectId("");
       setError(null);
       refresh();
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Unable to record sponsorship");
     } finally {
-      setIsSubmittingTree(false);
+      setIsSubmittingProject(false);
     }
   }
 
   return (
     <section className="mx-auto max-w-4xl space-y-6 rounded-2xl border border-white/10 bg-[#0F1621] p-6 text-white shadow-xl">
       <header>
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300">Team forest</p>
-        <h1 className="mt-2 text-2xl font-bold">Sponsor trees together</h1>
-        <p className="mt-2 text-sm text-slate-400">Invite friends, track every sponsored tree, and see your team’s combined impact.</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300">Team water access</p>
+        <h1 className="mt-2 text-2xl font-bold">Sponsor water access together</h1>
+        <p className="mt-2 text-sm text-slate-400">Invite friends, track every sponsored water project, and see your team’s combined impact.</p>
       </header>
 
       {!address && <p className="rounded-lg border border-amber-400/30 bg-amber-400/10 p-3 text-sm text-amber-200">Connect a wallet to create or manage a sponsor team.</p>}
@@ -101,7 +101,7 @@ export function SponsorTeamDashboard() {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <h2 className="font-semibold">{selectedTeam.name}</h2>
-              <p className="text-xs text-slate-400">{selectedTeam.members.length} members · {selectedTeam.sponsoredTrees.length} trees sponsored</p>
+              <p className="text-xs text-slate-400">{selectedTeam.members.length} members · {selectedTeam.sponsoredWaterProjects.length} water projects sponsored</p>
             </div>
             <div className="text-right"><p className="text-2xl font-bold text-emerald-300">{selectedTeam.totalImpact}</p><p className="text-xs text-slate-400">team impact points</p></div>
           </div>
@@ -113,11 +113,11 @@ export function SponsorTeamDashboard() {
                 {isSubmittingInvite ? "Inviting..." : "Invite"}
               </button>
             </form>
-            <form onSubmit={submitTree} className="flex gap-2">
-              <label className="sr-only" htmlFor="team-tree">Tree ID</label>
-              <input id="team-tree" value={treeId} onChange={(event) => setTreeId(event.target.value)} placeholder="Sponsored tree ID" className="min-w-0 flex-1 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs" disabled={isSubmittingTree} />
-              <button type="submit" disabled={isSubmittingTree} className="rounded-lg border border-white/10 px-3 py-2 text-xs disabled:opacity-50">
-                {isSubmittingTree ? "Adding..." : "Add tree"}
+            <form onSubmit={submitProject} className="flex gap-2">
+              <label className="sr-only" htmlFor="team-project">Project ID</label>
+              <input id="team-project" value={projectId} onChange={(event) => setProjectId(event.target.value)} placeholder="Sponsored project ID" className="min-w-0 flex-1 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs" disabled={isSubmittingProject} />
+              <button type="submit" disabled={isSubmittingProject} className="rounded-lg border border-white/10 px-3 py-2 text-xs disabled:opacity-50">
+                {isSubmittingProject ? "Adding..." : "Add project"}
               </button>
             </form>
           </div>

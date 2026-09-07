@@ -1,14 +1,14 @@
-import { PlanterClient, PlanterInfo, ReferralInfo } from "@fundable/sdk";
+import { WaterTechnicianClient, WaterTechnicianInfo, ReferralInfo } from "@azable/sdk";
 
 /**
- * Service for interacting with the Planter referral system.
+ * Service for interacting with the water technician referral system.
  */
 export class SocialService {
-  private planterClient: PlanterClient | null = null;
+  private technicianClient: WaterTechnicianClient | null = null;
 
   /**
-   * Initialize the social service with the planter contract client.
-   * @param contractId The deployed planter contract ID
+   * Initialize the social service with the water technician contract client.
+   * @param contractId The deployed water technician contract ID
    * @param networkPassphrase The network passphrase
    * @param rpcUrl The RPC URL for Soroban
    */
@@ -17,7 +17,7 @@ export class SocialService {
     networkPassphrase: string,
     rpcUrl: string
   ) {
-    this.planterClient = new PlanterClient({
+    this.technicianClient = new WaterTechnicianClient({
       contractId,
       networkPassphrase,
       rpcUrl,
@@ -25,20 +25,20 @@ export class SocialService {
   }
 
   /**
-   * Register a new planter with an optional referrer.
-   * @param planterAddress The planter's address
+   * Register a new water technician with an optional referrer.
+   * @param technicianAddress The technician's address
    * @param referrerAddress Optional referrer's address
    */
-  async registerPlanter(
-    planterAddress: string,
+  async registerTechnician(
+    technicianAddress: string,
     referrerAddress?: string
   ): Promise<void> {
-    if (!this.planterClient) {
+    if (!this.technicianClient) {
       throw new Error("SocialService not initialized");
     }
 
-    const tx = await this.planterClient.registerPlanter({
-      planter: planterAddress,
+    const tx = await this.technicianClient.registerTechnician({
+      technician: technicianAddress,
       referrer: referrerAddress,
     });
 
@@ -48,54 +48,54 @@ export class SocialService {
   }
 
   /**
-   * Record a job completion for a planter.
-   * @param planterAddress The planter's address
+   * Record a job completion for a water technician.
+   * @param technicianAddress The technician's address
    */
-  async completeJob(planterAddress: string): Promise<void> {
-    if (!this.planterClient) {
+  async completeJob(technicianAddress: string): Promise<void> {
+    if (!this.technicianClient) {
       throw new Error("SocialService not initialized");
     }
 
-    const tx = await this.planterClient.completeJob({
-      planter: planterAddress,
+    const tx = await this.technicianClient.completeJob({
+      technician: technicianAddress,
     });
 
     await tx.signAndSend();
   }
 
   /**
-   * Claim referral reward for a referred planter's first job completion.
+   * Claim referral reward for a referred water technician's first job completion.
    * @param referrerAddress The referrer's address
-   * @param referredPlanterAddress The referred planter's address
+   * @param referredTechnicianAddress The referred technician's address
    */
   async claimReferralReward(
     referrerAddress: string,
-    referredPlanterAddress: string
+    referredTechnicianAddress: string
   ): Promise<void> {
-    if (!this.planterClient) {
+    if (!this.technicianClient) {
       throw new Error("SocialService not initialized");
     }
 
-    const tx = await this.planterClient.claimReferralReward({
+    const tx = await this.technicianClient.claimReferralReward({
       referrer: referrerAddress,
-      referredPlanter: referredPlanterAddress,
+      referredTechnician: referredTechnicianAddress,
     });
 
     await tx.signAndSend();
   }
 
   /**
-   * Get planter information.
-   * @param planterAddress The planter's address
-   * @returns Planter information
+   * Get water technician information.
+   * @param technicianAddress The technician's address
+   * @returns Water technician information
    */
-  async getPlanter(planterAddress: string): Promise<PlanterInfo> {
-    if (!this.planterClient) {
+  async getTechnician(technicianAddress: string): Promise<WaterTechnicianInfo> {
+    if (!this.technicianClient) {
       throw new Error("SocialService not initialized");
     }
 
-    return await this.planterClient.getPlanter({
-      planter: planterAddress,
+    return await this.technicianClient.getTechnician({
+      technician: technicianAddress,
     });
   }
 
@@ -105,11 +105,11 @@ export class SocialService {
    * @returns Referral information
    */
   async getReferralInfo(referrerAddress: string): Promise<ReferralInfo> {
-    if (!this.planterClient) {
+    if (!this.technicianClient) {
       throw new Error("SocialService not initialized");
     }
 
-    return await this.planterClient.getReferralInfo({
+    return await this.technicianClient.getReferralInfo({
       referrer: referrerAddress,
     });
   }
@@ -119,11 +119,11 @@ export class SocialService {
    * @returns Current reward amount in stroops
    */
   async getRewardAmount(): Promise<bigint> {
-    if (!this.planterClient) {
+    if (!this.technicianClient) {
       throw new Error("SocialService not initialized");
     }
 
-    return await this.planterClient.getRewardAmount();
+    return await this.technicianClient.getRewardAmount();
   }
 
   /**
@@ -131,11 +131,11 @@ export class SocialService {
    * @param newAmount New reward amount in stroops
    */
   async setRewardAmount(newAmount: bigint): Promise<void> {
-    if (!this.planterClient) {
+    if (!this.technicianClient) {
       throw new Error("SocialService not initialized");
     }
 
-    const tx = await this.planterClient.setRewardAmount({
+    const tx = await this.technicianClient.setRewardAmount({
       newAmount,
     });
 
@@ -159,7 +159,7 @@ export type SponsorTeam = {
   name: string;
   owner: string;
   members: TeamMember[];
-  sponsoredTrees: string[];
+  sponsoredWaterProjects: string[];
   totalImpact: number;
   createdAt: string;
 };
@@ -177,8 +177,8 @@ export interface SocialStore {
   setItem(key: string, value: string): void;
 }
 
-const TEAMS_KEY = "fundable:sponsor-teams";
-const REWARDS_KEY = "fundable:referral-rewards";
+const TEAMS_KEY = "azable:sponsor-teams";
+const REWARDS_KEY = "azable:referral-rewards";
 
 const browserStore: SocialStore = {
   getItem: (key) => (typeof window === "undefined" ? null : window.localStorage.getItem(key)),
@@ -221,7 +221,7 @@ export function createSponsorTeam(
     name: trimmedName,
     owner,
     members: [{ address: owner, role: "owner", joinedAt: now.toISOString() }],
-    sponsoredTrees: [],
+    sponsoredWaterProjects: [],
     totalImpact: 0,
     createdAt: now.toISOString(),
   };
@@ -246,10 +246,10 @@ export function inviteSponsorToTeam(
   return team;
 }
 
-export function recordTeamTreeSponsorship(
+export function recordTeamWaterProjectSponsorship(
   teamId: string,
   sponsorAddress: string,
-  treeId: string,
+  projectId: string,
   impact = 1,
   store: SocialStore = browserStore,
 ): SponsorTeam {
@@ -257,8 +257,8 @@ export function recordTeamTreeSponsorship(
   const team = teams.find((candidate) => candidate.id === teamId);
   if (!team) throw new Error("Team not found");
   if (!team.members.some((member) => member.address === sponsorAddress)) throw new Error("Sponsor is not a team member");
-  if (!treeId || team.sponsoredTrees.includes(treeId)) return team;
-  team.sponsoredTrees.push(treeId);
+  if (!projectId || team.sponsoredWaterProjects.includes(projectId)) return team;
+  team.sponsoredWaterProjects.push(projectId);
   team.totalImpact += Math.max(0, impact);
   write(store, TEAMS_KEY, teams);
   return team;
@@ -268,15 +268,15 @@ export function listReferralRewards(store: SocialStore = browserStore): Referral
   return read<ReferralReward[]>(store, REWARDS_KEY, []);
 }
 
-/** Record the first completed tree for a referred sponsor, capped at 10 rewards/month. */
+/** Record the first completed water project for a referred sponsor, capped at 10 rewards/month. */
 export function recordReferralCompletion(
   referrer: string,
   referredSponsor: string,
-  completedTreeId: string,
+  completedProjectId: string,
   store: SocialStore = browserStore,
   now = new Date(),
 ): ReferralReward | null {
-  if (!referrer || !referredSponsor || !completedTreeId || referrer === referredSponsor) return null;
+  if (!referrer || !referredSponsor || !completedProjectId || referrer === referredSponsor) return null;
   const month = monthKey(now);
   const rewards = listReferralRewards(store);
   if (rewards.some((reward) => reward.referredSponsor === referredSponsor)) return null;
