@@ -7,23 +7,21 @@ members = [
     "nft-stream",
     "campaign-funding",
     "soulbound-badge",
-    "verifier-penalty"
-    "planter",
+    "verifier-penalty",
+    "water-technician",
     "dispute-arbiter",
-    "campaign-funding",
-    "soulbound-badge"
-    "soulbound-badge",
     "timelock",
     "upgrade-proxy",
     "sponsor-crowdfunding",
     "sponsor-insurance",
+    "donor-verification",
 ]
 
 [workspace.package]
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
-repository = "https://github.com/Fundable-Protocol/stellar_client"
+repository = "https://github.com/anitajordan22244-afk/mitros"
 
 [workspace.dependencies]
 soroban-sdk = "=25.3.2"
