@@ -51,7 +51,7 @@ export default function OfframpSummary({
     const canProceed = isFormValid && quote && !isLoading;
 
     return (
-        <div className="bg-fundable-mid-dark rounded-2xl p-6 border border-gray-800">
+        <div className="bg-azable-mid-dark rounded-2xl p-6 border border-gray-800">
             <h2 className="text-xl font-syne font-semibold text-white mb-6">
                 Quote Summary
             </h2>
@@ -76,25 +76,25 @@ export default function OfframpSummary({
                 ) : quote ? (
                     <div className="space-y-3">
                         <div className="flex justify-between text-sm">
-                            <span className="text-fundable-light-grey">You Send</span>
+                            <span className="text-azable-light-grey">You Send</span>
                             <span className="text-white font-medium">
                                 {quote.cryptoAmount} {formState.token}
                             </span>
                         </div>
                         <div className="flex justify-between text-sm">
-                            <span className="text-fundable-light-grey">Exchange Rate</span>
+                            <span className="text-azable-light-grey">Exchange Rate</span>
                             <span className="text-white">
                                 1 {formState.token} = {quote.currency} {quote.rate?.toLocaleString() ?? "N/A"}
                             </span>
                         </div>
                         <div className="flex justify-between text-sm">
-                            <span className="text-fundable-light-grey">Provider</span>
+                            <span className="text-azable-light-grey">Provider</span>
                             <span className="text-white capitalize">{quote.displayName}</span>
                         </div>
                         {quote.expiresAt && (
                             <div className="flex justify-between text-sm">
-                                <span className="text-fundable-light-grey">Expires At</span>
-                                <span className={timeLeft !== null && timeLeft <= 60 ? "text-orange-500 font-bold" : "text-fundable-purple"}>
+                                <span className="text-azable-light-grey">Expires At</span>
+                                <span className={timeLeft !== null && timeLeft <= 60 ? "text-orange-500 font-bold" : "text-azable-purple"}>
                                     {new Date(quote.expiresAt).toLocaleTimeString()}
                                     {timeLeft !== null && timeLeft <= 60 && ` (${timeLeft}s)`}
                                 </span>
@@ -108,21 +108,21 @@ export default function OfframpSummary({
                 ) : (
                     <div className="space-y-3">
                         <div className="flex justify-between text-sm">
-                            <span className="text-fundable-light-grey">You Send</span>
+                            <span className="text-azable-light-grey">You Send</span>
                             <span className="text-white">
                                 {formState.amount || "0"} {formState.token}
                             </span>
                         </div>
                         <div className="flex justify-between text-sm">
-                            <span className="text-fundable-light-grey">Exchange Rate</span>
-                            <span className="text-fundable-light-grey">Enter amount for quote</span>
+                            <span className="text-azable-light-grey">Exchange Rate</span>
+                            <span className="text-azable-light-grey">Enter amount for quote</span>
                         </div>
                     </div>
                 )}
 
                 <div className="border-t border-gray-700 pt-4">
                     <div className="flex justify-between items-center">
-                        <span className="text-fundable-light-grey">You Receive</span>
+                        <span className="text-azable-light-grey">You Receive</span>
                         <div className="text-right">
                             {isLoading ? (
                                 <div className="space-y-2 flex flex-col items-end">
@@ -135,16 +135,16 @@ export default function OfframpSummary({
                                         {getCurrencySymbol(selectedCountry?.currency || "")}
                                         {quote.fiatAmount?.toLocaleString()}
                                     </p>
-                                    <p className="text-fundable-light-grey text-xs">
+                                    <p className="text-azable-light-grey text-xs">
                                         Fee: {quote.fee} {quote.currency}
                                     </p>
                                 </>
                             ) : (
                                 <>
-                                    <p className="text-2xl font-bold text-fundable-light-grey">
+                                    <p className="text-2xl font-bold text-azable-light-grey">
                                         {selectedCountry?.currency || "---"}
                                     </p>
-                                    <p className="text-fundable-light-grey text-sm">
+                                    <p className="text-azable-light-grey text-sm">
                                         ---
                                     </p>
                                 </>

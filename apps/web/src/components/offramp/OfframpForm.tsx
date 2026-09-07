@@ -35,13 +35,13 @@ export function OfframpForm({
     const [isKycNoticeVisible, setIsKycNoticeVisible] = useState(true);
 
     return (
-        <div className="bg-fundable-mid-dark rounded-2xl p-6 border border-gray-800">
+        <div className="bg-azable-mid-dark rounded-2xl p-6 border border-gray-800">
             {/* KYC Notice Banner */}
             {isKycNoticeVisible && (
-                <div className="mb-6 flex items-start gap-3 rounded-xl bg-fundable-dark border border-fundable-purple/30 p-4">
+                <div className="mb-6 flex items-start gap-3 rounded-xl bg-azable-dark border border-azable-purple/30 p-4">
                     <div className="flex-1">
                         <p className="text-sm font-medium text-white">KYC Verification Required</p>
-                        <p className="mt-1 text-xs text-fundable-light-grey">
+                        <p className="mt-1 text-xs text-azable-light-grey">
                             To comply with regulatory requirements, you must complete KYC verification
                             before proceeding with offramp transactions. Your information is securely
                             processed and encrypted.
@@ -50,7 +50,7 @@ export function OfframpForm({
                     <button
                         type="button"
                         onClick={() => setIsKycNoticeVisible(false)}
-                        className="shrink-0 rounded-full p-1 text-fundable-light-grey hover:bg-white/10 hover:text-white transition-colors"
+                        className="shrink-0 rounded-full p-1 text-azable-light-grey hover:bg-white/10 hover:text-white transition-colors"
                         aria-label="Dismiss KYC notice"
                     >
                         <X className="h-4 w-4" />
@@ -64,24 +64,24 @@ export function OfframpForm({
             {/* Token Selector */}
             <div className="space-y-4">
                 <div className="space-y-2">
-                    <Label htmlFor="token" className="text-fundable-light-grey text-sm">Select Token</Label>
+                    <Label htmlFor="token" className="text-azable-light-grey text-sm">Select Token</Label>
                     <Select
                         value={formState.token}
                         onValueChange={(value) => onChange("token", value as OfframpToken)}
                     >
-                        <SelectTrigger id="token" className="bg-fundable-dark border-gray-700 text-white h-12">
+                        <SelectTrigger id="token" className="bg-azable-dark border-gray-700 text-white h-12">
                             <SelectValue placeholder="Select token" />
                         </SelectTrigger>
-                        <SelectContent className="bg-fundable-dark border-gray-700">
+                        <SelectContent className="bg-azable-dark border-gray-700">
                             {SUPPORTED_OFFRAMP_TOKENS.map((token) => (
                                 <SelectItem
                                     key={token.symbol}
                                     value={token.symbol}
-                                    className="text-white hover:bg-fundable-violet focus:bg-fundable-violet"
+                                    className="text-white hover:bg-azable-violet focus:bg-azable-violet"
                                 >
                                     <div className="flex items-center gap-2">
                                         <span className="font-medium">{token.symbol}</span>
-                                        <span className="text-fundable-light-grey text-sm">
+                                        <span className="text-azable-light-grey text-sm">
                                             ({token.name})
                                         </span>
                                     </div>
@@ -93,7 +93,7 @@ export function OfframpForm({
 
                 {/* Amount Input */}
                 <div className="space-y-2">
-                    <Label htmlFor="amount" className="text-fundable-light-grey text-sm">
+                    <Label htmlFor="amount" className="text-azable-light-grey text-sm">
                         Amount
                         {isLoadingMinimum
                             ? " (Loading provider minimum...)"
@@ -110,7 +110,7 @@ export function OfframpForm({
                                 const val = e.target.value.replace(/[^0-9.]/g, "");
                                 if (val.split(".").length <= 2) onChange("amount", val);
                             }}
-                            className="bg-fundable-dark border-gray-700 text-white h-12 pr-16"
+                            className="bg-azable-dark border-gray-700 text-white h-12 pr-16"
                         />
                         <button
                             type="button"
@@ -120,7 +120,7 @@ export function OfframpForm({
                                 }
                             }}
                             disabled={!maxBalance || !onMaxClick}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-fundable-purple text-sm font-medium hover:text-fundable-violet disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-azable-purple text-sm font-medium hover:text-azable-violet disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             Max
                         </button>
@@ -129,27 +129,27 @@ export function OfframpForm({
 
                 {/* Destination Country */}
                 <div className="space-y-2">
-                    <Label htmlFor="country" className="text-fundable-light-grey text-sm">
+                    <Label htmlFor="country" className="text-azable-light-grey text-sm">
                         Destination Country
                     </Label>
                     <Select
                         value={formState.country}
                         onValueChange={(value) => onChange("country", value as OfframpCountry)}
                     >
-                        <SelectTrigger id="country" className="bg-fundable-dark border-gray-700 text-white h-12">
+                        <SelectTrigger id="country" className="bg-azable-dark border-gray-700 text-white h-12">
                             <SelectValue placeholder="Select country" />
                         </SelectTrigger>
-                        <SelectContent className="bg-fundable-dark border-gray-700">
+                        <SelectContent className="bg-azable-dark border-gray-700">
                             {SUPPORTED_COUNTRIES.map((country) => (
                                 <SelectItem
                                     key={country.code}
                                     value={country.code}
-                                    className="text-white hover:bg-fundable-violet focus:bg-fundable-violet"
+                                    className="text-white hover:bg-azable-violet focus:bg-azable-violet"
                                 >
                                     <div className="flex items-center gap-2">
                                         <span>{country.flag}</span>
                                         <span>{country.name}</span>
-                                        <span className="text-fundable-light-grey">
+                                        <span className="text-azable-light-grey">
                                             ({country.currency})
                                         </span>
                                     </div>

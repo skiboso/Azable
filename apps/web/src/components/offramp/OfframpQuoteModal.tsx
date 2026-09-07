@@ -74,7 +74,7 @@ export default function OfframpQuoteModal({
 
     return (
         <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
-            <DialogContent className="bg-fundable-mid-dark border border-fundable-purple p-6 w-full max-w-md mx-4 relative">
+            <DialogContent className="bg-azable-mid-dark border border-azable-purple p-6 w-full max-w-md mx-4 relative">
                 <DialogHeader>
                     <DialogTitle
                         id="offramp-quote-title"
@@ -98,7 +98,7 @@ export default function OfframpQuoteModal({
                             <p className="text-orange-400 font-semibold text-lg">
                                 Quote Expired
                             </p>
-                            <p className="text-fundable-light-grey text-sm mt-1">
+                            <p className="text-azable-light-grey text-sm mt-1">
                                 The rate quote has expired. Please fetch a new
                                 quote to continue.
                             </p>
@@ -114,7 +114,7 @@ export default function OfframpQuoteModal({
                             <Button
                                 onClick={onRefresh}
                                 disabled={isLoading}
-                                className="flex-1 bg-gradient-to-r from-fundable-purple-2 to-purple-500 text-black h-12"
+                                className="flex-1 bg-gradient-to-r from-azable-purple-2 to-purple-500 text-black h-12"
                             >
                                 {isLoading ? (
                                     <>
@@ -132,25 +132,25 @@ export default function OfframpQuoteModal({
                     </div>
                 ) : isLoadingQuote ? (
                     <div className="space-y-4">
-                        <div className="bg-fundable-dark p-4 rounded-lg">
-                            <Skeleton className="h-4 w-20 mb-2 bg-fundable-light-grey" />
+                        <div className="bg-azable-dark p-4 rounded-lg">
+                            <Skeleton className="h-4 w-20 mb-2 bg-azable-light-grey" />
                             <Skeleton className="h-6 w-32 bg-white" />
                         </div>
-                        <div className="bg-fundable-dark p-4 rounded-lg">
-                            <Skeleton className="h-4 w-24 mb-2 bg-fundable-light-grey" />
+                        <div className="bg-azable-dark p-4 rounded-lg">
+                            <Skeleton className="h-4 w-24 mb-2 bg-azable-light-grey" />
                             <Skeleton className="h-8 w-40 bg-white" />
                         </div>
-                        <div className="space-y-3 bg-fundable-dark/50 p-4 rounded-lg border border-gray-800 text-sm">
-                            <div className="flex justify-between items-center text-xs text-fundable-light-grey uppercase tracking-wider mb-1">
-                                <Skeleton className="h-3 w-32 bg-fundable-light-grey" />
+                        <div className="space-y-3 bg-azable-dark/50 p-4 rounded-lg border border-gray-800 text-sm">
+                            <div className="flex justify-between items-center text-xs text-azable-light-grey uppercase tracking-wider mb-1">
+                                <Skeleton className="h-3 w-32 bg-azable-light-grey" />
                             </div>
                             <div className="flex justify-between">
-                                <Skeleton className="h-3 w-16 bg-fundable-light-grey" />
-                                <Skeleton className="h-3 w-20 bg-fundable-light-grey" />
+                                <Skeleton className="h-3 w-16 bg-azable-light-grey" />
+                                <Skeleton className="h-3 w-20 bg-azable-light-grey" />
                             </div>
                         </div>
-                        <div className="bg-fundable-dark p-4 rounded-lg">
-                            <Skeleton className="h-4 w-28 mb-2 bg-fundable-light-grey" />
+                        <div className="bg-azable-dark p-4 rounded-lg">
+                            <Skeleton className="h-4 w-28 mb-2 bg-azable-light-grey" />
                             <Skeleton className="h-4 w-32 mb-1 bg-white" />
                             <Skeleton className="h-4 w-40 bg-white" />
                         </div>
@@ -182,8 +182,8 @@ export default function OfframpQuoteModal({
                             </div>
                         )}
 
-                        <div className="bg-fundable-dark p-4 rounded-lg">
-                            <p className="text-fundable-light-grey text-sm">
+                        <div className="bg-azable-dark p-4 rounded-lg">
+                            <p className="text-azable-light-grey text-sm">
                                 You Send
                             </p>
                             <p className="text-white text-xl font-semibold">
@@ -194,8 +194,8 @@ export default function OfframpQuoteModal({
                             </p>
                         </div>
 
-                        <div className="bg-fundable-dark p-4 rounded-lg">
-                            <p className="text-fundable-light-grey text-sm">
+                        <div className="bg-azable-dark p-4 rounded-lg">
+                            <p className="text-azable-light-grey text-sm">
                                 Total Payout
                             </p>
                             <p className="text-white text-2xl font-bold">
@@ -204,12 +204,12 @@ export default function OfframpQuoteModal({
                             </p>
                         </div>
 
-                        <div className="space-y-3 bg-fundable-dark/50 p-4 rounded-lg border border-gray-800 text-sm">
-                            <div className="flex justify-between items-center text-xs text-fundable-light-grey uppercase tracking-wider mb-1">
+                        <div className="space-y-3 bg-azable-dark/50 p-4 rounded-lg border border-gray-800 text-sm">
+                            <div className="flex justify-between items-center text-xs text-azable-light-grey uppercase tracking-wider mb-1">
                                 <span>Transaction Breakdown</span>
                             </div>
                             <div className="flex justify-between">
-                                <span className="text-fundable-light-grey">
+                                <span className="text-azable-light-grey">
                                     Reference
                                 </span>
                                 <span className="text-white text-[10px] font-mono opacity-80">
@@ -218,8 +218,8 @@ export default function OfframpQuoteModal({
                             </div>
                         </div>
 
-                        <div className="bg-fundable-dark p-4 rounded-lg">
-                            <p className="text-fundable-light-grey text-sm mb-2">
+                        <div className="bg-azable-dark p-4 rounded-lg">
+                            <p className="text-azable-light-grey text-sm mb-2">
                                 Bank Details
                             </p>
                             <p className="text-white font-medium">
@@ -242,7 +242,7 @@ export default function OfframpQuoteModal({
                             <Button
                                 onClick={onConfirm}
                                 disabled={isLoading || isSubmitting || isExpired}
-                                className="flex-1 bg-gradient-to-r from-fundable-purple-2 to-purple-500 text-black h-12"
+                                className="flex-1 bg-gradient-to-r from-azable-purple-2 to-purple-500 text-black h-12"
                             >
                                 {isLoading || isSubmitting ? (
                                     <>

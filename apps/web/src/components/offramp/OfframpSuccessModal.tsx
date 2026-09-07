@@ -56,14 +56,14 @@ export default function OfframpSuccessModal({
         <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
             <DialogContent
                 aria-live="polite"
-                className="relative w-full max-w-md rounded-3xl bg-fundable-mid-dark border border-gray-800 p-8 space-y-8 animate-in fade-in zoom-in-95 duration-300"
+                className="relative w-full max-w-md rounded-3xl bg-azable-mid-dark border border-gray-800 p-8 space-y-8 animate-in fade-in zoom-in-95 duration-300"
             >
                 <DialogHeader>
                     <div className="text-center space-y-2 w-full">
                         <DialogTitle id="offramp-success-title" className="text-2xl font-syne font-bold text-white">
                             {isCompleted ? "Offramp Complete!" : isFailed ? "Offramp Failed" : "Offramp Processing"}
                         </DialogTitle>
-                        <DialogDescription id="offramp-success-desc" className="text-fundable-light-grey text-sm">
+                        <DialogDescription id="offramp-success-desc" className="text-azable-light-grey text-sm">
                             {isCompleted
                                 ? "Your funds have been successfully sent to your bank account."
                                 : isFailed
@@ -87,11 +87,11 @@ export default function OfframpSuccessModal({
  
                 <div className="space-y-4">
                     {payoutStatus?.transactionReference && (
-                        <div className="bg-fundable-dark p-4 rounded-xl border border-gray-800">
-                            <p className="text-[10px] text-fundable-light-grey uppercase tracking-wider mb-2">Reference ID</p>
+                        <div className="bg-azable-dark p-4 rounded-xl border border-gray-800">
+                            <p className="text-[10px] text-azable-light-grey uppercase tracking-wider mb-2">Reference ID</p>
                             <div className="flex items-center justify-between">
                                 <code className="text-xs text-white font-mono">{payoutStatus.transactionReference}</code>
-                                <button onClick={handleCopy} aria-label={copied ? "Reference copied" : "Copy reference ID"} className="text-fundable-purple hover:text-white transition-colors">
+                                <button onClick={handleCopy} aria-label={copied ? "Reference copied" : "Copy reference ID"} className="text-azable-purple hover:text-white transition-colors">
                                     {copied ? <CheckCircle2 className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
                                 </button>
                             </div>
@@ -103,7 +103,7 @@ export default function OfframpSuccessModal({
                             href={`${STELLAR_EXPERT_URL}/tx/${bridgeTxHash}?network=${STELLAR_NETWORK}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-2 w-full py-3 text-xs text-fundable-purple hover:text-fundable-violet transition-colors font-medium"
+                            className="flex items-center justify-center gap-2 w-full py-3 text-xs text-azable-purple hover:text-azable-violet transition-colors font-medium"
                         >
                             View Stellar Explorer <ExternalLink className="h-3 w-3" />
                         </a>
@@ -112,7 +112,7 @@ export default function OfframpSuccessModal({
  
                 <Button
                     onClick={onClose}
-                    className="w-full h-14 rounded-2xl font-bold text-fundable-dark bg-gradient-to-r from-fundable-purple-2 to-purple-500 hover:opacity-90 active:scale-[0.98] transition-all"
+                    className="w-full h-14 rounded-2xl font-bold text-azable-dark bg-gradient-to-r from-azable-purple-2 to-purple-500 hover:opacity-90 active:scale-[0.98] transition-all"
                 >
                     {isCompleted ? "Done" : "Close"}
                 </Button>
