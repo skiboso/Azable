@@ -5,7 +5,7 @@ import { useWallet } from "@/providers/StellarWalletProvider";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CreatorStats } from "@/services/creator-stats.service";
-import { TrendingUp, Trees, Users, DollarSign, Award, CheckCircle2 } from "lucide-react";
+import { TrendingUp, Droplets, Users, DollarSign, Award, CheckCircle2 } from "lucide-react";
 
 export const CreatorStatsDashboard: React.FC = () => {
   const { address } = useWallet();
@@ -49,10 +49,10 @@ export const CreatorStatsDashboard: React.FC = () => {
       bgColor: "bg-emerald-500/10 border-emerald-500/20",
     },
     {
-      title: "Trees Planted",
-      value: stats.totalTreesPlanted.toLocaleString(),
-      subtext: `~${stats.totalCo2OffsetKg.toLocaleString()} kg CO₂ offset/yr`,
-      icon: Trees,
+      title: "Water Sources Funded",
+      value: stats.totalWaterSourcesFunded.toLocaleString(),
+      subtext: `~${stats.totalLitersPerYear.toLocaleString()} L/yr provided`,
+      icon: Droplets,
       color: "text-green-400",
       bgColor: "bg-green-500/10 border-green-500/20",
     },
@@ -126,7 +126,7 @@ export const CreatorStatsDashboard: React.FC = () => {
                   <th className="px-4 py-3">Status</th>
                   <th className="px-4 py-3">Total Raised</th>
                   <th className="px-4 py-3">Sponsors</th>
-                  <th className="px-4 py-3">Trees Planted</th>
+                  <th className="px-4 py-3">Water Sources</th>
                   <th className="px-4 py-3">Creator Revenue</th>
                 </tr>
               </thead>
@@ -152,7 +152,7 @@ export const CreatorStatsDashboard: React.FC = () => {
                       })}
                     </td>
                     <td className="px-4 py-3">{c.sponsorsCount}</td>
-                    <td className="px-4 py-3 text-green-400 font-medium">{c.treesPlanted} trees</td>
+                    <td className="px-4 py-3 text-green-400 font-medium">{c.waterSourcesFunded} sources</td>
                     <td className="px-4 py-3 text-purple-300 font-medium">
                       {(Number(c.revenueEarned) / 10000000).toLocaleString("en-US", {
                         style: "currency",
