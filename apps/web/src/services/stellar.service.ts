@@ -64,7 +64,7 @@ function sleep(ms: number): Promise<void> {
 
 /**
  * StellarService provides methods for interacting with Stellar network
- * and Fundable Protocol smart contracts.
+ * and Azable smart contracts.
  */
 export class StellarService {
   private readonly rpcServer: RpcServer;

@@ -2,7 +2,7 @@
  * Stellar Service Layer
  *
  * This module provides the service layer for interacting with Stellar network
- * and Fundable Protocol smart contracts.
+ * and Azable smart contracts.
  *
  * @example
  * ```typescript
