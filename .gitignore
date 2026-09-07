@@ -37,6 +37,11 @@ next-env.d.ts
 # Lock files (use pnpm-lock only at root)
 apps/**/pnpm-lock.yaml
 packages/**/pnpm-lock.yaml
+# This repo is pnpm-only (see .github/workflows/sdk-ci.yml's lockfile
+# check); package-lock.json has been accidentally committed and deleted
+# several times already from a stray `npm install` — ignore it everywhere.
+package-lock.json
+yarn.lock
 
 # Vercel
 .vercel
@@ -46,8 +51,14 @@ coverage/
 
 # Rust / Cargo
 /contracts/target/
+/services/backend/target/
 **/*.rs.bk
 Cargo.lock
+# ...except services/backend's: it's a binary application (not a library
+# like the contracts/ workspace), so its lockfile should be committed for
+# reproducible builds — the Dockerfile's `COPY Cargo.lock` depends on it
+# existing in a fresh checkout.
+!/services/backend/Cargo.lock
 
 # Soroban
 *.wasm
