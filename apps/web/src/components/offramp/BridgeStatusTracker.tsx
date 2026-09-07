@@ -58,7 +58,7 @@ export function BridgeStatusTracker({
     ];
 
     return (
-        <div className="bg-fundable-mid-dark rounded-2xl p-6 border border-gray-800 space-y-6 animate-in fade-in duration-500">
+        <div className="bg-azable-mid-dark rounded-2xl p-6 border border-gray-800 space-y-6 animate-in fade-in duration-500">
             <h2 className="text-xl font-syne font-semibold text-white">
                 Transaction Progress
             </h2>
@@ -73,7 +73,7 @@ export function BridgeStatusTracker({
                                 className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${s.status === "completed"
                                     ? "bg-green-500/20 text-green-500"
                                     : s.status === "active"
-                                        ? "bg-fundable-purple-2/20 text-fundable-purple-2"
+                                        ? "bg-azable-purple-2/20 text-azable-purple-2"
                                         : s.status === "failed"
                                             ? "bg-red-500/20 text-red-500"
                                             : "bg-white/5 text-gray-400"
@@ -112,7 +112,7 @@ export function BridgeStatusTracker({
                             >
                                 {s.label}
                             </p>
-                            <p className="text-xs text-fundable-light-grey mt-0.5">{s.description}</p>
+                            <p className="text-xs text-azable-light-grey mt-0.5">{s.description}</p>
                         </div>
                     </div>
                 ))}
@@ -120,14 +120,14 @@ export function BridgeStatusTracker({
 
             {/* Transaction Links */}
             {bridgeTxHash && (
-                <div className="p-4 rounded-xl bg-fundable-dark border border-gray-800 space-y-2">
+                <div className="p-4 rounded-xl bg-azable-dark border border-gray-800 space-y-2">
                     <div className="flex justify-between items-center">
-                        <p className="text-xs text-fundable-light-grey font-medium uppercase tracking-wider">Stellar Transaction</p>
+                        <p className="text-xs text-azable-light-grey font-medium uppercase tracking-wider">Stellar Transaction</p>
                         <a
                             href={`https://stellar.expert/explorer/public/tx/${bridgeTxHash}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-fundable-purple hover:text-fundable-violet flex items-center gap-1 text-xs"
+                            className="text-azable-purple hover:text-azable-violet flex items-center gap-1 text-xs"
                         >
                             View Explorer <ExternalLink className="h-3 w-3" />
                         </a>
@@ -138,8 +138,8 @@ export function BridgeStatusTracker({
 
             {/* Provider Status Message */}
             {payoutStatus?.providerMessage && (
-                <div className="px-4 py-3 rounded-xl bg-fundable-dark border border-gray-800">
-                    <p className="text-xs text-fundable-light-grey mb-1 uppercase tracking-wider">Provider Status</p>
+                <div className="px-4 py-3 rounded-xl bg-azable-dark border border-gray-800">
+                    <p className="text-xs text-azable-light-grey mb-1 uppercase tracking-wider">Provider Status</p>
                     <p className="text-sm text-white">{payoutStatus.providerMessage}</p>
                 </div>
             )}

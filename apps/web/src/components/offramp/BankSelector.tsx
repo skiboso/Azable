@@ -113,7 +113,7 @@ export function BankSelector({
                     value={country}
                     onValueChange={(value) => onCountryChange(value as OfframpCountry)}
                 >
-                    <SelectTrigger className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-fundable-purple-2 transition-colors">
+                    <SelectTrigger className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-azable-purple-2 transition-colors">
                         <SelectValue placeholder="Select country" />
                     </SelectTrigger>
                     <SelectContent className="bg-[#1a1a2e] border border-white/10">
@@ -148,7 +148,7 @@ export function BankSelector({
                             placeholder="Search for your bank..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-fundable-purple-2 transition-colors"
+                            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-azable-purple-2 transition-colors"
                         />
                         {searchTerm && filteredBanks.length > 0 && (
                             <div className="absolute z-10 mt-1 w-full max-h-48 overflow-y-auto rounded-xl bg-[#1a1a2e] border border-white/10 shadow-xl">
@@ -161,7 +161,7 @@ export function BankSelector({
                                             setSearchTerm(bank.name);
                                         }}
                                         className={`w-full text-left px-4 py-3 text-sm hover:bg-white/10 transition-colors ${selectedBankCode === bank.code
-                                                ? "text-fundable-purple-2 bg-white/5"
+                                                ? "text-azable-purple-2 bg-white/5"
                                                 : "text-white"
                                             }`}
                                     >
@@ -194,14 +194,14 @@ export function BankSelector({
                         const val = e.target.value.replace(/\D/g, "");
                         onAccountNumberChange(val);
                     }}
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-fundable-purple-2 transition-colors"
+                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-azable-purple-2 transition-colors"
                 />
             </div>
 
             {/* Verification Status */}
             {isVerifying && (
                 <div className="flex items-center gap-2 text-sm text-gray-400">
-                    <div className="w-4 h-4 border-2 border-fundable-purple-2 border-t-transparent rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-azable-purple-2 border-t-transparent rounded-full animate-spin" />
                     Verifying account...
                 </div>
             )}
