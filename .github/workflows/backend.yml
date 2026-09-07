@@ -1,0 +1,91 @@
+name: Backend CI
+
+on:
+  push:
+    paths:
+      - 'services/backend/**'
+      - '.github/workflows/backend.yml'
+  pull_request:
+    paths:
+      - 'services/backend/**'
+      - '.github/workflows/backend.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: azable
+          POSTGRES_PASSWORD: azable
+          POSTGRES_DB: azable
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U azable"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql://azable:azable@localhost:5432/azable
+      JWT_SECRET: ci-test-secret
+      SOROBAN_RPC_URL: https://soroban-testnet.stellar.org
+      NETWORK_PASSPHRASE: "Test SDF Network ; September 2015"
+
+    defaults:
+      run:
+        working-directory: services/backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - name: Cache cargo registry and build output
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            services/backend/target
+          key: backend-cargo-${{ runner.os }}-${{ hashFiles('services/backend/Cargo.lock') }}
+
+      - name: Check formatting
+        run: cargo fmt --check
+
+      - name: Clippy
+        run: cargo clippy --all-targets -- -D warnings
+
+      - name: Install sqlx-cli
+        run: cargo install sqlx-cli --no-default-features --features postgres,rustls --locked
+
+      - name: Run migrations
+        run: sqlx migrate run
+
+      - name: Run tests
+        run: cargo test
+
+      - name: Build
+        run: cargo build --release
+
+      - name: Boot server and smoke-check /health
+        run: |
+          ./target/release/azable-backend &
+          SERVER_PID=$!
+          for i in $(seq 1 20); do
+            if curl -sf localhost:8080/health > /dev/null; then
+              echo "server healthy"
+              kill $SERVER_PID
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "server did not become healthy in time"
+          kill $SERVER_PID
+          exit 1
