@@ -47,10 +47,10 @@ pub enum DataKey {
     Contribution(u64, Address),
     /// Campaign metadata IPFS CID or hex hash keyed by campaign ID.
     CampaignIpfsHash(u64),
-    /// Total count of tree planting records.
-    PlantingCount(u64),
-    /// Tree planting verification SLA record keyed by `(campaign_id, planting_id)`.
-    PlantingSla(u64, u64),
+    /// Total count of water project records.
+    WaterProjectCount(u64),
+    /// Water project verification SLA record keyed by `(campaign_id, project_id)`.
+    WaterProjectSla(u64, u64),
     /// Status history entry keyed by `(campaign_id, entry_index)` (persistent storage).
     StatusHistory(u64, u32),
     /// Total number of status history entries for a campaign (persistent storage).
@@ -58,8 +58,8 @@ pub enum DataKey {
     /// Bitmask of campaign goal milestones (25 %, 50 %, 75 %, 100 %) that
     /// have been reached so far, keyed by campaign ID (persistent storage).
     MilestonesReached(u64),
-    /// Reserve pool balance for tree replacement, keyed by campaign ID
-    /// (persistent storage). Holds 10% of raised funds for dead tree replacement.
+    /// Reserve pool balance for water infrastructure replacement, keyed by campaign ID
+    /// (persistent storage). Holds 10% of raised funds for failed water infrastructure replacement.
     Reserve(u64),
     /// Team members configuration keyed by campaign ID (persistent storage).
     TeamMembers(u64),
@@ -78,7 +78,7 @@ pub enum CampaignStatus {
     Failed,
     /// Creator has already claimed the raised funds.
     Claimed,
-    /// Trees died during verification; sponsors are entitled to insurance
+    /// Water project failed verification; sponsors are entitled to insurance
     /// refunds from the insurance pool.
     VerificationFailed,
 }
@@ -123,11 +123,11 @@ pub struct Campaign {
     /// Current lifecycle state.
     pub status: CampaignStatus,
     /// Unix timestamp (seconds) when the campaign was created.
-    /// Used to enforce the 90-day planter-assignment window.
+    /// Used to enforce the 90-day technician-assignment window.
     pub created_at: u64,
-    /// Address of the planter assigned to this campaign, if any.
-    /// `OptionalAddress::None` means no planter has been assigned yet.
-    pub planter: OptionalAddress,
+    /// Address of the technician assigned to this campaign, if any.
+    /// `OptionalAddress::None` means no technician has been assigned yet.
+    pub technician: OptionalAddress,
 }
 
 /// A single co-creator on a campaign team and the share of the proceeds they
@@ -224,49 +224,51 @@ pub struct CampaignIpfsHashUpdatedEvent {
     pub ipfs_hash: soroban_sdk::String,
 }
 
-/// Tree planting verification SLA record.
+/// Water project verification SLA record.
 #[contracttype]
 #[derive(Clone)]
-pub struct PlantingSlaRecord {
-    pub planting_id: u64,
+pub struct WaterProjectSlaRecord {
+    pub project_id: u64,
     pub campaign_id: u64,
-    pub planter: Address,
-    pub tree_count: u32,
-    pub planted_at: u64,
+    pub technician: Address,
+    pub wells_count: u32,
+    pub completed_at: u64,
     pub verification_deadline: u64,
     pub is_verified: bool,
     pub verified_at: u64,
     pub is_refunded: bool,
 }
 
-/// Emitted when a tree planting batch is recorded with 30-day SLA window.
+/// Emitted when a water project completion batch is recorded with 30-day SLA window.
 #[contracttype]
 #[derive(Clone)]
-pub struct TreePlantingRecordedEvent {
+pub struct WaterProjectRecordedEvent {
     pub campaign_id: u64,
-    pub planting_id: u64,
-    pub planter: Address,
-    pub tree_count: u32,
+    pub project_id: u64,
+    pub technician: Address,
+    pub wells_count: u32,
     pub verification_deadline: u64,
 }
 
-/// Emitted when tree planting is verified on-chain.
+/// Emitted when a water project is verified on-chain.
 #[contracttype]
 #[derive(Clone)]
-pub struct TreePlantingVerifiedEvent {
+pub struct WaterProjectVerifiedEvent {
     pub campaign_id: u64,
-    pub planting_id: u64,
+    pub project_id: u64,
     pub verified_at: u64,
 }
 
-/// Emitted when SLA verification refund is issued for unverified tree planting.
+/// Emitted when SLA verification refund is issued for an unverified water project.
 #[contracttype]
 #[derive(Clone)]
 pub struct SlaRefundIssuedEvent {
     pub campaign_id: u64,
-    pub planting_id: u64,
+    pub project_id: u64,
     pub contributor: Address,
     pub amount: i128,
+}
+
 /// Emitted when cumulative contributions cross one of a campaign's funding
 /// milestones (25 %, 50 %, 75 % or 100 % of `target_amount`).
 ///
@@ -300,7 +302,7 @@ pub struct ProtocolFeeCollectedEvent {
     pub amount: i128,
 }
 
-/// Emitted when 10% of campaign funds are reserved for tree replacement.
+/// Emitted when 10% of campaign funds are reserved for water infrastructure replacement.
 #[contractevent(topics = ["ReserveAllocated"])]
 #[derive(Clone)]
 pub struct ReserveAllocatedEvent {
@@ -371,9 +373,9 @@ pub enum Error {
     DeadlineTooFar = 17,
     /// Verification SLA period has not expired yet.
     SlaNotBreached = 18,
-    /// Requested tree planting record was not found.
-    PlantingNotFound = 19,
-    /// Tree planting is already verified.
+    /// Requested water project record was not found.
+    WaterProjectNotFound = 19,
+    /// Water project is already verified.
     AlreadyVerified = 20,
     DeadlineTooFar = 23,
     /// The campaign is not in the `VerificationFailed` state.
@@ -405,7 +407,7 @@ const LEDGER_THRESHOLD: u32 = 518_400;
 const LEDGER_BUMP: u32 = 535_680;
 /// Maximum duration for a campaign (180 days in seconds).
 const MAX_CAMPAIGN_DURATION_SECONDS: u64 = 180 * 24 * 60 * 60;
-/// 30-day Tree Verification SLA duration in seconds (30 * 24 * 60 * 60).
+/// 30-day Water Project Verification SLA duration in seconds (30 * 24 * 60 * 60).
 const VERIFICATION_SLA_SECONDS: u64 = 2_592_000;
 
 // ---------------------------------------------------------------------------
@@ -610,7 +612,7 @@ impl CampaignFundingContract {
             total_raised: 0,
             status: CampaignStatus::Active,
             created_at: now,
-            planter: OptionalAddress::None,
+            technician: OptionalAddress::None,
         };
 
         Self::save_campaign(&env, count, &campaign);
@@ -632,21 +634,21 @@ impl CampaignFundingContract {
         count
     }
 
-    /// Mark a campaign as having lost its trees during verification.
+    /// Mark a campaign as having failed its water project verification.
     ///
     /// Only the contract admin can call this. Once a campaign is marked,
     /// sponsors can claim refunds from the insurance pool.
     ///
     /// # Arguments
-    /// * `campaign_id` — ID of the campaign whose trees died.
+    /// * `campaign_id` — ID of the campaign whose water project failed.
     ///
     /// # Errors
     /// * [`Error::NotInitialized`]        — contract not initialised.
     /// * [`Error::Unauthorized`]          — caller is not the admin.
     /// * [`Error::CampaignNotFound`]      — campaign does not exist.
     /// * [`Error::CampaignNotSuccessful`] — campaign has not been successfully
-    ///   claimed (only claimed campaigns can be subject to tree death).
-    pub fn mark_trees_died(env: Env, campaign_id: u64) {
+    ///   claimed (only claimed campaigns can be subject to verification failure).
+    pub fn mark_project_failed(env: Env, campaign_id: u64) {
         Self::assert_initialized(&env);
         let admin: Address = env
             .storage()
@@ -677,13 +679,13 @@ impl CampaignFundingContract {
         );
     }
 
-    /// Claim an insurance refund for a sponsor after tree death.
+    /// Claim an insurance refund for a sponsor after verification failure.
     ///
     /// A sponsor calls this to recover their contribution from the insurance
     /// pool. The campaign must have been marked as `VerificationFailed`.
     ///
     /// # Arguments
-    /// * `campaign_id` — ID of the campaign whose trees died.
+    /// * `campaign_id` — ID of the campaign whose water project failed.
     /// * `contributor` — Address that originally contributed.
     ///
     /// # Errors
@@ -897,7 +899,7 @@ impl CampaignFundingContract {
     ///
     /// Only the campaign `creator` may call this.  A protocol fee is deducted
     /// from `total_raised`, then 10% of the remaining amount is reserved for
-    /// tree replacement during verification. The final 90% is distributed:
+    /// water infrastructure replacement during verification. The final 90% is distributed:
     /// if the creator previously configured a team split via [`set_team_rewards`],
     /// the proceeds are paid out to each co-creator proportionally, otherwise
     /// the full amount is sent to the sole `creator`. The campaign status is
@@ -929,7 +931,7 @@ impl CampaignFundingContract {
         let fee = Self::calculate_fee(&env, gross);
         let after_fee = gross - fee;
 
-        // Calculate 10% reserve for tree replacement (1000 bps = 10%)
+        // Calculate 10% reserve for water infrastructure replacement (1000 bps = 10%)
         let reserve = Self::calculate_reserve(&env, after_fee);
         let distributable = after_fee - reserve;
 
@@ -1396,6 +1398,8 @@ impl CampaignFundingContract {
             }
         }
         history
+    }
+
     /// Return the configured payment-stream contract address, if any.
     pub fn get_stream_contract(env: Env) -> Option<Address> {
         env.storage().instance().get(&DataKey::StreamContract)
@@ -1503,74 +1507,74 @@ impl CampaignFundingContract {
     }
 
     // -----------------------------------------------------------------------
-    // Tree Verification SLA (issue #742)
+    // Water Project Verification SLA (issue #742)
     // -----------------------------------------------------------------------
 
-    /// Record a tree planting batch with a strict 30-day verification SLA.
-    pub fn record_tree_planting(
+    /// Record a water project completion batch with a strict 30-day verification SLA.
+    pub fn record_water_project(
         env: Env,
         campaign_id: u64,
-        planter: Address,
-        tree_count: u32,
+        technician: Address,
+        wells_count: u32,
     ) -> u64 {
-        planter.require_auth();
+        technician.require_auth();
         let _campaign = Self::load_campaign(&env, campaign_id);
 
-        let count_key = DataKey::PlantingCount(campaign_id);
-        let mut planting_count: u64 = env
+        let count_key = DataKey::WaterProjectCount(campaign_id);
+        let mut project_count: u64 = env
             .storage()
             .instance()
             .get(&count_key)
             .unwrap_or(0);
-        planting_count += 1;
+        project_count += 1;
 
-        let planted_at = env.ledger().timestamp();
-        let verification_deadline = planted_at + VERIFICATION_SLA_SECONDS;
+        let completed_at = env.ledger().timestamp();
+        let verification_deadline = completed_at + VERIFICATION_SLA_SECONDS;
 
-        let record = PlantingSlaRecord {
-            planting_id: planting_count,
+        let record = WaterProjectSlaRecord {
+            project_id: project_count,
             campaign_id,
-            planter: planter.clone(),
-            tree_count,
-            planted_at,
+            technician: technician.clone(),
+            wells_count,
+            completed_at,
             verification_deadline,
             is_verified: false,
             verified_at: 0,
             is_refunded: false,
         };
 
-        let key = DataKey::PlantingSla(campaign_id, planting_count);
+        let key = DataKey::WaterProjectSla(campaign_id, project_count);
         env.storage().persistent().set(&key, &record);
         env.storage().persistent().extend_ttl(&key, LEDGER_THRESHOLD, LEDGER_BUMP);
 
-        env.storage().instance().set(&count_key, &planting_count);
+        env.storage().instance().set(&count_key, &project_count);
 
         env.events().publish(
-            ("TreePlantingRecorded", campaign_id),
-            TreePlantingRecordedEvent {
+            ("WaterProjectRecorded", campaign_id),
+            WaterProjectRecordedEvent {
                 campaign_id,
-                planting_id: planting_count,
-                planter,
-                tree_count,
+                project_id: project_count,
+                technician,
+                wells_count,
                 verification_deadline,
             },
         );
 
-        planting_count
+        project_count
     }
 
-    /// Mark a tree planting batch as verified on-chain.
-    pub fn verify_tree_planting(env: Env, campaign_id: u64, planting_id: u64) {
+    /// Mark a water project completion batch as verified on-chain.
+    pub fn verify_water_project(env: Env, campaign_id: u64, project_id: u64) {
         Self::assert_initialized(&env);
         let admin: Address = env.storage().instance().get(&DataKey::Admin).unwrap();
         admin.require_auth();
 
-        let key = DataKey::PlantingSla(campaign_id, planting_id);
-        let mut record: PlantingSlaRecord = env
+        let key = DataKey::WaterProjectSla(campaign_id, project_id);
+        let mut record: WaterProjectSlaRecord = env
             .storage()
             .persistent()
             .get(&key)
-            .unwrap_or_else(|| panic_with_error!(&env, Error::PlantingNotFound));
+            .unwrap_or_else(|| panic_with_error!(&env, Error::WaterProjectNotFound));
 
         if record.is_verified {
             panic_with_error!(&env, Error::AlreadyVerified);
@@ -1582,10 +1586,10 @@ impl CampaignFundingContract {
         env.storage().persistent().set(&key, &record);
 
         env.events().publish(
-            ("TreePlantingVerified", campaign_id),
-            TreePlantingVerifiedEvent {
+            ("WaterProjectVerified", campaign_id),
+            WaterProjectVerifiedEvent {
                 campaign_id,
-                planting_id,
+                project_id,
                 verified_at: record.verified_at,
             },
         );
@@ -1595,17 +1599,17 @@ impl CampaignFundingContract {
     pub fn claim_sla_refund(
         env: Env,
         campaign_id: u64,
-        planting_id: u64,
+        project_id: u64,
         contributor: Address,
     ) {
         contributor.require_auth();
 
-        let key = DataKey::PlantingSla(campaign_id, planting_id);
-        let record: PlantingSlaRecord = env
+        let key = DataKey::WaterProjectSla(campaign_id, project_id);
+        let record: WaterProjectSlaRecord = env
             .storage()
             .persistent()
             .get(&key)
-            .unwrap_or_else(|| panic_with_error!(&env, Error::PlantingNotFound));
+            .unwrap_or_else(|| panic_with_error!(&env, Error::WaterProjectNotFound));
 
         if record.is_verified {
             panic_with_error!(&env, Error::AlreadyVerified);
@@ -1630,20 +1634,20 @@ impl CampaignFundingContract {
             ("SlaRefundIssued", campaign_id),
             SlaRefundIssuedEvent {
                 campaign_id,
-                planting_id,
+                project_id,
                 contributor,
                 amount,
             },
         );
     }
 
-    /// Retrieve tree planting SLA record.
-    pub fn get_planting_sla(env: Env, campaign_id: u64, planting_id: u64) -> PlantingSlaRecord {
-        let key = DataKey::PlantingSla(campaign_id, planting_id);
+    /// Retrieve water project SLA record.
+    pub fn get_water_project_sla(env: Env, campaign_id: u64, project_id: u64) -> WaterProjectSlaRecord {
+        let key = DataKey::WaterProjectSla(campaign_id, project_id);
         env.storage()
             .persistent()
             .get(&key)
-            .unwrap_or_else(|| panic_with_error!(&env, Error::PlantingNotFound))
+            .unwrap_or_else(|| panic_with_error!(&env, Error::WaterProjectNotFound))
     }
 
     // -----------------------------------------------------------------------
@@ -1813,7 +1817,7 @@ impl CampaignFundingContract {
             .unwrap_or_else(|| panic_with_error!(env, Error::ArithmeticOverflow))
     }
 
-    /// Compute the 10% reserve for tree replacement.
+    /// Compute the 10% reserve for water infrastructure replacement.
     ///
     /// Uses ceiling division (same technique as `calculate_fee`) so that the
     /// remainder term is rounded **up** instead of floored.  Without ceiling
@@ -2052,9 +2056,9 @@ mod tests {
         assert_eq!(campaign.deadline, 2_000);
         assert_eq!(campaign.total_raised, 0);
         assert_eq!(campaign.status, CampaignStatus::Active);
-        // New fields: created_at should be set to ledger time; planter should be None.
+        // New fields: created_at should be set to ledger time; technician should be None.
         assert_eq!(campaign.created_at, 1_000);
-        assert_eq!(campaign.planter, OptionalAddress::None);
+        assert_eq!(campaign.technician, OptionalAddress::None);
     }
 
     #[test]
@@ -2888,15 +2892,6 @@ mod tests {
         env.mock_all_auths();
         set_time(&env, 1_000);
         let (_, client, _, _) = setup_contract(&env);
-    // Funds-flow transparency events
-    // -----------------------------------------------------------------------
-
-    #[test]
-    fn test_claim_funds_emits_protocol_fee_event() {
-        let env = Env::default();
-        env.mock_all_auths();
-        set_time(&env, 1_000);
-        let (contract_id, client, _, fee_collector) = setup_contract(&env);
 
         let token_admin = Address::generate(&env);
         let (token_addr, _, token_admin_client) = create_token(&env, &token_admin);
@@ -2915,6 +2910,45 @@ mod tests {
         assert_eq!(history.get(0).unwrap().timestamp, 1_000);
         assert_eq!(history.get(1).unwrap().status, CampaignStatus::Successful);
         assert_eq!(history.get(1).unwrap().timestamp, 1_500);
+    }
+
+    // -----------------------------------------------------------------------
+    // Funds-flow transparency events
+    // -----------------------------------------------------------------------
+
+    #[test]
+    fn test_claim_funds_emits_protocol_fee_event() {
+        let env = Env::default();
+        env.mock_all_auths();
+        set_time(&env, 1_000);
+        let (contract_id, client, _, fee_collector) = setup_contract(&env);
+
+        let token_admin = Address::generate(&env);
+        let (token_addr, _, token_admin_client) = create_token(&env, &token_admin);
+        let creator = Address::generate(&env);
+        let contributor = Address::generate(&env);
+        token_admin_client.mint(&creator, &500);
+        token_admin_client.mint(&contributor, &10_000);
+
+        let id = client.create_campaign(&creator, &token_addr, &10_000, &5_000, &2_000, &500);
+        client.contribute(&contributor, &id, &8_000);
+        set_time(&env, 3_000);
+        client.trigger_expiry(&id);
+        client.claim_funds(&id);
+
+        // 2.5 % fee on 8_000 = 200; net to creator = 7_800.
+        let expected_fee = ProtocolFeeCollectedEvent {
+            campaign_id: id,
+            token: token_addr.clone(),
+            fee_collector: fee_collector.clone(),
+            amount: 200,
+        }
+        .to_xdr(&env, &contract_id);
+        let events = env.events().all();
+        assert!(
+            events.events().iter().any(|e| *e == expected_fee),
+            "expected ProtocolFeeCollectedEvent to be emitted"
+        );
     }
 
     #[test]
@@ -2976,25 +3010,6 @@ mod tests {
 
         let history = client.get_status_history(&99);
         assert_eq!(history.len(), 0);
-        let id = client.create_campaign(&creator, &token_addr, &10_000, &5_000, &2_000, &500);
-        client.contribute(&contributor, &id, &8_000);
-        set_time(&env, 3_000);
-        client.trigger_expiry(&id);
-        client.claim_funds(&id);
-
-        // 2.5 % fee on 8_000 = 200; net to creator = 7_800.
-        let expected_fee = ProtocolFeeCollectedEvent {
-            campaign_id: id,
-            token: token_addr.clone(),
-            fee_collector: fee_collector.clone(),
-            amount: 200,
-        }
-        .to_xdr(&env, &contract_id);
-        let events = env.events().all();
-        assert!(
-            events.events().iter().any(|e| *e == expected_fee),
-            "expected ProtocolFeeCollectedEvent to be emitted"
-        );
     }
 
     #[test]
@@ -3253,10 +3268,6 @@ mod tests {
         env.mock_all_auths();
         set_time(&env, 1_000);
 
-    #[test]
-    fn test_rainy_season_co2_multiplier() {
-        let env = Env::default();
-        env.mock_all_auths();
         let (_, client, _, _) = setup_contract(&env);
         let creator = Address::generate(&env);
         let token = Address::generate(&env);
@@ -3271,6 +3282,25 @@ mod tests {
         // Resume campaign
         client.resume_campaign(&id);
         assert_eq!(client.get_campaign(&id).status, CampaignStatus::Active);
+    }
+
+    #[test]
+    fn test_rainy_season_co2_multiplier() {
+        let env = Env::default();
+        env.mock_all_auths();
+        let (_, client, _, _) = setup_contract(&env);
+        let creator = Address::generate(&env);
+        let token = Address::generate(&env);
+
+        // May 15, 2026 (rainy season -> 2x multiplier)
+        set_time(&env, 1_778_800_000);
+        let id_rainy = client.create_campaign(&creator, &token, &10_000, &5_000, &1_778_900_000);
+        assert_eq!(client.get_co2_multiplier(&id_rainy), 2);
+
+        // January 15, 2026 (non-rainy season -> 1x multiplier)
+        set_time(&env, 1_768_400_000);
+        let id_dry = client.create_campaign(&creator, &token, &10_000, &5_000, &1_768_500_000);
+        assert_eq!(client.get_co2_multiplier(&id_dry), 1);
     }
 
     #[test]
@@ -3292,15 +3322,6 @@ mod tests {
 
         // Must panic with CampaignPaused (#18)
         client.contribute(&contributor, &id, &1_000);
-        // May 15, 2026 (rainy season -> 2x multiplier)
-        set_time(&env, 1_778_800_000);
-        let id_rainy = client.create_campaign(&creator, &token, &10_000, &5_000, &1_778_900_000);
-        assert_eq!(client.get_co2_multiplier(&id_rainy), 2);
-
-        // January 15, 2026 (non-rainy season -> 1x multiplier)
-        set_time(&env, 1_768_400_000);
-        let id_dry = client.create_campaign(&creator, &token, &10_000, &5_000, &1_768_500_000);
-        assert_eq!(client.get_co2_multiplier(&id_dry), 1);
     }
 
     #[test]
