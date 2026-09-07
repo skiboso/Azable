@@ -10,7 +10,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <div className="hidden md:flex items-center gap-8 text-xs font-bold tracking-widest text-[#92A5A8]">
           <Link href="/" className="flex items-center gap-2 group">
-            Fundable
+            Azable
           </Link>
 
           {/* Desktop Nav */}
