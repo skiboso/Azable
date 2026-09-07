@@ -1,32 +1,35 @@
 {
-  "name": "stellar_client",
+  "name": "azable",
   "version": "0.1.0",
   "private": true,
-  "description": "Fundable Protocol - Stellar blockchain client and smart contracts",
+  "description": "Azable - Stellar blockchain client and smart contracts",
   "scripts": {
-    "dev": "pnpm --filter @fundable/web dev",
-    "build": "pnpm --filter @fundable/web build",
+    "dev": "pnpm --filter @azable/web dev",
+    "build": "pnpm --filter @azable/web build",
     "build:contracts": "cd contracts && cargo build --release",
-    "generate:sdk": "pnpm --filter @fundable/sdk generate",
+    "generate:sdk": "pnpm --filter @azable/sdk generate",
     "test:contracts": "cd contracts && cargo test",
-    "test:sdk": "pnpm --filter @fundable/sdk test",
-    "test:sdk:coverage": "pnpm --filter @fundable/sdk test:coverage",
-    "test:sdk:integration": "pnpm --filter @fundable/sdk test:integration",
-    "lint": "pnpm --filter @fundable/web lint",
+    "dev:backend": "cd services/backend && cargo run",
+    "build:backend": "cd services/backend && cargo build --release",
+    "test:backend": "cd services/backend && cargo test",
+    "test:sdk": "pnpm --filter @azable/sdk test",
+    "test:sdk:coverage": "pnpm --filter @azable/sdk test:coverage",
+    "test:sdk:integration": "pnpm --filter @azable/sdk test:integration",
+    "lint": "pnpm --filter @azable/web lint",
     "changeset": "changeset",
     "changeset:version": "changeset version",
-    "changeset:publish": "pnpm --filter @fundable/sdk build && changeset publish"
+    "changeset:publish": "pnpm --filter @azable/sdk build && changeset publish"
   },
   "keywords": [
     "stellar",
     "soroban",
-    "fundable",
+    "azable",
     "payment-streaming",
     "defi"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Fundable-Protocol/stellar_client.git"
+    "url": "https://github.com/anitajordan22244-afk/mitros.git"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0"
