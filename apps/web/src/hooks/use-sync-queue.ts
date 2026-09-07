@@ -46,7 +46,7 @@ export interface SyncQueueItem {
 }
 
 export interface SyncQueueOptions {
-  /** localStorage key for queue persistence. Default: "fundable_sync_queue" */
+  /** localStorage key for queue persistence. Default: "azable_sync_queue" */
   storageKey?: string;
   /** Maximum number of auto-retry attempts per item. Default: 3 */
   maxRetries?: number;
@@ -94,7 +94,7 @@ export interface SyncQueueState {
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const DEFAULT_STORAGE_KEY = "fundable_sync_queue";
+const DEFAULT_STORAGE_KEY = "azable_sync_queue";
 const DEFAULT_MAX_RETRIES = 3;
 
 // ── UUID helper ───────────────────────────────────────────────────────────────
