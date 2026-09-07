@@ -7,7 +7,7 @@ import { ErrorFallback } from "@/components/ui/error-fallback";
 import ReferralStats from "@/components/modules/social/ReferralStats";
 import ReferralLink from "@/components/modules/social/ReferralLink";
 import ClaimRewards from "@/components/modules/social/ClaimRewards";
-import RegisterPlanter from "@/components/modules/social/RegisterPlanter";
+import RegisterTechnician from "@/components/modules/social/RegisterTechnician";
 import { PLANTER_CONTRACT_ID } from "@/lib/constants";
 
 const SocialPage = () => {
@@ -19,7 +19,7 @@ const SocialPage = () => {
             Referral rewards are not yet available.
           </p>
           <p className="text-zinc-500 text-sm mt-2">
-            The planter contract has not been deployed yet. Check back later.
+            The water technician contract has not been deployed yet. Check back later.
           </p>
         </div>
       </DashboardLayout>
@@ -39,13 +39,13 @@ const SocialPage = () => {
           fallback={({ error, reset }) => (
             <ErrorFallback
               title="Registration Unavailable"
-              description="We couldn't load your planter status."
+              description="We couldn't load your technician status."
               error={error}
               onRetry={reset}
             />
           )}
         >
-          <RegisterPlanter />
+          <RegisterTechnician />
         </ErrorBoundary>
 
         <ErrorBoundary
