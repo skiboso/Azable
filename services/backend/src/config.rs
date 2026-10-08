@@ -40,6 +40,14 @@ impl AppConfig {
             env::var("DATABASE_URL").map_err(|_| "DATABASE_URL is required".to_string())?;
         let jwt_secret =
             env::var("JWT_SECRET").map_err(|_| "JWT_SECRET is required".to_string())?;
+        if jwt_secret == "dev-only-change-me" {
+            return Err(
+                "JWT_SECRET is still set to the .env.example placeholder \
+                 (\"dev-only-change-me\") — generate a real value with \
+                 `openssl rand -hex 32` and set it before starting the server."
+                    .to_string(),
+            );
+        }
 
         let contract_ids = env::var("CONTRACT_IDS")
             .unwrap_or_default()
