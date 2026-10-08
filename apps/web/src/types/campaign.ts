@@ -4,16 +4,16 @@
 
 export type CampaignStatus = "Active" | "Paused" | "Successful" | "Failed" | "Claimed";
 
-export type TreeType =
-  | "Oak"
-  | "Mangrove"
-  | "Pine"
-  | "Acacia"
-  | "Cedar"
-  | "Fruit Tree"
-  | "Baobab"
-  | "Redwood"
-  | "Birch";
+export type WaterSourceType =
+  | "Borehole"
+  | "Hand-dug Well"
+  | "Solar Pump"
+  | "Rainwater Harvesting"
+  | "Spring Protection"
+  | "Sand Dam"
+  | "Filtration Station"
+  | "Piped Supply"
+  | "Rope Pump";
 
 export interface CampaignData {
   id: string;
@@ -25,10 +25,10 @@ export interface CampaignData {
   minTarget: string;
   totalRaised: string;
   status: CampaignStatus;
-  treeType: TreeType;
-  costPerTree: number;
-  treesPlanted: number;
-  targetTrees: number;
+  waterSourceType: WaterSourceType;
+  costPerWaterSource: number;
+  waterSourcesCompleted: number;
+  targetWaterSources: number;
   createdAt: number;
   deadline: number;
   location?: string;
@@ -40,7 +40,7 @@ export interface CampaignData {
 export interface CampaignFilterOptions {
   searchQuery: string;
   status: CampaignStatus | "All";
-  treeType: TreeType | "All";
+  waterSourceType: WaterSourceType | "All";
   progressRange: "All" | "0-25%" | "25-50%" | "50-75%" | "75-100%" | "100%+";
   sortBy: "trending" | "newest" | "progress" | "target";
 }

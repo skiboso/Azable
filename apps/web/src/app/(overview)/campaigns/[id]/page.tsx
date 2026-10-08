@@ -33,22 +33,22 @@ import { CampaignFundingVelocityChart } from "@/components/modules/campaign/Fund
 
 const translations = {
   es: {
-    title: "Salvemos la Reserva de la Selva Amazónica",
-    shortDescription: "Protegiendo 50,000 hectáreas de bosque primario mediante guardianía comunitaria y streaming de carbono.",
-    fullStory: "El proyecto Reserva de la Selva Amazónica empodera a comunidades indígenas para monitorear, proteger y restaurar corredores críticos de vida silvestre. Los fondos recaudados se bloquean en flujos de pago transparentes en Stellar para operaciones contra la caza furtiva, mapeo satelital y agricultura sostenible.",
-    impactStatement: "Compensar permanentemente 150 toneladas métricas de CO2 mientras se asegura hábitat para más de 200 especies en peligro.",
+    title: "Agua Limpia para la Cuenca del Turkana",
+    shortDescription: "Perforando y manteniendo pozos para 12 comunidades rurales mediante gestión comunitaria y streaming de pagos transparente.",
+    fullStory: "El proyecto Agua Limpia para la Cuenca del Turkana capacita a técnicos de agua locales para monitorear, mantener y reparar pozos comunitarios. Los fondos recaudados se bloquean en flujos de pago transparentes en Stellar para operaciones de perforación, pruebas de calidad del agua y comités de puntos de agua.",
+    impactStatement: "Brindar acceso a agua potable a más de 5,000 residentes mientras se reduce a la mitad la incidencia de enfermedades transmitidas por el agua en la cuenca.",
   },
   pt: {
-    title: "Salve a Reserva da Floresta Amazônica",
-    shortDescription: "Protegendo 50.000 hectares de floresta primária por meio de guarda comunitária e streaming de carbono.",
-    fullStory: "O projeto Reserva da Floresta Amazônica capacita comunidades indígenas a monitorar, proteger e restaurar corredores críticos de vida selvagem. Os fundos arrecadados são bloqueados em fluxos de pagamento transparentes na Stellar para operações contra a caça ilegal, mapeamento por satélite e agricultura sustentável.",
-    impactStatement: "Compensar permanentemente 150 toneladas métricas de CO2 enquanto protege o habitat de mais de 200 espécies ameaçadas.",
+    title: "Água Limpa para a Bacia de Turkana",
+    shortDescription: "Perfurando e mantendo poços para 12 comunidades rurais por meio de gestão comunitária e streaming de pagamentos transparente.",
+    fullStory: "O projeto Água Limpa para a Bacia de Turkana capacita técnicos de água locais a monitorar, manter e reparar poços comunitários. Os fundos arrecadados são bloqueados em fluxos de pagamento transparentes na Stellar para operações de perfuração, testes de qualidade da água e comitês de pontos de água.",
+    impactStatement: "Garantir acesso à água potável para mais de 5.000 moradores enquanto reduz à metade a incidência de doenças transmitidas pela água na bacia.",
   },
   fr: {
-    title: "Sauvons la Réserve de la forêt amazonienne",
-    shortDescription: "Protéger 50 000 hectares de forêt primaire grâce à une garde communautaire et au streaming carbone.",
-    fullStory: "Le projet Réserve de la forêt amazonienne permet aux communautés autochtones de surveiller, protéger et restaurer des corridors fauniques critiques. Les fonds collectés sont verrouillés dans des flux de paiement transparents sur Stellar pour les opérations anti-braconnage, la cartographie par satellite et l'agriculture durable.",
-    impactStatement: "Compenser durablement 150 tonnes métriques de CO2 tout en sécurisant l'habitat de plus de 200 espèces menacées.",
+    title: "Eau Potable pour le Bassin du Turkana",
+    shortDescription: "Forage et entretien de puits pour 12 communautés rurales grâce à une gestion communautaire et un streaming de paiements transparent.",
+    fullStory: "Le projet Eau Potable pour le Bassin du Turkana permet à des techniciens de l'eau locaux de surveiller, entretenir et réparer les puits communautaires. Les fonds collectés sont verrouillés dans des flux de paiement transparents sur Stellar pour les opérations de forage, les tests de qualité de l'eau et les comités de points d'eau.",
+    impactStatement: "Fournir un accès à l'eau potable à plus de 5 000 habitants tout en réduisant de moitié l'incidence des maladies hydriques dans le bassin.",
   },
 } as const;
 
@@ -85,30 +85,29 @@ export default function CampaignDetailPage({ params }: { params: Promise<{ id: s
   // Mock campaign record data
   const campaign = {
     id: id || "camp-101",
-    title: "Save the Amazon RainForest Reserve",
-    category: "Environmental & Reforestation",
+    title: "Clean Water for the Turkana Basin",
+    category: "Clean Water & Sanitation",
     creator: "GD6W...X892",
-    shortDescription: "Protecting 50,000 hectares of primary rainforest through community-led guardianship and carbon streaming.",
-    fullStory: "The Amazon RainForest Reserve project empowers indigenous communities to monitor, protect, and restore critical wildlife corridors. Funds raised are locked in transparent Stellar payment streams for anti-poaching operations, satellite mapping, and sustainable agriculture.",
+    shortDescription: "Drilling and maintaining boreholes for 12 rural communities through community-led stewardship and transparent payment streaming.",
+    fullStory: "The Clean Water for the Turkana Basin project trains local water technicians to monitor, maintain, and repair community boreholes. Funds raised are locked in transparent Stellar payment streams for drilling operations, water-quality testing, and water-point committee stipends.",
     goalAmount: "50,000",
     raisedAmount: "33,850",
     token: "XLM",
     status: "ACTIVE",
     startDate: "2026-08-01",
     endDate: "2026-10-31",
-    impactStatement: "Permanently offset 150 metric tons of CO2 while securing habitat for 200+ endangered species.",
-    beneficiaries: "5,000 local indigenous community members",
-    co2OffsetTons: "150",
+    impactStatement: "Provide reliable clean water access to 5,000+ residents while cutting waterborne illness in half across the basin.",
+    beneficiaries: "5,000 residents of the Turkana Basin",
+    litersPerYear: "2,400,000",
     successStory: {
-      headline: "From Rainforest Pledge to On-the-Ground Impact",
-      creatorInterview: "Every XLM stream is tied to verifiable patrol hours and backers receive monthly GPS updates. The team shipped on every promise.",
+      headline: "From Pledge to Flowing Water",
+      creatorInterview: "Every XLM stream is tied to a verified borehole's GPS coordinates and water-quality test results, and backers receive monthly flow-rate updates. The team shipped on every promise.",
       backerTestimonials: [
         { name: "Marta L.", location: "Lisbon, Portugal", quote: "I could see exactly where my contribution went." },
         { name: "Devon K.", location: "Austin, TX", quote: "You can tell this is a team that ships." },
         { name: "Priya N.", location: "Bengaluru, India", quote: "More campaigns should publish stories like this." },
       ],
     },
-    treesPlanted: "1,500",
   };
 
   // The mock detail page renders as the campaign creator, so creator-only
@@ -331,7 +330,7 @@ export default function CampaignDetailPage({ params }: { params: Promise<{ id: s
                 </p>
                 <div className="grid grid-cols-2 gap-4 text-xs pt-2">
                   <div>Beneficiaries: <strong className="text-zinc-100">{campaign.beneficiaries}</strong></div>
-                  <div>Estimated CO2 Offset: <strong className="text-amber-400 font-bold">{campaign.co2OffsetTons} Tons</strong></div>
+                  <div>Est. Water Provided: <strong className="text-amber-400 font-bold">{campaign.litersPerYear} L/yr</strong></div>
                 </div>
               </div>
             </div>

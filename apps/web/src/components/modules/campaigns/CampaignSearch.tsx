@@ -5,7 +5,7 @@ import Link from "next/link";
 import {
   Search,
   Filter,
-  Trees,
+  Droplets,
   ArrowUpDown,
   XCircle,
   Play,
@@ -16,130 +16,130 @@ import {
   ChevronRight,
   Sparkles,
 } from "lucide-react";
-import { CampaignData, CampaignFilterOptions, CampaignStatus, TreeType } from "@/types/campaign";
+import { CampaignData, CampaignFilterOptions, CampaignStatus, WaterSourceType } from "@/types/campaign";
 
 // Sample initial campaign records for demonstration & discovery
 const INITIAL_CAMPAIGNS: CampaignData[] = [
   {
     id: "1",
-    title: "Amazon Rainforest Reforestation Initiative",
-    description: "Restoring native canopy cover in the western Amazon basin through community tree planting.",
+    title: "Amazon Basin Borehole Initiative",
+    description: "Drilling clean-water boreholes for riverside communities in the western Amazon basin through community-led maintenance.",
     creator: "GBREAKER1...378",
     token: "XLM",
     targetAmount: "10000",
     minTarget: "5000",
     totalRaised: "7250",
     status: "Active",
-    treeType: "Mangrove",
-    costPerTree: 10,
-    treesPlanted: 725,
-    targetTrees: 1000,
+    waterSourceType: "Borehole",
+    costPerWaterSource: 10,
+    waterSourcesCompleted: 725,
+    targetWaterSources: 1000,
     createdAt: Date.now() / 1000 - 86400 * 10,
     deadline: Date.now() / 1000 + 86400 * 20,
     location: "Brazil / Peru Basin",
   },
   {
     id: "2",
-    title: "Sub-Saharan Acacia Agroforestry Expansion",
-    description: "Planting drought-resistant Acacia trees to fight desertification and enrich local soil health.",
+    title: "Sub-Saharan Solar Pump Expansion",
+    description: "Installing solar-powered water pumps to fight drought and secure reliable household water access.",
     creator: "GVET01...941",
     token: "XLM",
     targetAmount: "25000",
     minTarget: "10000",
     totalRaised: "18500",
     status: "Paused",
-    treeType: "Acacia",
-    costPerTree: 15,
-    treesPlanted: 1233,
-    targetTrees: 1666,
+    waterSourceType: "Solar Pump",
+    costPerWaterSource: 15,
+    waterSourcesCompleted: 1233,
+    targetWaterSources: 1666,
     createdAt: Date.now() / 1000 - 86400 * 15,
     deadline: Date.now() / 1000 + 86400 * 15,
     location: "Kenya & Ethiopia border",
   },
   {
     id: "3",
-    title: "Pacific Coast Mangrove Restoration",
-    description: "Establishing vital coastal mangrove buffers to protect ecosystems and capture carbon.",
+    title: "Pacific Coast Rainwater Harvesting",
+    description: "Establishing rainwater harvesting systems to protect coastal communities from seasonal water shortages.",
     creator: "GCOAST2...112",
     token: "XLM",
     targetAmount: "15000",
     minTarget: "7500",
     totalRaised: "15000",
     status: "Successful",
-    treeType: "Mangrove",
-    costPerTree: 12,
-    treesPlanted: 1250,
-    targetTrees: 1250,
+    waterSourceType: "Rainwater Harvesting",
+    costPerWaterSource: 12,
+    waterSourcesCompleted: 1250,
+    targetWaterSources: 1250,
     createdAt: Date.now() / 1000 - 86400 * 30,
     deadline: Date.now() / 1000 - 86400 * 2,
     location: "Southeast Asia Coastal Region",
   },
   {
     id: "4",
-    title: "Alpine Cedar & Oak Habitat Preservation",
-    description: "Expanding high-altitude Cedar and Oak habitats to preserve indigenous wildlife biodiversity.",
+    title: "Alpine Spring Protection Program",
+    description: "Protecting high-altitude natural springs to preserve clean water sources for indigenous highland communities.",
     creator: "GALPINE8...663",
     token: "XLM",
     targetAmount: "8000",
     minTarget: "4000",
     totalRaised: "1200",
     status: "Failed",
-    treeType: "Cedar",
-    costPerTree: 20,
-    treesPlanted: 60,
-    targetTrees: 400,
+    waterSourceType: "Spring Protection",
+    costPerWaterSource: 20,
+    waterSourcesCompleted: 60,
+    targetWaterSources: 400,
     createdAt: Date.now() / 1000 - 86400 * 45,
     deadline: Date.now() / 1000 - 86400 * 5,
     location: "European Alpine Ridge",
   },
   {
     id: "5",
-    title: "Community Fruit Orchards & Food Security",
-    description: "Sponsoring sustainable fruit tree orchards for rural communities to ensure long-term food sovereignty.",
+    title: "Community Hand-dug Wells & Food Security",
+    description: "Sponsoring hand-dug wells for rural communities to secure irrigation water and long-term food sovereignty.",
     creator: "GORCHARD5...449",
     token: "XLM",
     targetAmount: "30000",
     minTarget: "15000",
     totalRaised: "30000",
     status: "Claimed",
-    treeType: "Fruit Tree",
-    costPerTree: 25,
-    treesPlanted: 1200,
-    targetTrees: 1200,
+    waterSourceType: "Hand-dug Well",
+    costPerWaterSource: 25,
+    waterSourcesCompleted: 1200,
+    targetWaterSources: 1200,
     createdAt: Date.now() / 1000 - 86400 * 60,
     deadline: Date.now() / 1000 - 86400 * 12,
     location: "Central America",
   },
   {
     id: "6",
-    title: "Ancient Baobab Conservation Trust",
-    description: "Protecting keystone Baobab species through targeted tree propagation and local stewardship.",
+    title: "Sand Dam Water Trust",
+    description: "Building sand dams to capture seasonal rainfall and sustain year-round water access through local stewardship.",
     creator: "GBAOBAB7...881",
     token: "XLM",
     targetAmount: "50000",
     minTarget: "20000",
     totalRaised: "41000",
     status: "Active",
-    treeType: "Baobab",
-    costPerTree: 50,
-    treesPlanted: 820,
-    targetTrees: 1000,
+    waterSourceType: "Sand Dam",
+    costPerWaterSource: 50,
+    waterSourcesCompleted: 820,
+    targetWaterSources: 1000,
     createdAt: Date.now() / 1000 - 86400 * 5,
     deadline: Date.now() / 1000 + 86400 * 25,
     location: "Madagascar",
   },
 ];
 
-const TREE_TYPES: TreeType[] = [
-  "Oak",
-  "Mangrove",
-  "Pine",
-  "Acacia",
-  "Cedar",
-  "Fruit Tree",
-  "Baobab",
-  "Redwood",
-  "Birch",
+const WATER_SOURCE_TYPES: WaterSourceType[] = [
+  "Borehole",
+  "Hand-dug Well",
+  "Solar Pump",
+  "Rainwater Harvesting",
+  "Spring Protection",
+  "Sand Dam",
+  "Filtration Station",
+  "Piped Supply",
+  "Rope Pump",
 ];
 
 const STATUS_LIST: (CampaignStatus | "All")[] = [
@@ -155,7 +155,7 @@ export const CampaignSearch: React.FC = () => {
   const [filters, setFilters] = useState<CampaignFilterOptions>({
     searchQuery: "",
     status: "All",
-    treeType: "All",
+    waterSourceType: "All",
     progressRange: "All",
     sortBy: "trending",
   });
@@ -168,7 +168,7 @@ export const CampaignSearch: React.FC = () => {
         const matchesTitle = campaign.title.toLowerCase().includes(query);
         const matchesDesc = campaign.description.toLowerCase().includes(query);
         const matchesCreator = campaign.creator.toLowerCase().includes(query);
-        const matchesTree = campaign.treeType.toLowerCase().includes(query);
+        const matchesTree = campaign.waterSourceType.toLowerCase().includes(query);
         if (!matchesTitle && !matchesDesc && !matchesCreator && !matchesTree) {
           return false;
         }
@@ -179,8 +179,8 @@ export const CampaignSearch: React.FC = () => {
         return false;
       }
 
-      // 3. Tree type filter
-      if (filters.treeType !== "All" && campaign.treeType !== filters.treeType) {
+      // 3. Water source type filter
+      if (filters.waterSourceType !== "All" && campaign.waterSourceType !== filters.waterSourceType) {
         return false;
       }
 
@@ -228,7 +228,7 @@ export const CampaignSearch: React.FC = () => {
     setFilters({
       searchQuery: "",
       status: "All",
-      treeType: "All",
+      waterSourceType: "All",
       progressRange: "All",
       sortBy: "trending",
     });
@@ -274,7 +274,7 @@ export const CampaignSearch: React.FC = () => {
       {/* Header Banner */}
       <div className="relative rounded-2xl bg-gradient-to-r from-emerald-950 via-slate-900 to-zinc-900 p-6 sm:p-8 border border-emerald-500/20 shadow-xl overflow-hidden">
         <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
-          <Trees className="size-64 text-emerald-400" />
+          <Droplets className="size-64 text-emerald-400" />
         </div>
         <div className="relative z-10 max-w-2xl space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold uppercase tracking-wider">
@@ -282,10 +282,10 @@ export const CampaignSearch: React.FC = () => {
             <span>Azable Explorer</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-            Explore Tree Reforestation Campaigns
+            Explore Clean Water Access Campaigns
           </h1>
           <p className="text-sm text-zinc-300 leading-relaxed">
-            Search and filter active campaigns by lifecycle status, target tree species, or progress milestones. Sponsor real-world environmental impact on Stellar.
+            Search and filter active campaigns by lifecycle status, water source type, or progress milestones. Sponsor real-world clean-water impact on Stellar.
           </p>
         </div>
       </div>
@@ -315,22 +315,22 @@ export const CampaignSearch: React.FC = () => {
             )}
           </div>
 
-          {/* Tree Type Select Filter */}
+          {/* Water Source Type Select Filter */}
           <div className="md:col-span-3">
             <select
-              value={filters.treeType}
+              value={filters.waterSourceType}
               onChange={(e) =>
                 setFilters((prev) => ({
                   ...prev,
-                  treeType: e.target.value as TreeType | "All",
+                  waterSourceType: e.target.value as WaterSourceType | "All",
                 }))
               }
               className="w-full px-3 py-2.5 rounded-xl bg-zinc-950/80 border border-zinc-700/60 text-zinc-200 text-sm focus:outline-none focus:border-emerald-500 transition-colors"
             >
-              <option value="All">🌳 All Tree Types</option>
-              {TREE_TYPES.map((tree) => (
-                <option key={tree} value={tree}>
-                  {tree}
+              <option value="All">💧 All Water Source Types</option>
+              {WATER_SOURCE_TYPES.map((source) => (
+                <option key={source} value={source}>
+                  {source}
                 </option>
               ))}
             </select>
@@ -401,7 +401,7 @@ export const CampaignSearch: React.FC = () => {
 
             {(filters.searchQuery ||
               filters.status !== "All" ||
-              filters.treeType !== "All" ||
+              filters.waterSourceType !== "All" ||
               filters.progressRange !== "All") && (
               <button
                 onClick={resetFilters}
@@ -425,10 +425,10 @@ export const CampaignSearch: React.FC = () => {
       {/* Campaign Cards Grid */}
       {filteredCampaigns.length === 0 ? (
         <div className="rounded-2xl border border-zinc-800 bg-slate-900/50 p-12 text-center space-y-3">
-          <Trees className="size-12 text-zinc-600 mx-auto" />
+          <Droplets className="size-12 text-zinc-600 mx-auto" />
           <h3 className="text-base font-bold text-zinc-200">No campaigns found</h3>
           <p className="text-xs text-zinc-400 max-w-sm mx-auto">
-            No campaigns matched your current search filters. Try clearing your search query or selecting a different status/tree type.
+            No campaigns matched your current search filters. Try clearing your search query or selecting a different status/water source type.
           </p>
           <button
             onClick={resetFilters}
@@ -450,11 +450,11 @@ export const CampaignSearch: React.FC = () => {
                 className="group relative rounded-2xl bg-slate-900/90 border border-zinc-800 p-5 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-emerald-500/40 hover:shadow-emerald-500/5 flex flex-col justify-between"
               >
                 <div className="space-y-3">
-                  {/* Status & Tree Tag */}
+                  {/* Status & Water Source Tag */}
                   <div className="flex items-center justify-between">
                     {getStatusBadge(campaign.status)}
                     <span className="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-md border border-emerald-500/20">
-                      🌲 {campaign.treeType}
+                      💧 {campaign.waterSourceType}
                     </span>
                   </div>
 
@@ -468,11 +468,11 @@ export const CampaignSearch: React.FC = () => {
                     </p>
                   </div>
 
-                  {/* Trees Planted Badge */}
+                  {/* Water Sources Completed Badge */}
                   <div className="flex items-center justify-between p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800/80 text-xs">
-                    <span className="text-zinc-400">Trees Impact:</span>
+                    <span className="text-zinc-400">Water Impact:</span>
                     <span className="font-bold text-zinc-200">
-                      {campaign.treesPlanted.toLocaleString()} / {campaign.targetTrees.toLocaleString()} Trees
+                      {campaign.waterSourcesCompleted.toLocaleString()} / {campaign.targetWaterSources.toLocaleString()} Sources
                     </span>
                   </div>
 

@@ -8,7 +8,7 @@ import {
   Play,
   Share2,
   ShieldCheck,
-  Trees,
+  Droplets,
   Clock,
   User,
   MapPin,
@@ -17,7 +17,7 @@ import {
   AlertTriangle,
   Info,
 } from "lucide-react";
-import LiveTreeCounter from "./LiveTreeCounter";
+import LiveWaterCounter from "./LiveWaterCounter";
 import AnimatedProgressBar from "./AnimatedProgressBar";
 import { CampaignData, CampaignStatus } from "@/types/campaign";
 
@@ -28,19 +28,19 @@ interface CampaignDetailProps {
 // Sample campaign fallback generator for detail page
 const getSampleCampaign = (id: string): CampaignData => ({
   id,
-  title: id === "2" ? "Sub-Saharan Acacia Agroforestry Expansion" : "Amazon Rainforest Reforestation Initiative",
+  title: id === "2" ? "Sub-Saharan Solar Pump Expansion" : "Turkana Basin Clean Water Initiative",
   description:
-    "This campaign aims to restore degraded native forest canopy, fight soil erosion, and build climate resilience for local ecosystems. Every contribution directly funds saplings, planting labor, and ongoing stewardship.",
+    "This campaign aims to restore reliable access to clean water, cut waterborne illness, and build drought resilience for local communities. Every contribution directly funds drilling, water-technician labor, and ongoing maintenance.",
   creator: "GBREAKER1...378",
   token: "XLM",
   targetAmount: "10000",
   minTarget: "5000",
   totalRaised: "7250",
   status: id === "2" ? "Paused" : "Active",
-  treeType: id === "2" ? "Acacia" : "Mangrove",
-  costPerTree: 10,
-  treesPlanted: 725,
-  targetTrees: 1000,
+  waterSourceType: id === "2" ? "Solar Pump" : "Borehole",
+  costPerWaterSource: 10,
+  waterSourcesCompleted: 725,
+  targetWaterSources: 1000,
   createdAt: Date.now() / 1000 - 86400 * 10,
   deadline: Date.now() / 1000 + 86400 * 20,
   location: "Amazon Basin, South America",
@@ -118,7 +118,7 @@ export const CampaignDetail: React.FC<CampaignDetailProps> = ({ campaignId }) =>
             </span>
 
             <span className="px-3 py-1 rounded-full text-xs font-semibold bg-zinc-800/80 text-zinc-300 border border-zinc-700/50">
-              🌲 {campaign.treeType} Species
+              💧 {campaign.waterSourceType}
             </span>
           </div>
 
@@ -171,15 +171,15 @@ export const CampaignDetail: React.FC<CampaignDetailProps> = ({ campaignId }) =>
         )}
       </div>
 
-      {/* Issue #702: Live Tree Counter & Animated Progress Bar Grid */}
+      {/* Issue #702: Live Water Counter & Animated Progress Bar Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Animated Tree Ticker (Issue #702) */}
+        {/* Animated Water Ticker (Issue #702) */}
         <div className="lg:col-span-5">
-          <LiveTreeCounter
-            treesPlanted={campaign.treesPlanted}
-            targetTrees={campaign.targetTrees}
-            costPerTree={campaign.costPerTree}
-            treeType={campaign.treeType}
+          <LiveWaterCounter
+            waterSourcesCompleted={campaign.waterSourcesCompleted}
+            targetWaterSources={campaign.targetWaterSources}
+            costPerWaterSource={campaign.costPerWaterSource}
+            waterSourceType={campaign.waterSourceType}
           />
         </div>
 
